@@ -14,20 +14,20 @@
 # GUUP Environment Setup:
 # set Platform, Vitis and Petalinux repo
 # =======================================================
-#ts 2024.1_daily_latest -petalinux petalinux-v2024.1_daily_latest
+#ts 2024.2_daily_latest -petalinux petalinux-v2024.2_daily_latest
 
 export CUR_DIR=$PWD
 
 # =======================================================
 # global variables for this tutorial
 # =======================================================
-#RELEASE=2024.1
-RELEASE=2024.1
+#RELEASE=
+RELEASE=2024.2
 BOARD=zcu102
-BASE_NUM=202410_1
-#BASE_NUM=202410_1
+BASE_NUM=202420_1
+#BASE_NUM=202420_1
 
-export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Vitis-Tutorials/Developer_Contributed
+export WRK_DIR=/group/xirguup/danieleb/ide2024.2/Vitis-Tutorials/Developer_Contributed
 export TUTORIAL=03-HLS_Code_Optimization
 
 # =======================================================
@@ -48,14 +48,14 @@ mkdir -p /tmp/danieleb
 export TMPDIR=/tmp/danieleb
 
 # PETALINUX and ZYNQMP COMMON IMAGE
-export COMMON_IMAGE_ZYNQMP=${HOME}/common/xilinx-zynqmp-common-v2024.1
+export COMMON_IMAGE_ZYNQMP=${HOME}/common/xilinx-zynqmp-common-v2024.2
 
 : '
 # install Versal SDK on $HOME/common
 echo " "
 echo "NOW INSTALLING ZCU102 SDK in $HOME/common "
 echo " "
-export ZYNQMP_COMMON_2023v2=$PETALINUX/../../bsp/internal/xilinx-zynqmp-common-v2024.1/
+export ZYNQMP_COMMON_2023v2=$PETALINUX/../../bsp/internal/xilinx-zynqmp-common-v2024.2/
 # clean zynqmp folder content
 rm -rf ${COMMON_IMAGE_ZYNQMP}
 # install SDK
@@ -68,8 +68,8 @@ cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${C
 # Set DSP Library for Vitis
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
-#export DSPLIB_ROOT=<Path to 2024.1 DSP Libs - Directory>
-export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.1/Vitis_Libraries
+#export DSPLIB_ROOT=<Path to 2024.2 DSP Libs - Directory>
+export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.2/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 
 

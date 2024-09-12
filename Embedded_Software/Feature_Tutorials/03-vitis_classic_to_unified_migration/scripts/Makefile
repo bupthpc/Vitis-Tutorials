@@ -6,7 +6,7 @@
 
 SHELL := /bin/bash
 TOOLS ?= ""
-VERSION ?= 2024.1
+VERSION ?= 2024.2
 
 all: create_xsa classic_workspace
 

@@ -34,13 +34,13 @@ export TARGET ARCH MULTIRATE
 
 $(info "-------------------------------------------------------------------------")
 ifeq ($(ARCH), aie)
-PFM_NAME := xilinx_vck190_base_202410_1
+PFM_NAME := xilinx_vck190_base_202420_1
 REPO := $(PLATFORM_REPO_PATHS)
 $(info "ARCH set for AI Engine Architecture   (ARCH = $(ARCH))")
 else ifeq ($(ARCH), aie-ml)
-# PFM_NAME := xilinx_vek280_base_202410_1
+# PFM_NAME := xilinx_vek280_base_202420_1
 # REPO := $(PLATFORM_REPO_PATHS)
-PFM_NAME := xilinx_vek280_es1_base_202410_1
+PFM_NAME := xilinx_vek280_es1_base_202420_1
 REPO := $(XILINX_VITIS)/base_platforms
 $(info "ARCH set for AI Engine ML Architecture   (ARCH = $(ARCH))")
 else

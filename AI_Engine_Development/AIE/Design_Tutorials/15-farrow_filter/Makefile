@@ -10,7 +10,7 @@ export TARGET                      ?= hw_emu
 export AIE_SIM_ONLY                := false
 
 TOP_DIR                   ?= $(shell readlink -f .)
-PLATFORM_NAME              = xilinx_vck190_base_202410_1
+PLATFORM_NAME              = xilinx_vck190_base_202420_1
 PLATFORM_PATH              = ${TOP_DIR}/platform/platform_repo
 
 export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/export/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm

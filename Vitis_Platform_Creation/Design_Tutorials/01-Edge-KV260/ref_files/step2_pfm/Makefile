@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
 
 XSA_NAME=kv260_hardware_platform
-VERSION=2024.1
+VERSION=2024.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DT_PLAT_NAME=mydeivice
 DT_PATH=$(ROOT_DIR)/$(DT_PLAT_NAME)/psu_cortexa53_0/device_tree_domain/bsp
