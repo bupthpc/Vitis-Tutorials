@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 
 # Digital Down-conversion Chain: Converting from Intrinsics to API
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents <!-- omit from toc -->
 
@@ -145,7 +145,7 @@ The 32-branch digital down-conversion design can be built using the command line
 The first step is to set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Versal platforms corresponding to your tool release. This edit should be done in the ```09-ddc_chain/Makefile``` file.
 
 ```shell
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202420_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
