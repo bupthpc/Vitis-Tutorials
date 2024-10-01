@@ -8,7 +8,14 @@
 % A continuously variable digital delay element https://ieeexplore.ieee.org/document/15483
 clear all;close all;
 rng(1);
-
+vfs_use=0;          % Vitis Functional Simulation, EA. For more information, register in EA Lounge: 
+                    % https://account.amd.com/en/member/vitis-functional-simulation.html
+if (vfs_use==1)
+    run(sprintf('%s/%s',getenv("XILINX_VITIS"),'vfs/matlab/addVfsToPath.m'))
+    if( exist('vfs_work', 'dir') )
+        system("rm -rf vfs_work");
+    end
+end
 %% Create signal
 Nsamp=1024*4;
 TT = numerictype(1,16,14);
@@ -41,6 +48,34 @@ sig_o = fi(z,TT,FF);
 % flip(f2_taps.int(end-3:end))
 % flip(f1_taps.int(end-3:end))
 % flip(f0_taps.int(end-3:end))
+
+%% Vitis Functional Simulation
+if (vfs_use==1)
+    % Initialize AIE Graphs and HLS Kernel objects
+    farrow_vfs_object = vfs.aieGraph(input_file="aie/farrow_final/farrow_app.cpp", include_paths={'aie/farrow_final'});
+
+    % Massage input data to match kernel assumptions
+    del_i_model = zeros(size(del_i));
+    for ii = 1 : 8 : numel(del_i)
+      del_i_model(ii  ) = double(del_i.int(ii+0))+2^16 * double(del_i.int(ii+1));
+      del_i_model(ii+1) = double(del_i.int(ii+2))+2^16 * double(del_i.int(ii+3));
+      del_i_model(ii+2) = double(del_i.int(ii+4))+2^16 * double(del_i.int(ii+5));
+      del_i_model(ii+3) = double(del_i.int(ii+6))+2^16 * double(del_i.int(ii+7));
+    end
+
+    % Functionally simulate design
+    sig_o_actual = farrow_vfs_object.run(vfs.cint16(sig_i.int),vfs.int32(del_i_model)).';
+
+    % Compare actual output vs expected
+    error = double(sig_o.int) - double(sig_o_actual);
+    error_real = real(error);
+    error_imag = imag(error);
+    if max(max(error_real),max(error_imag))<=1
+        disp('Model matches reference algorithm up to an LSB');
+    else
+        disp('Model does not match reference algorithm');
+    end
+end
 
 %% Save I/O files for simulation
 

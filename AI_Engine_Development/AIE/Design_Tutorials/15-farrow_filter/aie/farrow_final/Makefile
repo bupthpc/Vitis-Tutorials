@@ -6,6 +6,9 @@
 
 AIE_SIM_ONLY      ?= true
 
+PLATFORM_USE	  := xilinx_vck190_base_202420_1
+PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+
 MY_APP             = farrow_app.cpp
 MY_SOURCES         = ${MY_APP} farrow_graph.h farrow_kernel1.cpp farrow_kernel1.h farrow_kernel2.cpp farrow_kernel2.h
 LOG_FILE           = log
@@ -63,4 +66,4 @@ get_II:
 
 clean:
 	@rm -rf Work* .Xil function_wdb_dir .crashReporter .AIE_SIM_CMD_LINE_OPTIONS AIECompiler.log xcd.log log aiesimulator_output x86simulator_output diff_output pl_sample_count* tmp vitis_analyzer.* xsc_report.log diag_report.log libadf.a sol.db t.txt Map_Report.csv AIESimulator.log
-	@rm -rf ISS_RPC_SERVER_PORT system_flat.wcfg system.wcfg system.wdb tmp.vcd.vcd trdata.aiesim vcdanalyze.log vitis_analyzer_pid* logs VCDAnalyze.log plio_throughput_info.json qemu_rp.log .wsdata
+	@rm -rf ISS_RPC_SERVER_PORT system_flat.wcfg system.wcfg system.wdb tmp.vcd.vcd trdata.aiesim vcdanalyze.log vitis_analyzer_pid* logs VCDAnalyze.log plio_throughput_info.json qemu_rp.log .wsdata _ide throughput_info.json
