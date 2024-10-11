@@ -12,9 +12,9 @@ RELEASE=2024.2
 
 TOP_DIR                   ?= $(shell readlink -f .)
 PLATFORM_NAME              = xilinx_vck190_base_202420_1
-PLATFORM_PATH              = ${TOP_DIR}/platform/platform_repo
+PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
 
-export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/export/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
+export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
 export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
 export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
@@ -36,7 +36,6 @@ help::
 all:	channelizer
 
 channelizer:
-	$(MAKE) all -C platform
 	$(MAKE) all -C aie/m16_ssr8
 	$(MAKE) all -C hls/m16_ssr8_permute_fb_i
 	$(MAKE) all -C hls/m16_ssr8_permute_fb_o
@@ -51,7 +50,6 @@ power:
 	$(MAKE) vitis_xpe -C aie/m16_ssr8
 
 clean:
-	$(MAKE) clean -C platform
 	$(MAKE) clean -C aie/m16_ssr8
 	$(MAKE) clean -C aie/m16_ssr8_dft
 	$(MAKE) clean -C aie/m16_ssr8_filterbank
