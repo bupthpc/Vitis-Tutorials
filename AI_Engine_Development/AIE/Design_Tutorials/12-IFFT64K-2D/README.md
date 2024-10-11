@@ -10,7 +10,7 @@
 
 # 64K-Pt IFFT @ 2 Gsps Using a 2D Architecture
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents
 

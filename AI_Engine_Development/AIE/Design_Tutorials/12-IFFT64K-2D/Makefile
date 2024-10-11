@@ -11,9 +11,9 @@ RELEASE=2024.2
 
 TOP_DIR                   ?= $(shell readlink -f .)
 PLATFORM_NAME              = xilinx_vck190_base_202420_1
-PLATFORM_PATH              = ${TOP_DIR}/platform/platform_repo
+PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
 
-export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/export/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
+export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
 export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
 export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
@@ -35,7 +35,6 @@ help::
 all:	ifft
 
 ifft:
-	$(MAKE) all -C platform
 	$(MAKE) all -C aie/ifft64k
 	$(MAKE) all -C hls/ifft_dma_src
 	$(MAKE) all -C hls/ifft_transpose
@@ -44,7 +43,6 @@ ifft:
 	$(MAKE) all -C vitis
 
 clean:
-	$(MAKE) clean -C platform
 	$(MAKE) clean -C aie/ifft64k
 	$(MAKE) clean -C hls/ifft_dma_src
 	$(MAKE) clean -C hls/ifft_transpose
