@@ -23,7 +23,7 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include \
                     -I../../aie/dft9w \
                     -I../../aie/dft16
 
-GCC_C_FLAGS      := -O -Wall -std=c++14 -DXAIE_DEBUG \
+GCC_C_FLAGS      := -O -Wall -std=c++17 -DXAIE_DEBUG \
                     -pthread \
                     --sysroot=${SYSROOT}
 

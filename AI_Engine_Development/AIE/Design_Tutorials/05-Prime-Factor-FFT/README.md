@@ -9,7 +9,7 @@
 
 # Prime Factor FFT-1008
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents
 
