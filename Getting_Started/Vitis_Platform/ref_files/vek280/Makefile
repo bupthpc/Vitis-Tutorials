@@ -67,7 +67,7 @@ dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 # Input: vck190_custom.xsa in build/vivado directory
 pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 
 	
 
@@ -100,6 +100,6 @@ clean:
 	-$(MAKE) -C $(AIE_WORK) clean
 
 ultraclean: clean
-	-rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
+	-rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp ws
 	-rm -rf $(VADD_WORK) 
 	make ultraclean  -C  $(AIE_WORK) 

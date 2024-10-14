@@ -21,7 +21,9 @@ dtb=args.dtb
 boot=args.boot
 print('args',args)
 client = vitis.create_client()
-client.set_workspace(path=os.getcwd())
+workspace_path = os.getcwd() + "/ws" 
+client.set_workspace(path=workspace_path)
+print(workspace_path)
 platform = client.create_platform_component(name = platform_name, hw_design =xsa_path, os = "aie_runtime",cpu = "ai_engine")
 platform = client.get_component(name=platform_name)
 domain = platform.add_domain(cpu = "psv_cortexa72",os = "linux",name = "xrt",display_name = "xrt")

@@ -23,7 +23,10 @@ dtb=args.dtb
 boot=args.boot
 print('args',args)
 client = vitis.create_client()
-client.set_workspace(path=os.getcwd())
+
+workspace_path = os.getcwd() + "/ws" 
+client.set_workspace(path=workspace_path)
+print(workspace_path)
 platform = client.create_platform_component(name = platform_name, hw_design =xsa_path, os = "linux",cpu = "psu_cortexa53",emu_design = emuxsa_path )
 platform = client.get_component(name=platform_name)
 domain = platform.get_domain(name="linux_psu_cortexa53")

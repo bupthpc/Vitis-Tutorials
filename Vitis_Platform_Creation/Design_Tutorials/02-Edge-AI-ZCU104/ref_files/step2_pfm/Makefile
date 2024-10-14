@@ -10,7 +10,7 @@ VERSION=2024.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DTB=$(ROOT_DIR)/mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb
 SYSROOT=$(ROOT_DIR)/sysroot
-DEVICE_TREE ?=
+DEVICE_TREE ?=https://github.com/Xilinx/device-tree-xlnx.git
 
 ifdef DEVICE_TREE
 DEVICE_TREE_REPO=$(DEVICE_TREE)
@@ -52,7 +52,7 @@ pfm: $(DTB)
 
 
 clean:
-	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) mydevice  .Xil tmp/
+	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) mydevice  .Xil tmp/ ws
 ultraclean:clean
 	rm -rf  device-tree-xlnx
 

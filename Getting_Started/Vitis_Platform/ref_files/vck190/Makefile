@@ -67,7 +67,7 @@ dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 $(PLATFORM): pfm
 pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 
 
 cpAieCode:
@@ -103,7 +103,7 @@ clean:
 	$(MAKE) -C $(AIE_WORK) clean
 
 ultraclean:clean
-	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
+	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp ws
 	rm -rf $(VADD_WORK) $(AIE_WORK)
 	rm -rf $(VADD_WORK) $(VADD_WORK)
 
