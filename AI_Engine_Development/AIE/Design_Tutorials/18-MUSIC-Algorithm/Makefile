@@ -7,9 +7,9 @@
 ECHO                               = @echo
 export TARGET                      ?= hw
 
-RELEASE=2024.1
+RELEASE=2024.2
 
-PLATFORM_NAME              = xilinx_vck190_base_202410_1
+PLATFORM_NAME              = xilinx_vck190_base_202420_1
 PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
 
 export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
