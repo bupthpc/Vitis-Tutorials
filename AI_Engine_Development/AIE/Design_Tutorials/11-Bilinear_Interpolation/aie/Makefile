@@ -92,4 +92,4 @@ clean:
 	rm -rf *.log *.csv *.db *.vcd *.json logs
 	rm -rf x86simulator_output aiesimulator_output pl_sample_counts
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS ISS_RPC_SERVER_PORT
-	rm -rf pl_sample_count* .wsdata
+	rm -rf pl_sample_count* .wsdata _ide

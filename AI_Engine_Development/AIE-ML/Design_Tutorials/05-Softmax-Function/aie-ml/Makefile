@@ -7,7 +7,7 @@
 SRC_DIR           := ./src
 MY_SOURCES        := $(shell find $(SRC_DIR) -name *.cpp) $(shell find $(SRC_DIR) -name *.h)
 
-PLATFORM_USE      := xilinx_vek280_base_202410_1
+PLATFORM_USE      := xilinx_vek280_base_202420_1
 
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
@@ -87,5 +87,5 @@ clean:
 	rm -rf *.log *.csv *.db *.vcd logs
 	rm -rf x86simulator_output aiesimulator_output pl_sample_counts
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS ISS_RPC_SERVER_PORT
-	rm -rf pl_sample_count* .wsdata
+	rm -rf pl_sample_count* .wsdata throughput_info.json _ide
 	rm -rf component_ide plio_throughput_info.json

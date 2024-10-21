@@ -9,7 +9,7 @@
 
 # Bilinear Interpolation
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents
 
@@ -227,7 +227,7 @@ void bilinear_kernel::interp(input_buffer<int32, extents<BUFFER_SIZE_IN>>& __res
 
 ## Running the Example
 
-Running the example requires that both MATLAB and AMD Vitis™ tools are installed and configured correctly. After downloading the files, cd into the ``.../bilinear_interpolation/aie/`` directory and use the make build process.
+Running the example requires that both MATLAB and AMD Vitis™ tools are installed and configured correctly. After downloading the files, cd into the ``.../11-Bilinear_Interpolation/aie/`` directory and use the make build process.
 
 ### Generating Test Vectors
 
