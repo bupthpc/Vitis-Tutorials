@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # Prime Factor FFT-1008 on AIE-ML
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents
 
@@ -156,16 +156,16 @@ The figure below summarizes the PL resources required to implement the design. T
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms```.
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/lin64/Vitis/2024.2/base_platforms```.
 
-The remaining environment variables are configured in the top level Makefile ```<path-to-design>/05-Prime-Factor-FFT/Makefile``` file.
+The remaining environment variables are configured in the top level Makefile ```<path-to-design>/02-Prime-Factor-FFT/Makefile``` file.
 
 ```
-RELEASE=2024.1
+RELEASE=2024.2
 BOARD=vek280
-BASE_NUM=202410_1
+BASE_NUM=202420_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
@@ -185,21 +185,21 @@ export SYSROOT          = ${VITIS_SYSROOT}
 
 
 ```
-[shell]% cd <path-to-design>/05-Prime-Factor-FFT
+[shell]% cd <path-to-design>/02-Prime-Factor-FFT
 [shell]% make all TARGET=hw_emu
 ```
 
 This will take about 90 minutes to run the first time as the build will perform C/RTL verification and Vivado out-of-context place-and-route runs for all six HLS IPs. This will only be done once, but is not strictly required for hardware emulation. To skip this step, alternately run using the following:
 
 ```
-[shell]% cd <path-to-design>/05-Prime-Factor-FFT
+[shell]% cd <path-to-design>/02-Prime-Factor-FFT
 [shell]% make all TARGET=hw_emu DO_COSIM=false
 ```
 
-The build process will generate a folder ```05-Prime-Factor-FFT/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
+The build process will generate a folder ```02-Prime-Factor-FFT/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
 
 ```
-[shell]% cd <path-to-design>/05-Prime-Factor-FFT/package
+[shell]% cd <path-to-design>/02-Prime-Factor-FFT/package
 [shell]% ./launch_hw_emu.sh -run-app embedded_exec.sh
 ```
 
@@ -208,11 +208,11 @@ The build process will generate a folder ```05-Prime-Factor-FFT/package``` conta
 The design can be built for the VEK280 board using the Makefile as follows:
 
 ```
-[shell]% cd <path-to-design>/05-Prime-Factor-FFT
+[shell]% cd <path-to-design>/02-Prime-Factor-FFT
 [shell]% make all TARGET=hw
 ```
 
-The build process will generate the SD card image in the ```<path-to-design>/05-Prime-Factor-FFT/package/sd_card``` folder.
+The build process will generate the SD card image in the ```<path-to-design>/02-Prime-Factor-FFT/package/sd_card``` folder.
 
 ## References
 

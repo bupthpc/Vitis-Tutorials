@@ -45,8 +45,12 @@ static constexpr unsigned    NUM_SAMPLES_O = DDR_WORD_DEPTH_O * 4; // 32-bit (ci
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES = NUM_SAMPLES_I * 4; // Each sample is 4 bytes (32-bits)
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each sample is 4 bytes (32-bits)
 static constexpr unsigned        TOTAL_O_BYTES = DDR_BUFFSIZE_O_BYTES * LOOP_CNT_O;
-static constexpr long long          DDR_CYCLES = 8053;              // To transfer captured samples back (measured HW_EMU)
-static constexpr double      TARGET_THROUGHPUT = 900;
+// Measure equivalent AIE cycles that bloat the XRT counters:
+// 1) The 1st number of the transfer time back to DDR
+// 2) The 2nd number is the latency from 'aie_dut.sig_o' to 'dma_sink.sig_i'
+// Both values are measured with HW_EMU waveforms
+static constexpr long long          DDR_CYCLES = 8053+1075;
+static constexpr double      TARGET_THROUGHPUT = 1000;
 
 // ------------------------------------------------------------
 // Main
@@ -182,6 +186,7 @@ int main(int argc, char* argv[])
   long long cycle_count = handle.read();
   handle.stop();
   double throughput = (double) TOTAL_O_BYTES / ((cycle_count-DDR_CYCLES) * 0.8 * 1e-3);
+  double throughput_Msps = throughput / 4;
 
   // ------------------------------------------------------------
   // Retrieve Results
@@ -225,16 +230,26 @@ int main(int argc, char* argv[])
   std::cout << "=============================="          << std::endl;
   std::cout << "Cycle count: " << cycle_count            << std::endl;
   std::cout << "Approx Throughput: " << throughput << " MB/sec" << std::endl;
-  std::cout << "Approx Throughput: " << throughput/4 << " Msps" << std::endl;
+  std::cout << "Approx Throughput: " << throughput_Msps << " Msps" << std::endl;
   std::cout << "=============================="          << std::endl;
 
-  bool flag_tp = ( abs(throughput/4 - TARGET_THROUGHPUT) > 0.05*TARGET_THROUGHPUT ) ? 1 : 0;
+  bool flag_tp = ( throughput_Msps > TARGET_THROUGHPUT ) ? 0 : 1;
 
   // Done:
-  if ( flag == 0 && flag_tp == 0 )
-    std::cout << std::endl << "--- PASSED ---" << std::endl;
+  if ( flag == 1 && flag_tp == 0 ) {
+    std::cout << std::endl << "--- FAILED ---" << std::endl;
+    std::cout << "--- Data failure ---" << std::endl;
+  }
+  else if ( flag == 0 && flag_tp == 1 ) {
+    std::cout << std::endl << "--- FAILED ---" << std::endl;
+    std::cout << "--- Throughput failure ---" << std::endl;
+  }
+  else if ( flag == 1 && flag_tp == 1 ) {
+    std::cout << std::endl << "--- FAILED ---" << std::endl;
+    std::cout << "--- Data & Throughput failure ---" << std::endl;
+  }
   else
-    std::cout << std::endl << "*** FAILED ***" << std::endl;
+    std::cout << std::endl << "*** PASSED ***" << std::endl;
 
-  return(flag);
+  return(flag|flag_tp);
 }
