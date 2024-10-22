@@ -29,13 +29,13 @@ testvectors:
 libadf.a:	$(SOURCES)
 	echo "#define NUM_ITERATION (32 * $(NUM_ITERATION))" > test_cfg.h ;\
 	awk -f gen_shim_constrain.awk ./shim_loc.cfg > ./shim_loc.json ;\
-	v++ --compile --mode aie --target=hw --aie.verbose $(INCLUDES) $(TEST_BENCH) $(OTHER_OPTS) $(ROUTER_OPTS) --platform=../$(PLATFORMNAME) |& tee -a $(LOG_FILE)
+	v++ --compile --mode aie --target=hw --aie.verbose $(INCLUDES) $(TEST_BENCH) $(OTHER_OPTS) $(ROUTER_OPTS) --platform=../$(PLATFORMNAME) 2>&1 | tee -a $(LOG_FILE)
 
 x86_compile:
 	@rm -rf Work *.a ;\
 	echo "#define NUM_ITERATION (32 * $(NUM_ITERATION))" > test_cfg.h ;\
 	awk -f gen_shim_constrain.awk ./shim_loc.cfg > ./shim_loc.json ;\
-	v++ --compile --mode aie --target=x86sim --aie.verbose $(INCLUDES) $(TEST_BENCH) $(OTHER_OPTS) $(ROUTER_OPTS) --platform=../$(PLATFORMNAME) |& tee -a $(LOG_FILE)
+	v++ --compile --mode aie --target=x86sim --aie.verbose $(INCLUDES) $(TEST_BENCH) $(OTHER_OPTS) $(ROUTER_OPTS) --platform=../$(PLATFORMNAME) 2>&1 | tee -a $(LOG_FILE)
 
 aie_sim:
 	@rm -rf aiesimulator_output ;\
