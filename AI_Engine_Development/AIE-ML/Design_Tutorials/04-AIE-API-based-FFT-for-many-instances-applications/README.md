@@ -9,11 +9,11 @@
 
 # AIE API based FFT for Many Instances Applications on AIE-ML <!-- omit from toc -->
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Introduction
 This tutorial intends to show how to design a complex Digital Signal Processing application using the AI Engine ML with its exclusive features through Vitis Unified IDE. In the tutorial the GUI flow is used. 
-Moreover, Python scripts are provided to automate project creation and build. To run such Python scripts, first set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms`, then clone this repository, locate inside it, and run the following commands:
+Moreover, Python scripts are provided to automate project creation and build. To run such Python scripts, first set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.2/base_platforms`, then clone this repository, locate inside it, and run the following commands:
 - ``vitis -s Step1_3Dbuf.py`` to automate the first hands-on part of the tutorial.
 - ``vitis -s Step2_4Dbuf.py`` to automate the second hands-on part of the tutorial.
 ### Table of Contents <!-- omit from toc -->
@@ -539,7 +539,7 @@ Now that the design of the AIE-ML FFT implementation is complete, the next step 
 To create the AIE-ML project in Vitis Unified IDE, follow those steps:
 1. Clone this repository.
 2. Open Vitis Unified IDE.
-3. Select "Open Workspace" and choose a folder for the project.
+3. Select "Set Workspace" and choose a folder for the project.
 4. Create a new AI engine component by either clicking on "Create Component" under the "AI Engine Graph Development" menu, or opening the "File" &rarr; "New Component" menu, and clicking on AI Engine, as shown in the following figure.
   <p align="center"><img src="./images/2_1_Vitis.png" width="90%"></p>
   <p align="center">Fig. 4: AI Engine Component Creation in Vitis Unified IDE.</p>
@@ -563,19 +563,21 @@ To create the AIE-ML project in Vitis Unified IDE, follow those steps:
 ### x86 Simulation and Functional Validation
 
 1. Build the x86 simulation for the graph by clicking "Build" under the "X86 SIMULATION" tab on the "FLOW" menu located on the bottom left corner of the GUI.
-2. Run the simulation by clicking "Run" under the same tab of the previous step. This functional simulation takes the input data from the text files present in the ```./src/verif_i_128```, that represent the 16 PLIOs.
+2. Open the ```launch.json``` simulation configuration file under the "settings" folder of the workspace.
+3. Create a new x86 simulation by clicking on "New Launch Configuration", and then "x86sim".
+4. Run the simulation by clicking "Run" under the "X86 SIMULATION" tab in the "FLOW" menu. This functional simulation takes the input data from the text files present in the ```./src/verif_i_128```, that represent the 16 PLIOs.
     - Note: By default the input data is a set of three rectangular waves per each instance. Those files can be replaced the text files present in the three folders in the ``verification/v_inputs`` folder to test also random signals.
-3. Check the execution outputs under the ``Output/x86sim/x86simulator_output/verif_o_128`` in the GUI, as shown in the following figure.
+5. Check the execution outputs under the ``Output/x86sim/x86simulator_output/verif_o_128`` in the GUI, as shown in the following figure.
   <p align="center"><img src="./images/2_5_Vitis.png" width="90%"></p>
   <p align="center">Fig. 8: Visualizing the x86 Simulation Output Files.</p>
   </br>
 
-4. Perform a functional verification using the Python script in the ``support/verification`` folder of this repository.
+6. Perform a functional verification using the Python script in the ``support/verification`` folder of this repository.
    - This script analyzes the text files inside the "v_inputs" and "v_outputs" folder and creates some functional verification charts. 
    For more information refer to [this document](./support/verification/Readme.md).
    - If you did not modify the input files, you can just run the ```Basic_verification``` Python script with the following terminal command, while being located into the ```support/verification``` directory: ```python -i ./Basic_verification```
    -  If you replaced the simulator input files, replace also the text files inside the ```support/verification/v_inputs``` folder with the ones you used, keeping the same names. Then, copy the output files from ```[project-folder]/build/x86sim/x86simulato_output/verif_o_128``` into the ```support/verification/v_outputs``` folder and run the python script with the aforementioned command.
-5. Look at the generated charts and make sure that the comparison graphs are superimposed, and the error is fairly low, as shown in the following figure.
+7. Look at the generated charts and make sure that the comparison graphs are superimposed, and the error is fairly low, as shown in the following figure.
 Note that, since this is a fixed point implementation and Numpy performs the FFT with a float datatype, the error could spike when the transform approaches zero.
 <p align="center"><img src="./images/2_6_1_Vitis.png" width="100%"></p>
   <p align="center"><img src="./images/2_6_2_Vitis.png" width="50%"></p>
@@ -590,13 +592,14 @@ Note that, since this is a fixed point implementation and Numpy performs the FFT
   <p align="center">Fig. 7: Vitis AI Engine array view of the implemented graph.</p>
   </br>
 
-3. Enable tracing for the simulation by opening the ```launch.json``` configuration file, selecting the "aiesim" run and clicking "Enable Trace".
+3. Create a new "AIESim" run in the ```launch.json``` file, by clicking on the "+" ("Add Configuration") icon at the top of the interface. 
+4. Enable tracing for the simulation, selecting the "aiesim" run and clicking "Enable Trace".
 <p align="center"><img src="./images/2_8_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 8: Enabling trace for AI Engine simulation.</p>
+  <p align="center">Fig. 8: Creating a new run and enabling trace for AI Engine simulation.</p>
   </br>
 
-4. Run the AI Engine simulation by clicking "Run" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu.
-5. When the simulation ends, open the Trace reports and collapse all the signals, as shown in the following figure.
+5. Run the AI Engine simulation by clicking "Run" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu.
+6. When the simulation ends, open the Trace reports and collapse all the signals, as shown in the following figure.
 <p align="center"><img src="./images/2_9_Vitis.png" width="100%"></p>
   <p align="center">Fig. 9: Opening and analyzing the AIE simulator trace report.</p>
   </br>
