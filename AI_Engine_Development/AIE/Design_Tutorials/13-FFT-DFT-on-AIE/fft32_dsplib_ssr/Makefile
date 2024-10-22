@@ -31,7 +31,7 @@ ifeq (${AIE_SIM_ONLY},true)
 endif
 
 
-all: 	${AIE_OUTPUT} sim
+all: 	${AIE_OUTPUT} sim throughput_ok
 
 ${AIE_OUTPUT}:	 ${MY_APP}.cpp ${MY_SOURCES}
 	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
@@ -51,11 +51,11 @@ trace:
 profile:
 	aiesimulator --online -wdb -text --profile 2>&1| tee -a log
 
-throughput:
-	@../python/throughput.py aiesimulator_output/data/sig0_o.txt --iscomplex
-	@../python/throughput.py aiesimulator_output/data/sig1_o.txt --iscomplex
-	@../python/throughput.py aiesimulator_output/data/sig2_o.txt --iscomplex
-	@../python/throughput.py aiesimulator_output/data/sig3_o.txt --iscomplex
+throughput_ok:
+	@../python/check_throughput.py PLIO_o_0 683.509662 5.0
+	@../python/check_throughput.py PLIO_o_1 683.509662 5.0
+	@../python/check_throughput.py PLIO_o_2 683.509662 5.0
+	@../python/check_throughput.py PLIO_o_3 683.509662 5.0
 
 loopII:
 	@../python/get_loop_II.py Work/aie

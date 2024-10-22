@@ -26,7 +26,7 @@ ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"
 endif
 
-all: 	${AIE_OUTPUT} sim
+all: 	${AIE_OUTPUT} sim throughput_ok
 
 ${AIE_OUTPUT}:	 ${MUY_SOURCES}
 	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
@@ -46,9 +46,8 @@ trace:
 profile:
 	aiesimulator --online -wdb -text --profile 2>&1| tee -a log
 
-
-throughput:
-	@../python/throughput.py aiesimulator_output/data/sig0_o.txt --iscomplex
+throughput_ok:
+	@../python/check_throughput.py PLIO_o_0 1519.316011 5.0
 
 loopII:
 	@../python/get_loop_II.py Work/aie
