@@ -28,7 +28,7 @@ ifeq (${AIE_SIM_ONLY},true)
 endif
 
 
-.PHONY: help clean x86com x86sim sim profile throughput
+.PHONY: help clean x86com x86sim sim profile throughput_ok
 
 help::
 	@echo "Makefile Usage:"
@@ -44,13 +44,10 @@ help::
 	@echo "  make analyze"
 	@echo "      Run Vitis Analyzer to inspect results"
 	@echo ""
-	@echo "  make throughput"
-	@echo "      Evaluate the achieved throughput at the output"
-	@echo ""
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT} sim
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -75,11 +72,8 @@ profile:
 trace:
 	aiesimulator --online -wdb -text 2>&1| tee -a log
 
-throughput:
-	@../../tools/python/throughput.py aiesimulator_output/data/sig_o.txt
-
-regression:
-	matlab -batch regression
+throughput_ok:
+	@../scripts/check_throughput.py PLIO_o 16.858076 5.0
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
