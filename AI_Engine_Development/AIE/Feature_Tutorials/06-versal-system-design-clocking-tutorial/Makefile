@@ -10,7 +10,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
-EMU_CMD := ./launch_hw_emu.sh
+EMU_CMD := ./launch_hw_emu.sh -no-reboot -run-app embedded_exec.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -53,7 +53,7 @@ GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT}
 guard-%:
 	@#$(or ${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-xilinx-linux))
 
-run: all
+run: run_emu
 all: kernels aie xsa host package
 sd_card: kernels aie xsa host package
 
@@ -107,7 +107,7 @@ package: guard-IMAGE guard-ROOTFS
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the Confluence page for
 # running on a board farm system.
-run_emu: 
+run_emu: all
 ifeq (${TARGET},hw_emu)
 	cd ./sw
 	$(EMU_CMD)
