@@ -40,6 +40,10 @@ vitis_project:
 
 all: vivado_platform vitis_project
 
+clean:
+	$(MAKE) clean -C Vitis
+	$(MAKE) clean -C Vivado
+
 all_designs:
 	$(MAKE) all
 	$(MAKE) all RTL_OUT_BD=1

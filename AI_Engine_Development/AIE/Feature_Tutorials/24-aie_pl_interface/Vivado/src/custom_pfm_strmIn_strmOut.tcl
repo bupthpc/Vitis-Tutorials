@@ -39,17 +39,17 @@ if {$RTL_out_bd == "0"} {
 
 	# Add AXI4-Stream Counter and connect clock and reset
 	create_bd_cell -type ip -vlnv AMD.com:AMD:AXI4S_Counter:1.0 AXI4S_Counter_0
-	connect_bd_net [get_bd_pins AXI4S_Counter_0/m00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-	connect_bd_net [get_bd_pins AXI4S_Counter_0/m00_axis_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+	connect_bd_net [get_bd_pins AXI4S_Counter_0/m00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+	connect_bd_net [get_bd_pins AXI4S_Counter_0/m00_axis_aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
 	# Add Dummy Sink
 	create_bd_cell -type ip -vlnv AMD.com:AMD:dummy_sink:1.0 dummy_sink_0
-	connect_bd_net [get_bd_pins dummy_sink_0/s00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-	connect_bd_net [get_bd_pins dummy_sink_0/s00_axis_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+	connect_bd_net [get_bd_pins dummy_sink_0/s00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+	connect_bd_net [get_bd_pins dummy_sink_0/s00_axis_aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
 	if {$include_ilas == "1"} {
 		# Add ILA to monitor input and output streams
-		create_bd_cell -type ip -vlnv xilinx.com:ip:axis_ila:1.2 axis_ila_0
+		create_bd_cell -type ip -vlnv xilinx.com:ip:axis_ila:1.3 axis_ila_0
 		set_property -dict [list \
 		CONFIG.C_MON_TYPE {Interface_Monitor} \
 		CONFIG.C_NUM_MONITOR_SLOTS {2} \
@@ -59,22 +59,22 @@ if {$RTL_out_bd == "0"} {
 		] [get_bd_cells axis_ila_0]
 
 		connect_bd_intf_net [get_bd_intf_pins axis_ila_0/SLOT_0_AXIS] [get_bd_intf_pins AXI4S_Counter_0/M00_AXIS]
-		connect_bd_net [get_bd_pins axis_ila_0/clk] [get_bd_pins clk_wizard_0/clk_out1]
-		connect_bd_net [get_bd_pins axis_ila_0/resetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+		connect_bd_net [get_bd_pins axis_ila_0/clk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+		connect_bd_net [get_bd_pins axis_ila_0/resetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 		connect_bd_intf_net [get_bd_intf_pins axis_ila_0/SLOT_1_AXIS] [get_bd_intf_pins dummy_sink_0/S00_AXIS]
 	}
 
 	if { ${AXIS_BROADCAST} == "1" } {
 		# Add another Dummy Sink to be connected to AXI4-Stream Broadcaster IP
 		create_bd_cell -type ip -vlnv AMD.com:AMD:dummy_sink:1.0 dummy_sink_1
-		connect_bd_net [get_bd_pins dummy_sink_1/s00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-		connect_bd_net [get_bd_pins dummy_sink_1/s00_axis_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+		connect_bd_net [get_bd_pins dummy_sink_1/s00_axis_aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+		connect_bd_net [get_bd_pins dummy_sink_1/s00_axis_aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
 		# Add an AXI4-Stream Broadcaster IP
 		create_bd_cell -type ip -vlnv xilinx.com:ip:axis_broadcaster:1.1 axis_broadcaster_0
 		set_property CONFIG.NUM_MI {2} [get_bd_cells axis_broadcaster_0]
-		connect_bd_net [get_bd_pins axis_broadcaster_0/aclk] [get_bd_pins clk_wizard_0/clk_out1]
-		connect_bd_net [get_bd_pins axis_broadcaster_0/aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+		connect_bd_net [get_bd_pins axis_broadcaster_0/aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+		connect_bd_net [get_bd_pins axis_broadcaster_0/aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 		connect_bd_intf_net [get_bd_intf_pins axis_broadcaster_0/S_AXIS] [get_bd_intf_pins AXI4S_Counter_0/M00_AXIS]
 		connect_bd_intf_net [get_bd_intf_pins axis_broadcaster_0/M01_AXIS] [get_bd_intf_pins dummy_sink_1/S00_AXIS]
 
@@ -97,10 +97,10 @@ if {$RTL_out_bd == "0"} {
 
 	# Create port for clock and Reset
 	create_bd_port -dir O -type clk axis_aclk
-	connect_bd_net [get_bd_ports axis_aclk] [get_bd_pins clk_wizard_0/clk_out1]
+	connect_bd_net [get_bd_ports axis_aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
 
 	create_bd_port -dir O -type rst axis_aresetn
-	connect_bd_net [get_bd_ports axis_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+	connect_bd_net [get_bd_ports axis_aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
 	# Add 2 AXI4-Stream Register Slices Pass-Through
 	create_bd_cell -type ip -vlnv xilinx.com:ip:axis_register_slice:1.1 axis_register_slice_0
@@ -131,11 +131,11 @@ if {$RTL_out_bd == "0"} {
 		CONFIG.TDATA_NUM_BYTES {8} \
 	] [get_bd_cells axis_register_slice_1]
 
-	connect_bd_net [get_bd_pins axis_register_slice_0/aclk] [get_bd_pins clk_wizard_0/clk_out1]
-	connect_bd_net [get_bd_pins axis_register_slice_0/aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+	connect_bd_net [get_bd_pins axis_register_slice_0/aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+	connect_bd_net [get_bd_pins axis_register_slice_0/aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
-	connect_bd_net [get_bd_pins axis_register_slice_1/aclk] [get_bd_pins clk_wizard_0/clk_out1]
-	connect_bd_net [get_bd_pins axis_register_slice_1/aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+	connect_bd_net [get_bd_pins axis_register_slice_1/aclk] [get_bd_pins clk_wizard_0/clk_out1_o2]
+	connect_bd_net [get_bd_pins axis_register_slice_1/aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
 
 	# Create BD AXI4-Stream interface ports and connect to the pass-through IPs
 	create_bd_intf_port -mode Master -vlnv xilinx.com:interface:axis_rtl:1.0 M00_AXIS

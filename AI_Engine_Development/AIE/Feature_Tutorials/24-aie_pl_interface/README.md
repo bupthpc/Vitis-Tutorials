@@ -9,7 +9,7 @@
 
 # RTL / AI Engine interfacing Examples 
 
-***Version: Vivado / Vitis 2024.1***
+***Version: Vivado / Vitis 2024.2***
 
 ## Introduction
 The AI Engine can be connected to the Programmable Logic (PL) using AXI compliant AXI4-Stream interfaces. In most availabe examples, the connectivity between the PL and the AI Engine is shown using HLS kernels connected to the DDR as the default VCK190 base platform does not include any other blocks than the infrastructure blocks. To accelerate part of an application, connecting the AI Engine to a user's existing RTL requires knowledge of the AXI-Stream protocol and how it can be used to connect with the AI Engines using the AMD Vitis&trade; Acceleration flow.  It might require some modification or bridging from the existing RTL.
@@ -59,8 +59,8 @@ In this example, you have an AI Engine application (simple FIR filter) with one 
 
 In the AI Engine application, you can see the two PLIOs declared as follows:
 ```
-sig_i =  input_plio::create("PLIO_i",plio_64_bits, "data/sig_i.txt" );
-sig_o = output_plio::create("PLIO_o",plio_64_bits, "data/sig_o.txt" );
+sig_i =  input_plio::create("PLIO_i_0",plio_64_bits, "data/sig_i.txt" );
+sig_o = output_plio::create("PLIO_o_0",plio_64_bits, "data/sig_o.txt" );
 ```
 You can see that the input and output PLIOs are called PLIO_i_0 and PLIO_o_0, respectively.
 
