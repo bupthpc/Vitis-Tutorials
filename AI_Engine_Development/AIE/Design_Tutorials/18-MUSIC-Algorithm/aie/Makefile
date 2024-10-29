@@ -57,7 +57,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -68,9 +68,11 @@ x86com:
 	time v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} 2>&1| tee log
 
 sim:
+	@python3 ../python/setup.py aiesim 0
 	time aiesimulator 2>&1| tee -a log
 
 x86sim:
+	@python3 ../python/setup.py x86sim 0
 	time x86simulator 2>&1| tee -a log
 
 profile:
@@ -78,6 +80,10 @@ profile:
 
 trace:
 	time aiesimulator --online -wdb -text 2>&1| tee -a log
+
+throughput_ok:
+	@../python/check_throughput.py PLIO_o 2619.372442 5.0
+
 
 clean:
 	rm -rf .Xil Work libadf.a
@@ -87,5 +93,5 @@ clean:
 	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
 	rm -rf vitis_analyzer* pl_sample_counts* pl_sample_count_*
 	rm -rf temp ISS_RPC_SERVER_PORT .crashReporter .AIE_SIM_CMD_LINE_OPTIONS
-	rm -rf system*.* trdata.aiesim function_wdb_dir
+	rm -rf system*.* trdata.aiesim function_wdb_dir data/sig_i.txt data/sig_i_0.txt data/sig_i_1.txt
 
