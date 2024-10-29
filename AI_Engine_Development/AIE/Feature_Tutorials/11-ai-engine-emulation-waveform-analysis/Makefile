@@ -14,7 +14,7 @@ BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202420_1/xilinx_vck19
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
-EMU_CMD := ./launch_hw_emu.sh -g -aie-sim-options ../aiesimulator_output/aiesim_options.txt
+EMU_CMD := ./launch_hw_emu.sh -no-reboot -aie-sim-options ../aiesimulator_output/aiesim_options.txt -run-app embedded_exec.sh
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -79,7 +79,7 @@ guard-SDKTARGETSYSROOT:
 ###
 
 all: kernels aie xsa host package
-run: all
+run: run_emu
 sd_card: all 
 
 ######################################################
@@ -141,7 +141,7 @@ package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to load it onto an sd_card for the device
-run_emu: 
+run_emu: all
 ifeq (${TARGET},hw_emu)
 	cd ./sw
 	$(EMU_CMD)
