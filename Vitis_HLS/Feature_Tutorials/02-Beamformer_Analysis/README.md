@@ -8,7 +8,7 @@
 
 # HLS Micro-Optimization Tutorial using Beamformer IP
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Tutorial Overview
 
@@ -242,6 +242,6 @@ By the end of this tutorial, you should be adept at applying these HLS directive
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
