@@ -1,11 +1,7 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Vitis™ Getting Started Tutorials </h1>
+   <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a> </td>
  </tr>
 </table>
 
@@ -17,7 +13,7 @@
 
 ### The Source Code for the Vector-Add Kernel
 
-In this tutorial, the hardware accelerator (also referred to as kernel) is modeled in C++. The Vitis flow also supports kernels coded in Verilog or VHDL. An example using a Verilog RTL version of the vector-add kernel can be found [here](https://github.com/Xilinx/Vitis_Accel_Examples/tree/master/rtl_kernels/rtl_vadd).
+In this tutorial, the hardware accelerator (also referred to as kernel) is modeled in C++. The Vitis flow also supports kernels coded in Verilog or VHDL. 
 
 Using C++, the description of the hardware accelerator fits in less than 20 lines of code and can be easily and efficiently implemented in FPGA using the Vitis compiler.
 
@@ -52,7 +48,7 @@ Other than this, the functionality of the vector-add kernel is very easily recog
 
 The pragmas are used to map function parameters to distinct kernel ports. By mapping the two inputs parameters to different input ports, the kernel will be able to read both inputs in parallel. As a general rule, and without going into further details in this introductory tutorial, it is important to think about interface requirements of hardware accelerators and they will have a determining impact on maximum achievable performance.
 
-The Vitis online documentation provides comprehensive information on [C/C++ Kernels](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=rjk1519742919747.html) as well as a complete [HLS Pragmas](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=hls-pragmas-tfo1593136615570.html) reference guide.
+The Vitis online documentation provides comprehensive information on [C/C++ Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Developing-C/C-Kernels) as well as a complete [HLS Pragmas](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/HLS-Pragmas) reference guide.
 
 ### The Source Code for the Host Program
 
@@ -112,6 +108,6 @@ This example shows the simplest way of using XRT API to interact with the hardwa
 
   **Click here to [Build and Run with the new Vitis unified IDE](./Part4-unified-ide.md)**
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -1,11 +1,7 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Vitis™ Getting Started Tutorials </h1>
+   <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a> </td>
  </tr>
 </table>
 
@@ -13,7 +9,7 @@
 
 ## Part 4: Build and Run the Embedded Processor Application
 
- In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=pkl1657651602103.html), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
+ In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
 ![image](https://github.com/user-attachments/assets/ab05271a-0ead-4a75-b5ec-9b19b140ca94)
 
@@ -22,9 +18,9 @@
 
 * Software Emulation: The kernel code is compiled to run on an emulation environment (QEMU) version of the embedded processor. The software emulation target allows quick iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system. Refer to [Software Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=using-software-emulation-xvc1504034328357.html) for more information.
 
-* Hardware Emulation: The kernel code is compiled into a hardware model (RTL), which is run in the Vivado logic simulator. The host application runs on an emulation environment (QEMU) version of the embedded processor. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates. Refer to [Hardware Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=using-hardware-emulation-ldh1504034328524.html) for more information.
+* Hardware Emulation: The kernel code is compiled into a hardware model (RTL), which is run in the Vivado logic simulator. The host application runs on an emulation environment (QEMU) version of the embedded processor. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates. Refer to [Hardware Emulation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Hardware-Emulation) for more information.
 
-* Hardware: The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. In the Embedded Processor platform, the host application, xclbin, and required support files are written to an SD card (for instance) and then used to boot and configure the system. Refer to [System Hardware Target](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=building-for-target-fpga-platform-prg1504034328691.html) for more information.
+* Hardware: The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. In the Embedded Processor platform, the host application, xclbin, and required support files are written to an SD card (for instance) and then used to boot and configure the system. Refer to [System Hardware Target](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/System-Hardware-Target) for more information.
 
 ## Building and Running on ZCU102 Zynq MPSoC Embedded Processor Platform
 
@@ -53,7 +49,9 @@
 
 
 ### Targeting Software Emulation
-
+>**Deprecation Note**  
+> * We are announcing the deprecation of the software emulation (sw_emu) feature in the Vitis Software Platform, which will affect all use cases, including embedded acceleration and data center applications.
+> * Check the [AR000036790 - Deprecation of Software Emulation in Vitis Software Platform](https://adaptivesupport.amd.com/s/article/000036790?language=en_US) for detailed timelines and alternative solutions.
 To build for software emulation, enter the following commands to setup the target build directory:
 
 ```bash
@@ -77,13 +75,13 @@ Here is a brief explanation of each of these four commands:
 
 1. `$CXX` compiles the host application using the Arm cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the software development kit (SDK) environment setup script. Refer to [Building the Software Application](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application) for more information. This should resolve to `$XILINX_VITIS/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++`.
 2. `v++ -c -k vadd` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file) for software emulation. Note that this is a different command than is required for compiling the C++ code for hardware emulation or hardware. Refer to [Compiling PL Kernels for Software Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=kqb1693589259529.html) for more information.
-3. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the System](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=mjs1528399150499.html) for more information.
-4. `v++ -p` packages the host executable, the rootfs, the FPGA binary and a few other files and generates a bootable image. Refer to [Packaging for Embedded Platforms](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=hqh1586367334583.html) for more information.
+3. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the System](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System) for more information.
+4. `v++ -p` packages the host executable, the rootfs, the FPGA binary and a few other files and generates a bootable image. Refer to [Packaging for Embedded Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-for-Embedded-Platforms) for more information.
 
 There are two important differences to take note of here between building for Data Center accelerator cards and building for Embedded Platforms.
 
 * The first is the use of the `v++ --package` command. This is a required step in the Embedded Processor platform flow and is largely optional in the Data Center flow, except in the case of Versal devices. The Data Center application runs in the X86 environment, and loads the xclbin from disk. However, in the Embedded Platform flow, generally, the processor must be booted from an SD card, and the `--package` option gathers the files and generates the SD card.
-* The second is the `emconfigutil` command. This command is used in the Data Center flow to build an emulation version of the hardware platform. However, in the Embedded Platform flow, the embedded processor requires the use of an emulation environment (QEMU) as described in [Simulating the Application with the Emulation Flow](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=btg1600442263101.html). In this flow, you will use a `launch_emulation` script rather than the emulation platform.
+* The second is the `emconfigutil` command. This command is used in the Data Center flow to build an emulation version of the hardware platform. However, in the Embedded Platform flow, the embedded processor requires the use of an emulation environment (QEMU) as described in [Simulating the Application with the Emulation Flow](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Simulating-the-Application-with-the-Emulation-Flow). In this flow, you will use a `launch_emulation` script rather than the emulation platform.
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu` so you are building for software emulation.
 
@@ -104,9 +102,9 @@ Building for software emulation is quick and should not take more than a few min
 ./package/launch_sw_emu.sh -forward-port 1440 22
 ```
 
-This command will launch software emulation, start the Quick Emulation (QEMU) environment and initiate the boot sequence. Refer to [launch_emulator Utility](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=qao1584149423414.html) for more information. 
+This command will launch software emulation, start the Quick Emulation (QEMU) environment and initiate the boot sequence. Refer to [launch_emulator Utility](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/launch_emulator-Utility) for more information. 
 
->**IMPORTANT**: You must use the `-forward-port` option as shown above in order to later retrieve files from the QEMU environment as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=lei1600364954309.html).
+>**IMPORTANT**: You must use the `-forward-port` option as shown above in order to later retrieve files from the QEMU environment as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform).
 
 When Linux has finished booting, enter the following commands from within the QEMU environment to run the example program:
 
@@ -133,7 +131,7 @@ If you look at the directory contents for the `zcu104/sw_emu` directory, you sho
 * **xrt.ini**: The runtime initilization file.
 * **xrt.run_summary**: A summary report of the events of the application runtime.
 
-These files and reports are the results of the build and run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=lei1600364954309.html).
+These files and reports are the results of the build and run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform).
 
 This command must be run from a Linux shell, outside of the QEMU environment. For example:
 
@@ -183,7 +181,7 @@ export XCL_EMULATION_MODE=hw_emu
 
 You should see messages that say `TEST PASSED` indicating that the run completed successfully.
 
-Running the application in the QEMU generates some report files during the run. These files and reports are the results of the run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=lei1600364954309.html).
+Running the application in the QEMU generates some report files during the run. These files and reports are the results of the run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform).
 
 This command must be run from a Linux shell, outside of the QEMU environment. For example:
 
@@ -230,12 +228,12 @@ cd /run/media/mmcblk0p1
 
 You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the `zcu102/hw` folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.2) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples) to use for examples of host application and kernel coding.
 
 ## Next Step
 
   **Click here to [Visualizing Results and Viewing Reports](./Part5.md)**
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

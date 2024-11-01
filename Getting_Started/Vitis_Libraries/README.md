@@ -1,26 +1,25 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
-   </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Vitis™ Getting Started Tutorials </h1>
+   <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a> </td>
  </tr>
 </table>
 
-**Note:** This tutorial has been updated for use with the Vitis unified IDE in the 2024.1 release. To use this tutorial with the classic Vitis and Vitis HLS tools refer to the 2023.1 version of the tutorial. 
-
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
+>**Note:** This tutorial has been updated for use with the Vitis Unified IDE, reflecting the enhancements introduced in the 2023.2 and 2024.1 releases. For guidance on using this tutorial with the classic Vitis and Vitis HLS tools, please refer to the earlier version by accessing the `2023.1` branch or earlier.
 
 ## Before You Begin
 
 ### Setup Environment
-Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=zks1565446519267.html).
+Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Vitis-Environment).
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2024.1/settings64.sh
+$ source <Vitis Tool Installation Path>/Vitis/2024.2/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
@@ -108,9 +107,9 @@ dsp/
 
 ## Create and run an HLS Component
 
-In this step, you are going to create an HLS component by using the files provided in the [1Dfix_impluse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impluse) L1 examples of the Vitis `dsp` library. The source files and script file are all located under this folder. Here, it is assumed that you have cloned the Vitis Libraries into *<installdir>/Vitis_Libraries* directory.
+In this step, you are going to create an HLS component by using the files provided in the [1Dfix_impulse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impulse) L1 examples of the Vitis `dsp` library. The source files and script file are all located under this folder. Here, it is assumed that you have cloned the Vitis Libraries into *<installdir>/Vitis_Libraries* directory.
 
-1. Go into the `<installdir>/Vitis_libraries/dsp/L1/examples/1Dfix_impluse` folder, create a directory to use as a workspace, and launch the Vitis unified IDE to create an HLS component as described in [Building and Running an HLS Component](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=aeg1676136124434.html).
+1. Go into the `<installdir>/Vitis_libraries/dsp/L1/examples/1Dfix_impulse` folder, create a directory to use as a workspace, and launch the Vitis unified IDE to create an HLS component as described in [Building and Running an HLS Component](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Building-and-Running-an-HLS-Component).
 
 ```
  mkdir myProject
@@ -135,7 +134,7 @@ The Vitis unified IDE opens as shown below.
  
  This opens the **Add Source Files** page
  * Under **Design Files** select the **Add Files** command icon, 
- * Browse to the `examples/1Dfix_impluse/src` folder, select the `top_module.cpp` file, and click **Open** to add the file and close the dialog. 
+ * Browse to the `examples/1Dfix_impulse/src` folder, select the `top_module.cpp` file, and click **Open** to add the file and close the dialog. 
  * In the **CFLAGS** entry field next to the `top_module.cpp` file, paste the following text to provide an include path:
     `-I<installdir>/Vitis_Libraries/dsp/L1/include/hw/vitis_fft/fixed`
  
@@ -143,7 +142,7 @@ The Vitis unified IDE opens as shown below.
  * Select the `fft_top(int * int *)` top module, and select **OK** to close the dialog box
  
  * Under **Test Bench Files** select the **Add Files** command icon
- * Browse to `examples/1Dfix_impluse/src` folder, select the `main.cpp` file, and click **Open** to add the file and close the dialog.
+ * Browse to `examples/1Dfix_impulse/src` folder, select the `main.cpp` file, and click **Open** to add the file and close the dialog.
  * In the **CFLAGS** entry field next to the `main.cpp` file, paste the following text to provide an include path:
     `-I<installdir>/Vitis_Libraries/dsp/L1/include/hw/vitis_fft/fixed`
  * Click **Next** to move forward. 
@@ -164,7 +163,7 @@ The Vitis unified IDE opens as shown below.
  
   ![Flow Navigator](images/hls-component-flow.png)
  
- You can browse into the Settings, view the  and open the `top_module.cpp` file by selecting the source file in the Vitis Components Explorer view. The `top_module.cpp` calls the FFT library and the parameters are defined in the `data_path.hpp` file. For detailed instructions on using the FFT library, refer to the  [Vitis Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L1.html_5).
+ You can browse into the Settings, view the  and open the `top_module.cpp` file by selecting the source file in the Vitis Components Explorer view. The `top_module.cpp` calls the FFT library and the parameters are defined in the `data_path.hpp` file. For detailed instructions on using the FFT library, refer to the  [Vitis Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html).
 
  * In Flow Navigator select **Run** under the **C Simulation** heading 
  * Select **Run** under the **C Synthesis** heading
@@ -274,7 +273,7 @@ Double click on the IP and click `OK` to add it into the project. Now you should
 
 2. Open the **fft_wrap.v** file to take a look at its port signals. 
 
-Along with the clock, reset, and control signals (start, done, idle, ready), there are four input steam ports (*inData_x* and *inData_x_ce*) and four output stream ports (*outData_x* and *outData_x*we*). The input and output data bus are simply validated by *_ce* or *_we* signals. In the testbench file **fft_tb.v**, read the input data from **datain.txt** file, divide them into four data streams, and then send them to the fft module. Four output data streams are received and compared with the reference data file **dataref.txt**. The test datasets are identical with the simulation example in */home/project/Vitis_Libraries/dsp/L1/examples/1Dfix_impluse* directory.
+Along with the clock, reset, and control signals (start, done, idle, ready), there are four input steam ports (*inData_x* and *inData_x_ce*) and four output stream ports (*outData_x* and *outData_x*we*). The input and output data bus are simply validated by *_ce* or *_we* signals. In the testbench file **fft_tb.v**, read the input data from **datain.txt** file, divide them into four data streams, and then send them to the fft module. Four output data streams are received and compared with the reference data file **dataref.txt**. The test datasets are identical with the simulation example in */home/project/Vitis_Libraries/dsp/L1/examples/1Dfix_impulse* directory.
 
 ~~~
 module fft_wrap (
@@ -336,6 +335,6 @@ In this tutorial, you learned how to leverage a L1 Vitis library element to buil
 Documentation on Vitis Libraries: https://docs.amd.com/r/en-US/Vitis_Libraries
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

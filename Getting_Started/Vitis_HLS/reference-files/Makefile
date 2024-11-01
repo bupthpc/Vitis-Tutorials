@@ -2,69 +2,36 @@
 .PHONY: help
 help:
 	@echo "Makefile Usage:"
-	@echo "  make all TARGET=<sw_emu/hw_emu/hw> PLATFORM=<FPGA platform>"
-	@echo "      Command to generate the design for specified Target and Device."
+	@echo "  make all"
+	@echo "      Command to run all target csim & csynth in turn."
 	@echo ""
-	@echo "  make run TARGET=<sw_emu/hw_emu/hw> PLATFORM=<FPGA platform>"
-	@echo "      Command to run for specified Target."
+	@echo "  make csim"
+	@echo "  make csynth"
+	@echo "      Command to run only one step of Vitis HLS. Note csim forces clean first."
 	@echo ""
-	@echo "  make host "
-	@echo "      Command to generate host."
-	@echo ""
-	@echo "  make xclbin "
-	@echo "      Command to generate hardware platform files(xo,xclbin)."
-	@echo ""
-	@echo "  make clean "
+	@echo "  make clean"
 	@echo "      Command to remove the generated files."
 	@echo ""
+	@echo "  make help"
+	@echo "      Print this help."
+	@echo ""
 #######################################################################################
-TARGET := sw_emu
-PLATFORM ?= xilinx_u250_gen3x16_xdma_4_1_202210_1
-HOST_EXE := dct_top
-XO := dct.xo
-XCLBIN := dct.xclbin
 
-# Host building global settings
-CXXFLAGS := -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -pthread -lrt -lstdc++
-CXXFLAGS2 := -lOpenCL
+SHELL 			:= bash
 
-# Kernel compiler & linker global settings
-KRNL_COMPILE_OPTS := -t $(TARGET) --config design.cfg
-KRNL_LINK_OPTS := -t $(TARGET) --config design.cfg
+CONFIG 			:= ./workspace/dct_golden/hls_config.cfg
+WORK_DIR 		:= dct
+COMMON_OPTIONS 	:= --mode hls --config ${CONFIG} --work_dir ${WORK_DIR}
 
-all:  $(XO) $(XCLBIN) $(HOST_EXE) emconfig
+all: csim csynth ;#cosim
 
-host: $(HOST_EXE)
+csynth:
+	v++ --compile ${COMMON_OPTIONS}
 
-xclbin: $(XO) $(XCLBIN)
+csim: clean # clean before csim !
+csim cosim: 
+	vitis-run --$@ ${COMMON_OPTIONS}
 
-# Building kernel
-$(XO): ./src/dct.cpp
-ifeq ($(TARGET),sw_emu)
-	v++ $(KRNL_COMPILE_OPTS) -c --platform $(PLATFORM) -k dct -I'$(<D)' -o'$@' '$<' 
-else
-	v++ -c --mode hls --platform $(PLATFORM) --config design_hls.cfg --work_dir .
-endif
-$(XCLBIN): $(XO)
-	v++ $(KRNL_LINK_OPTS) -l --platform $(PLATFORM) -o'$@' $(+)
-
-# Building Host
-$(HOST_EXE): ./src/dct_top.cpp
-	g++ $(CXXFLAGS) -o '$@' '$<' $(CXXFLAGS2)
-
-.PHONY: emconfig
-emconfig:
-	emconfigutil --platform $(PLATFORM)
-
-.PHONY: run
-run: all
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-	XCL_EMULATION_MODE=$(TARGET) ./$(HOST_EXE) $(XCLBIN)
-else
-	./$(HOST_EXE) $(XCLBIN)
-endif
-
-# Cleaning stuff
 .PHONY: clean
 clean:
-	rm -f $(HOST_EXE) *dct.* *.log *.json *.xo
+	rm -rf ${WORK_DIR} vitis_c++/ .Xil/ xcd.log

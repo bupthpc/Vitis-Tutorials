@@ -1,11 +1,7 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Vitis™ Getting Started Tutorials </h1>
+   <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a> </td>
  </tr>
 </table>
 
@@ -17,7 +13,7 @@ To develop and deploy applications with Vitis, you need to install the Vitis uni
 
 ### Step 1: Review the Installation Requirements
 
-Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=igz1531201833632.html).
+Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements).
 
 >**NOTE:** Windows OS support is limited to the Vitis embedded software development flow. The Vitis application acceleration flow is only supported on Linux.
 
@@ -29,9 +25,9 @@ Download the latest version of the Vitis from the [AMD download website](https:/
 
 After downloading the Vitis, XRT and platform packages, install them in the following order and according to the provided instructions:
 
-1. [Install the Vitis Software Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=juk1557377661419.html)
+1. [Install the Vitis Software Platform](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-the-Vitis-Software-Platform)
 
-2. [Install the Xilinx Runtime and Platforms](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=pjr1542153622642.html)
+2. [Install the Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 
 >**NOTE:** Installing XRT is not required when targeting Arm®-based embedded platforms. The Vitis compiler has its own copy of xclbinutil for hardware generation; and for software compilation, you can use the XRT from the sysroot on the Embedded Processor platform.
 
@@ -104,6 +100,6 @@ For more information see [AR 73698](https://www.xilinx.com/support/answers/73698
 
   **Click here to [Review the Host and Kernel Code](./Part3.md)**
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

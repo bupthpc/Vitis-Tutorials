@@ -1,3 +1,8 @@
+##################################################################################################
+# Set the env variable $DSPLIB_ROOT and point to the cloned dsp libraris of Vitis_Libraries. e.g.
+# export DSPLIB_ROOT= <your_cloned_dir>/Vitis_libraries/dsp/
+##################################################################################################
+
 prepare:
 	mkdir -p ref_files
 	cp $(DSPLIB_ROOT)/L1/examples/1Dfix_impulse/src/* ref_files/.
@@ -16,9 +21,6 @@ check:
 
 all: run
 
-
-# -----------------------------------------------------------------------------
-#
 clean:
 	rm -rf tmp
-#
+

@@ -1,11 +1,7 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Vitis™ Getting Started Tutorials </h1>
+   <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a> </td>
  </tr>
 </table>
 
@@ -13,15 +9,15 @@
 
 ## Part 4: Build and Run the Data Center Application
 
- In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Data Center Acceleration for Software Programmers](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=fvi1642629875790.html), and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
+ In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Data Center Acceleration for Software Programmers](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers), and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
 ![img](./images/data_center_flow.png)
 
 * Software Emulation: The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system. Refer to [Software Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=using-software-emulation-xvc1504034328357.html) for more information.
 
-* Hardware Emulation: The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates. Refer to [Hardware Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=using-hardware-emulation-ldh1504034328524.html) for more information.
+* Hardware Emulation: The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates. Refer to [Hardware Emulation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Hardware-Emulation) for more information.
 
-* Hardware: The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. Refer to [System Hardware Target](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=building-for-target-fpga-platform-prg1504034328691.html) for more information.
+* Hardware: The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. Refer to [System Hardware Target](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/System-Hardware-Target) for more information.
 
 ## Building and Running on Alveo U250 Data-Center Accelerator Card
 
@@ -45,6 +41,9 @@
   ```
 
 ### Targeting Software Emulation
+>**Deprecation Note**  
+> * We are announcing the deprecation of the software emulation (sw_emu) feature in the Vitis Software Platform, which will affect all use cases, including embedded acceleration and data center applications.
+> * Check the [AR000036790 - Deprecation of Software Emulation in Vitis Software Platform](https://adaptivesupport.amd.com/s/article/000036790?language=en_US) for detailed timelines and alternative solutions.
 
 To build for software emulation, enter the following commands to setup the target build directory:
 
@@ -65,10 +64,10 @@ v++ -l -t sw_emu --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../sr
 
 Here is a brief explanation of each of these four commands:
 
-1. `g++` compiles the host application using the standard GNU C compiler. Refer to [Building the Software Application](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=asy1528754332783.html) for more information.
-2. `emconfigutil` generates an emulation configuration file which defines the device type and quantity of devices to emulate for the specified platform. Refer to [emconfigutil](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=nrj1570599837825.html) for more information.
+1. `g++` compiles the host application using the standard GNU C compiler. Refer to [Building the Software Application](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application) for more information.
+2. `emconfigutil` generates an emulation configuration file which defines the device type and quantity of devices to emulate for the specified platform. Refer to [emconfigutil Utility](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/emconfigutil-Utility) for more information.
 3. `v++ -c -k vadd` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file) for use in software emulation (sw_emu). Refer to [Compiling C/C++ PL Kernels for Software Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=kqb1693589259529.html) for more information.
-4. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the System](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=mjs1528399150499.html) for more information.
+4. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the System](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System) for more information.
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu`, so you are building for software emulation.
 
@@ -176,12 +175,12 @@ After the build completes you can run the application on a system with the AMD A
 
 You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the `u250/hw` folder, you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U250 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U250 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples) to use for examples of host application and kernel coding.
 
 ## Next Step
 
   **Click here to [Visualizing Results and Viewing Reports](./Part5.md)**
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
