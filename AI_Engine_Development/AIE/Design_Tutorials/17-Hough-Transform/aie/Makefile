@@ -39,13 +39,11 @@ help::
 	@echo "  make analyze"
 	@echo "      Run Vitis Analyzer to inspect results"
 	@echo ""
-	@echo "  make throughput"
-	@echo "      Evaluate the achieved throughput at the output"
-	@echo ""
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all: 	x86com x86sim ${AIE_OUTPUT}
+all: 		${AIE_OUTPUT} sim throughput_ok
+all_x86:	x86com x86sim
 
 ${AIE_OUTPUT}:	 ${MY_APP}.cpp $(SOURCES)
 	v++ --compile --mode aie --config aie.cfg --target=hw $(AIE_FLAGS) 2>&1| tee log
@@ -64,6 +62,11 @@ trace:
 
 profile:
 	aiesimulator --profile 2>&1| tee -a log
+
+throughput_ok:
+	@for ii in {0..31}; do \
+		../scripts/check_throughput.py PLIO_o_$$ii 5007.633588 5.0; \
+	done
 
 loop_II:
 	@../scripts/get_loop_II.py Work/aie

@@ -27,8 +27,7 @@ namespace hough {
   // ------------------------------------------------------------
 
   template<int RR, int CC, int RHO_MAX>
-  void hough_tile<RR,CC,RHO_MAX>::run( input_stream<TT_PIXEL>* __restrict pixel_i,
-                                       output_stream<TT_COUNT>* __restrict sig_o )
+  void hough_tile<RR,CC,RHO_MAX>::run( input_stream<TT_PIXEL>* pixel_i, output_stream<TT_COUNT>* sig_o )
   {
     // Each kernel invocation performs one complete Hough Transform:
     clear_counts<RHO_DEPTH>( COUNTS );

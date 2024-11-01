@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # System Partitioning of a Hough Transform on AI Engine
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Table of Contents
 
