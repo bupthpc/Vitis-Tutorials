@@ -147,7 +147,7 @@ Before you run the system in hardware, you need to rebuild the system to target 
    1.  Build the **simple_aie_application_system_project** project for Hardware  (Click ***Build All*** under **HARDWARE** in the Flow navigator).
 
 
-## Step 6: Run the System in Hardware
+## Step 6A: Run the System in Hardware via SD Boot
 
 Use the SD card to run the application.
 
@@ -166,6 +166,45 @@ Use the SD card to run the application.
    5. Insert your SD card into your board, and power on your board. You should see the application running successfully with no error.
 
          ![missing image](images/232_hw_output.jpg)
+
+## Step 6B: Run or Debug the System in Hardware using JTAG
+To run the system in HW using JTAG through the Vitis IDE, as this is a baremetal system, we need to create a second system project with only the ai engine application and the ps application
+
+   1. Create a new System Project component by clicking ***File > New Component > System Project***
+
+   2. Call this system component **a-to-z_jtag** and click ***Next***
+
+   3. In the **Select Platform**, select the `AIE_A-to-Z_pfm_vck190`
+
+   4. Skip the **Embedded Component Paths** page (click ***Next***). This page is used for system running Linux. Our system will be Baremetal and Click ***Finish***.
+
+   5. Open the settings file called **vitis-sys.json** under **a-to-z_jtag > Settings** and click on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***Application*** and select the ***A-to-Z_app*** components.
+
+   6. Click again on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***AI Engine*** and select the **simple_aie_application*** components.
+
+   7. Still in **a-to-z_jtag**, under **Package Settings**, add the path to the v++ link generated XSA Vitis Worspace/simple_aie_application_system_project/build/hw/hw_link/binary_container_1.xsa
+
+         ![missing image](images/242_jtap_package_update.jpg)
+
+   8. In the package settings, **package.cfg**, disable **Enable debug**
+   
+      ![missing image](images/242_debug.jpg)
+   
+   9. In the flow navigator, make sure **a-to-z_jtag** is selected and click on ***Build All***
+
+         ![missing image](images/242_jtag_build_all.jpg)
+
+   10. In the flow navigator, click on the weel next to the run
+
+         ![missing image](images/242_run_settings.jpg)
+
+   11. In the **launch.json** page, click New Launch configuration
+
+   12. If you have a remote connection, set the correct **Target Connection**
+
+   13. Start a UART terminal connected to the COM ports of the VCK190 
+
+   14. Run the application through the launch.json page. You should see the application running successfully with no error.
 
 ## Summary
 
