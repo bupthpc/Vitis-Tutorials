@@ -32,7 +32,7 @@ Before starting this tutorial run the following steps:
 **Note** : This tutorial demonstrates how software emulation can run the PS application on an x86 process instead of an Arm process(QEMU). So, you may need to unset the `CXX` variable during the step `Running software emulation`. More information is provided in the software emulation flow section.
 
 3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2024.1``` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm```.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm```.
 
 This tutorial targets VCK190 production board for 2024.1 version.
 
