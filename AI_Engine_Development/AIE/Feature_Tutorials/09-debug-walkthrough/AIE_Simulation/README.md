@@ -123,21 +123,16 @@ Determine the average throughput of input and output PLIO.
 1. From the left pane in the Vitis IDE, select the AI Engine Component, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings.
 2. Select the **XLOpt** settings and under the **Kernel optimization** setting, select the **0 - None** from the drop-down. This gives greater visibility during the AI Engine debug.
     ![build setting](./Images/Build_setting.PNG)
-![build target](./Images/Build_target.PNG)
-3. Right-click the *[aiengine]* domain project, select **C/C++ Build Settings**, choose **Miscellaneous** -> **Optimization** -> from the drop down choose **No Optimizations(xlopt=0)**. This option helps IDE debugging capability by disabling any kernel optimizations.
-4. Now, in the **Flow** navigator window, select the **Build** option under **AIE SIMULATOR/HARDWARE**. This builds the AI Engine component for AIE Simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console and a green tick mark as highlighted below.
+3. Now, in the **Flow** navigator window, select the **Build** option under **AIE SIMULATOR/HARDWARE**. This builds the AI Engine component for AIE Simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console and a green tick mark as highlighted below.
     ![build output](./Images/build_output.PNG)
-5. In the **Flow** navigator window, under **AIE SIMULATION/HARDWARE**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking **Create Configuration** -> **New Launch Configuration** -> **AIESim**.
+4. In the **Flow** navigator window, under **AIE SIMULATION/HARDWARE**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking **Create Configuration** -> **New Launch Configuration** -> **AIESim**.
     ![Create_Configuration](./Images/create_configuration.PNG)
-6. You can change the Launch Config Name, and click the **Run** button to start the simulation for the AIE simulation target. When the simulation completes, the following output in the console is displayed.
+5. You can change the Launch Config Name, and click the **Run** button to start the simulation for the AIE simulation target. When the simulation completes, the following output in the console is displayed.
 ![aiesimulator_output](./Images/aiesimulator_output.PNG)
-7. Right-click the *[aiengine]* domain project, and select the **Run As → Launch AIE Emulator** option to start the simulation for the aiesimulation target. When the simulation completes, the following output in the console is displayed:
+6. Right-click the *[aiengine]* domain project, and select the **Run As → Launch AIE Emulator** option to start the simulation for the aiesimulation target. When the simulation completes, the following output in the console is displayed:
 ![aie simulator output](./Images/aiesimulator_output.PNG)
-8. The aiesimulator output files from design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`, and the golden output data is located at `09-debug-walkthrough/reference_output/`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
-   * Add the golden data to the `${PROJECT}/data/` by right clicking the `data/` directory in the *[aiengine]* domain project, and select **Import sources**.
-   * Highlight the two files to be compared.
-   * Right-click one of highlighted files, and select **compare with** > **each other with transformation**. Click the **Predefined filters** icon (as shown below). Enable the **Remove timestamp** checkmark, and click **OK** twice. Selecting **each other with transformation** is required because the AI Engine simulation inserts a timestamp for each output data. For example, compare `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/Emulation-AIE/data/output_upscale.txt`.
-![predefined filter](./Images/predefined_filter.PNG).
+7. The aiesimulator output files from design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`, and the golden output data is located at `09-debug-walkthrough/reference_output/`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct, Compare two files.
+   
 
 # Section 2
 

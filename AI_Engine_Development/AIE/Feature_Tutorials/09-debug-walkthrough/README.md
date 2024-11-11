@@ -9,7 +9,7 @@
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Introduction
 
@@ -28,16 +28,16 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into the register contents view, variable values view, breakpoints view, and hence, necessitates a GUI. The Vitis integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2024.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html>.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2024.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html>.
 
 The `common image` package contains a prebuilt Linux kernel and root file system that can be used with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.1` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms`.
+2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2024.2/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.2` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/lin64/Vitis/2024.2/base_platforms`.
 
-This tutorial targets a 2024.1 VCK190 production board.
+This tutorial targets a 2024.2 VCK190 production board.
 
 ## Example Design: Peak Detector
 
@@ -281,31 +281,6 @@ Explains how to debug a single kernel design usign a pipeline view in the Vitis 
 Shows how to calculate kernel latency and throughput using profile information.
 </td>
 </tr>
-
-<tr>
-  <td align="center" colspan="2" style="bold" ><b><a href="./SW_Emulation/README.md#Software-Emulation-Debug-Walkthrough">Software Emulation - Vitis IDE Flow</a></b>
-</tr>
-
-<table style="width:100%">
-
-<tr>
-<td>
-<a href="./SW_Emulation/README.md#Build-for-Software-Emulation-using-the-Vitis-IDE">Build for Software Emulation Using the Vitis IDE</a>
-</td>
-<td>
-Explains how to create a system project, build for sofware emulation, and run.
-</td>
-</tr>
-
-<tr>
-<td>
-<a href="./SW_Emulation/README.md#Debug-using-the-Vitis-IDE-Debugger-for-Software-Emulation">Using the Vitis IDE for Software Emulation Debug</a>
-</td>
-<td>
-Explains how to debug for software emulation using the Vitis IDE.
-</td>
-</tr>
-
 
 <tr>
   <td align="center" colspan="2" style="bold" ><b><a href="./HW_Emulation/README.md#Hardware-Emulation-Debug-Walkthrough">Hardware Emulation - Vitis IDE Flow</a></b>

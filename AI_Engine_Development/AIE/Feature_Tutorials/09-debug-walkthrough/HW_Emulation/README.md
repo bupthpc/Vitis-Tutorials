@@ -96,9 +96,9 @@ Besides referring to the link provided above to create a system project, make su
 
 3. Select the **Run for Time(10us)** in the XSIM GUI taskbar, observe the Linux bootup in the Vitis IDE `TASK: EMULATION FOR SYSTEM_PROJECT`. 
 
-![emulation console](./Images/emulation_console.PNG)
+![emulation console](./Images/emulation_console.png)
 
-5. You can stop emulation by clicking In the Flow Navigator -> [system_project] component -> select **Stop Emulator**.
+4. You can stop emulation by clicking In the Flow Navigator -> [system_project] component -> select **Stop Emulator**.
 ![Stop Emulation](./Images/stop_emulation.PNG)
 
 # Section 2
@@ -146,15 +146,15 @@ This section walks you through debugging PL kernels in the Vivado logic simulato
     TEST PASSED
     ```
 
-8. Now observe the waveform in the Vivado XSIM GUI. The system contains one `mm2s` compute unit and two `s2mm` compute units. You can notice them in the waveform viewer as follows:
+7. Now observe the waveform in the Vivado XSIM GUI. The system contains one `mm2s` compute unit and two `s2mm` compute units. You can notice them in the waveform viewer as follows:
 
-    ![compute units](./Images/compute_units.PNG)
-9. You can form a group of signals by right-clicking anywhere in the **Name** column, and select **New Group**. Add all the MM2S and S2MM-related signals to this group by dragging them correspondingly.
+    ![compute units](./Images/compute_units.png)
+8. You can form a group of signals by right-clicking anywhere in the **Name** column, and select **New Group**. Add all the MM2S and S2MM-related signals to this group by dragging them correspondingly.
 ![xsim waveform](./Images/xsim_waveform.PNG)
-10. Zoom into the waveform window to locate the transactions clearly.
-11. The `m_axi_gmem` is the transaction level signal which indicates the `Read` transaction in `mm2s` and `write` transaction in `s2mm`.
-12. The `TDATA` in `mm2s` shows the data that is being read into the AI Engine module. To correlate with the number of iterations (seven), you specified in the graph, observe the `TREADY` signal which goes high when the AI Engine module is ready to read, and the `TVALID` signal goes high for all the Read transactions.
-13. Similarly you can notice in `s2mm_1` the `TVALID` is high indicating the valid data and the `TLAST` goes high at the end of every iteration, goes low during start of next iteration.
+9. Zoom into the waveform window to locate the transactions clearly.
+10. The `m_axi_gmem` is the transaction level signal which indicates the `Read` transaction in `mm2s` and `write` transaction in `s2mm`.
+11. The `TDATA` in `mm2s` shows the data that is being read into the AI Engine module. To correlate with the number of iterations (seven), you specified in the graph, observe the `TREADY` signal which goes high when the AI Engine module is ready to read, and the `TVALID` signal goes high for all the Read transactions.
+12. Similarly you can notice in `s2mm_1` the `TVALID` is high indicating the valid data and the `TLAST` goes high at the end of every iteration, goes low during start of next iteration.
 
     This way you should be able to identify whether a data is being sent/received, to/from the AI Engine module correctly or not.
 
@@ -230,7 +230,7 @@ Before starting this tutorial:
             --package.sd_file host.exe ../tutorial.xsa ../libadf.a
     ```
 
-3. Open the workspace in Vitis IDE: {project_path}/cmd_src and select `Open Explorer View`
+3. Open the workspace in Vitis IDE: {project_path}/cmd_src and select `Set Workspace`
    ![open explorer view](./Images/open_explorer_view.png) 
 
 4. Right click in the `CMD_SRC` section in EXPLORER and select `Edit Build Configuration`
