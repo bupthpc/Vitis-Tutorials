@@ -11,11 +11,11 @@
 # make EXTIO=false aie aiesim PLATFORM=</path/to/vck190_base pfm>
 #   --> standard AIE simulation
 #
-# make TARGET=x86sim EXTIO=true PLATFORM=</path/to/vck190_base pfm> TRAFFIC_GEN=<PYTHON/CPP/MATLAB> PYTHON_INSTALL=<> aie x86sim 
-#   -->  X86 simulation using a Python/MATLAB?CPP based External Traffic Generator
+# make TARGET=x86sim EXTIO=true PLATFORM=</path/to/vck190_base pfm> TRAFFIC_GEN=<PYTHON/CPP> PYTHON_INSTALL=<> aie x86sim 
+#   -->  X86 simulation using a Python/CPP based External Traffic Generator
 #
 # make EXTIO=true PLATFORM=</path/to/vck190_base pfm> TRAFFIC_GEN=PYTHON PYTHON_INSTALL=<> aie aiesim
-#   -->  AIE simulation using a Python/MATLAB?CPP based External Traffic Generator
+#   -->  AIE simulation using a Python/CPP based External Traffic Generator
 #
 
 PLATFORM := xilinx_vck190_base_202420_1
@@ -29,10 +29,9 @@ TARGET ?= hw
 # false: simulation will use provided data files
 EXTIO ?= true
 
-# TRAFFIC_GEN --> PYTHON | CPP | MATLAB
+# TRAFFIC_GEN --> PYTHON | CPP 
 # PYTHON: A Python based traffic generator is used
 # CPP: A C++ traffic generator is used
-# MATLAB: A Matlab based traffic generator is used
 PYTHON_INSTALL := $(XILINX_VIVADO)/tps/lnx64/python-3.8.3/bin/
 
 # Full flows
@@ -60,7 +59,7 @@ TARGET ?= hw
 # EXTIO --> true | false
 EXTIO ?= true
 
-# TRAFFIC_GEN --> PYTHON | CPP | MATLAB
+# TRAFFIC_GEN --> PYTHON | CPP
 TRAFFIC_GEN ?= PYTHON 
 
 # File names and locations
@@ -98,11 +97,6 @@ ifeq (${TRAFFIC_GEN}, CPP)
 # For C++ Traffic Generator
 AIESIM_ETG := ./scripts/etg_cpp.sh & $(AIESIM)
 X86SIM_ETG := ./scripts/etg_cpp.sh & $(X86SIM)
-endif
-ifeq (${TRAFFIC_GEN}, MATLAB)
-#For MATLAB External Traffic Generator
-AIESIM_ETG := ./scripts/etg_matlab.sh & $(AIESIM)
-X86SIM_ETG := ./scripts/etg_matlab.sh & $(X86SIM)
 endif
 
 .ONESHELL:

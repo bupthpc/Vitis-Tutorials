@@ -51,7 +51,7 @@ sc=ai_engine_0.out_classifier:out_classifier.S00_AXIS
 ## Step-4: Writing the External Traffic Generator 
 The overall goal of the external traffic generator is to send or receive data to or from the AI Engine array through a specific port. The sender can generate data on the fly or read it from a file. The receiver can keep the data and save it somewhere, or process it in a function. This example design implements sender and receiver as external sources.
 
-Here, the external traffic generators have taken the place of the PL data movers mm2s and s2mm respectively i.e. interfaced with the input port of the interpolator (in_interpolator) and the output port of the classifier (out_classifier).  You can go inside `TrafficGenerator/` for the script analysis in Python, MATLAB and CPP.  
+Here, the external traffic generators have taken the place of the PL data movers mm2s and s2mm respectively i.e. interfaced with the input port of the interpolator (in_interpolator) and the output port of the classifier (out_classifier).  You can go inside `TrafficGenerator/` for the script analysis in Python and CPP.  
 
 <details>
   <summary>Python</summary>
@@ -88,43 +88,6 @@ out_classifier_data = out_classifier.receive_data_with_size(1024)
 This API is a blocking API and it will wait till expected bytes is received at the output port.
 
 For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
-</details>
-
-<details>
-  <summary>Matlab</summary>
-
-### Matlab
-
-#### 1. Instantiating the XTLM Utilies
-
-You can create the sender and receiver objects for the AIE that will make sure to instantiate the XTLM utilies for IPC based communication while sending or receiving the traffic. You can check lines 7-13. 
-
-```BASH
-in_interpolator = aie_input_plio("in_interpolator", 'int16')
-out_classifier = aie_output_plio("out_classifier", 'int32')
-```
-#### 2. Transmitting the data using send_data (data_val, tlast) API
-
-You can prepare the list of data values and send them using send_data API call. See lines <> in the script. The API expects data values list as the first parameter and TLAST value as the second.  
-
-```BASH
-in_interpolator.send_data(in_interpolator_data, True)
-```
-Here the first parameter `in_interpolator_data` is the list of int16 values expected by the AIE kernel. The second parameter is the TLAST value as `True`
-
-#### 3. Receiving the data using receive_data_with_size API(expected_data_size)
-
-In order to get the received data values from the classifier, use receive_data_with_size(exp_data_size) API call. This API needs expected data size (in bytes) as an argument. 
-
-```BASH 
-out_classifier_data = out_classifier.receive_data_with_size(1024)
-```
-
-This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` list.
-
-Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. Here, in this design we are dumping the output of a classifier into a file as it is the final output of the design. 
-
-For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
 </details>
 
 <details>
@@ -177,10 +140,6 @@ Open terminal 1 and use the script inside ``scripts/`` folder to launch the exte
 
 or 
 
-./scripts/etg_matlab.sh --> For Matlab Based
-
-or
-
 ./scripts/etg_cpp.sh --> For CPP Based
 ```
 ### Launching the Emulation process 
@@ -219,8 +178,8 @@ setenv XCL_EMULATION_MODE sw_emu
 
 #### Make Utitlity to run all the flows 
 
-1. To compile and run sw_emu with external traffic generators --> ``make run TARGET=sw_emu PLATFORM=<vck190> EXTO=true TRAFFIC_GEN=<PYTHON/MATLAB/CPP>``
+1. To compile and run sw_emu with external traffic generators --> ``make run TARGET=sw_emu PLATFORM=<vck190> EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 2. To compile and run sw_emu without external traffic generators --> ``make run TARGET=sw_emu PLATFORM=<vck190> EXTIO=false``
-3. To compile and run hw_emu with external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTO=true TRAFFIC_GEN=<PYTHON/MATLAB/CPP>``
-4. To compile and run hw_emu without external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTO=true TRAFFIC_GEN=<PYTHON/MATLAB/CPP>``
+3. To compile and run hw_emu with external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
+4. To compile and run hw_emu without external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 

@@ -13,7 +13,7 @@ To use external traffic generators for any kind of simulation, you need to make 
 
 The overall goal of the external traffic generator is to send or receive data to or from the AI Engine array through a specific port. The sender can generate data on the fly or read it from a file. The receiver can keep data and save it somewhere, or process it in a function.
 
-Here, the PL datamovers are replaced with traffic generators and any PL-interface with AIE is replaced via ETG interface with AIE i.e. interfaced with the input port of the interpolator (in_interpolator), output port of the interpolator (out_interpolator), input port of the classifier and the output port of the classifier (out_classifier).  You can go inside `TrafficGenerator/` folder for the script analysis in Python, Matlab and C++.
+Here, the PL datamovers are replaced with traffic generators and any PL-interface with AIE is replaced via ETG interface with AIE i.e. interfaced with the input port of the interpolator (in_interpolator), output port of the interpolator (out_interpolator), input port of the classifier and the output port of the classifier (out_classifier).  You can go inside `TrafficGenerator/` folder for the script analysis in Python and C++.
 
 <details>
   <summary>Python</summary>
@@ -56,49 +56,6 @@ This API is a blocking API and it will wait till specified data i.e. 4096 bytes 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (golden.txt). 
 
 For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
-</details>
-
-<details>
-  <summary>Matlab</summary>
-
-### Matlab
-
-#### 1. Instantiating the XTLM Utilies
-
-You need to instantiate the classes to send and receive the data. See lines below inside `TrafficGenerator/MATLAB/xtg_aie.m` 
-
-```BASH
-    in_interpolator = aie_input_plio("in_interpolator", 'int16')
-    out_interpolator = aie_output_plio("out_interpolator", 'int16')
-    in_classifier = aie_input_plio("in_classifier", 'int16')
-    out_classifier = aie_output_plio("out_classifier", 'int32')
-```
-Here, ``in_interpolator`` and ``in_classifier`` are sender objects whereas ``out_interpolator`` and ``out_classifier`` are the receiver objects. 
-
-#### 2. Transmitting the data using send_data () API
-
-In order to send the data values, use send_data() API call. The API expects its first parameter as data values in the list for the specified data type and second parameter as the TLAST value.   
-
-```BASH
-in_interpolator.send_data(in_interpolator_data, True)
-in_classifier.send_data(in_classifier_data, True)
-```
-Here the first parameter `in_interpolator_data` is the list of int16 values expected by the AIE kernel. The second parameter is the TLAST value as `True`
-
-#### 3. Receiving the data using receive_data_with_size () API
-
-In order to get the received data values from the classifier, use receive_data_with_size(exp_data_size) API call. This API needs expected data size (in bytes) as an argument. 
-
-```BASH 
-out_classifier_data = out_classifier.receive_data_with_size(1024)
-out_interpolator_data = out_interpolator.receive_data_with_size(1024)
-```
-
-This API is a blocking API and it will wait till specified data i.e. 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list.
-
-Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (classifier_golden.txt). 
-
-For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
 </details>
 
 <details>
@@ -157,10 +114,6 @@ Use the script inside script/python.sh to launch the external traffic generator.
 or 
 
 ./scripts/etg_cpp.sh 
-
-or 
-
-./scripts/etg_matlab.sh
 ```
 ### Launching the AIEsim process 
 Once launched the external script, simultaneously on the other terminal you can run the HW_Emulation as below: 
@@ -174,9 +127,9 @@ x86simulator --pkg-dir=aie/Work
 ```
 #### Make Utility to run all the flows 
 
-1. To compile and run the x86simulation with external traffic generators --> ``make run_x86sim TARGET=x86sim EXTIO=true TRAFFIC_GEN=<PYTHON/CPP/MATLAB>``
+1. To compile and run the x86simulation with external traffic generators --> ``make run_x86sim TARGET=x86sim EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 2. To compile and run the x86simulation without external traffic generators --> ``make run_x86sim TARGET=x86sim EXTIO=false``
-3. To compile and run the aiesimulation with external traffic generators --> ``make run_aiesim TARGET=hw EXTIO=true TRAFFIC_GEN=<PYTHON/CPP/MATLAB>``
+3. To compile and run the aiesimulation with external traffic generators --> ``make run_aiesim TARGET=hw EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 4. To compile and run the aiesimulation without external traffic generators --> ``make run_aiesim TARGET=hw EXTIO=false``
 
 ### Viewing the Results in the Vitis Analyzer 

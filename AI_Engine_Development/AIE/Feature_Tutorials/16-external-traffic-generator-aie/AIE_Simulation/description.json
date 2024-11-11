@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "AIE_F_16-external-tfc-gen",
+        "test_name": "AIE_F_16-external-tfc-gen_aie",
         "disable": true,
         "jobs": [
             {
@@ -18,26 +18,15 @@
                 "max_memory_MB": 32768,
                 "max_time_min": {
                     "vitis_aie_sim": 50,
-                    "vitis_aie_x86sim": 50,
-                    "vitis_hw_build": 470,
-                    "vitis_hw_emu": 300
+                    "vitis_aie_x86sim": 50
                 }
             }
         ],
         "targets": [
-            "vitis_hw_emu"
+            "vitis_aie_x86sim"
         ],
         "category": "canary",
-        "make_options": [
-            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
-            "HOST_ARCH=aarch64",
-            "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
-            "SYSROOT=${SYSROOT}",
-			"SDKTARGETSYSROOT=${SYSROOT}",
-			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
-			"IMAGE=${EDGE_COMMON_SW}/Image",
-            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\""
-        ],
+        "make_options": [],
         "custom_build_target":
         {
             "all": "run_aiesim"

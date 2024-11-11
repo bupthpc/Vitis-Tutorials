@@ -7,7 +7,7 @@
 # make run TARGET=hw_emu EXTIO=false 
 #   --> Standard hw emulation with PL datamovers
 #
-# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=<PYTHON/MATLAB/CPP>
+# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>
 #   -->  Runs hw_emu with external TG. 
 
 PLATFORM := xilinx_vck190_base_202420_1
@@ -27,7 +27,6 @@ EXTIO ?= true
 # TRAFFIC_GEN --> PYTHON | CPP
 # PYTHON: A Python based traffic generator is used
 # CPP: A C++ traffic generator is used
-# MATLAB: A MATLAB based traffic generator is used
 TRAFFIC_GEN ?= CPP 
 
 # necessary settings to run the python ETG
@@ -282,11 +281,6 @@ ifeq (${TRAFFIC_GEN}, CPP)
 # For C++ Traffic Generator
 HW_EMU_ETG := ./scripts/etg_cpp.sh & $(HW_EMU)
 SW_EMU_ETG := ./scripts/etg_cpp.sh & $(SW_EMU)
-endif
-ifeq (${TRAFFIC_GEN}, MATLAB)
-#For MATLAB External Traffic Generator
-HW_EMU_ETG := ./scripts/etg_matlab.sh & $(HW_EMU)
-SW_EMU_ETG := ./scripts/etg_matlab.sh & $(SW_EMU)
 endif
 
 run_test: all
