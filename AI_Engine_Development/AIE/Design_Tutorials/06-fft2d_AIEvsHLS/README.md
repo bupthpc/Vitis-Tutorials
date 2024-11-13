@@ -148,19 +148,11 @@ fft2d_AIEvsHLS
 	
 ### Installing the Tools
 
-* [AI Engine Tools Lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
-
-* [AI Engine Documentation](https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html)
-
 To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:
 
 * Install the [Vitis Software Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html).
 
 * Obtain licenses for AI Engine tools.
-
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
-
-* Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 *  [DSP Library(DSPLIB) Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
@@ -173,9 +165,9 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software.
 
-This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
+This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files by following installation steps and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
 
 </details>
 
