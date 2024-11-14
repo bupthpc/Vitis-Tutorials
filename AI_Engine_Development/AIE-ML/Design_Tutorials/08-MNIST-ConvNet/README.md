@@ -144,7 +144,7 @@ This tutorial adopts a simple design approach to building the MNIST ConvNet clas
 
 ### Vitis Functional Simulation
 
-This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature creates automatically "simulation wrappers" around the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely Matlab and Python. The tool creates MEX wrappers around your AI Engine graphs and your PL HLS kernels so they may be called directly from your m-code. Similar capability is provided for Python using equivalent mechanisms. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose.
+This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature generates executable "shared objects" of the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely Matlab and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose.
 
 Vitis Functional Simulation is an EA tool feature in 2024.2. To obtain instructions and design examples, request access to the [Vitis Functional Simulation Early Access Secure Site](https://account.amd.com/en/member/vitis-functional-simulation.html).
 
