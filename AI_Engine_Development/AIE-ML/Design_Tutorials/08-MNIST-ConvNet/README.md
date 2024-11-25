@@ -32,7 +32,7 @@ Author: Mark Rollins
 
 ## Introduction
 
-This tutorial implements a Convolutional Neural Network classifier on AIE-ML for identifying hand-written digits from the [MNIST database](https://en/wikipedia.org/wiki/MNIST_database). The goal is to illustrate how to partition & vectorize a simple machine learning example to Versal AI Engines. An MNIST ConvNet classifier makes a good learning example since it contains only ~100,000 parameters and a handful of layers. This tutorial example illustrates a number of key topics fundamental to custom coding machine learning designs using the AIE API including:
+This tutorial implements a Convolutional Neural Network classifier on AIE-ML for identifying hand-written digits from the [MNIST database](https://en/wikipedia.org/wiki/MNIST_database). The goal is to illustrate how to partition & vectorize a simple machine learning example to Versal AI Engines. An MNIST ConvNet classifier makes a good learning example because it contains only ~100,000 parameters and a handful of layers. This tutorial example illustrates a number of key topics fundamental to custom coding machine learning designs using the AIE API including:
 * Using multi-channel matrix multiply intrinsics to vectorize ConvNet layer compute workloads
 * Using 3D addressing patterns of memory tiles to access layer I/O in the order required for consumption by the compute
 * Using local tile memory for capturing stored network weights
@@ -84,7 +84,7 @@ The total # of weights for this network is 94,826 or approximately 100,000 weigh
 
 ### Import the MNIST Image Database
 
-The MNIST ConvNet must be trained on the MNIST image database. This database contains 60,0000 images of hand-written digits and is distributed as part of the Keras/TensorFlow package.The [MNIST-Convnet-demo.ipynb](MNIST-Convnet-demo.ipynb) selects 3750 x 16 images for training the network in batches of 16 and another 512 x 16 images for testing the trained network in batches of 16. Each image is represented by 28 x 28 monochromatic pixels (in the range 0 to 255). Code for extracting these training and testing image sets is shown below, along with examples of eight of these hand-written images.
+The MNIST ConvNet must be trained on the MNIST image database. This database contains 60,000 images of hand-written digits and is distributed as part of the Keras/TensorFlow package.The [MNIST-Convnet-demo.ipynb](MNIST-Convnet-demo.ipynb) selects 3750 x 16 images for training the network in batches of 16 and another 512 x 16 images for testing the trained network in batches of 16. Each image is represented by 28 x 28 monochromatic pixels (in the range 0 to 255). Code for extracting these training and testing image sets is shown below, along with examples of eight of these hand-written images.
 ```
 BS=16
 NB_trn = 3750
@@ -108,7 +108,7 @@ for rr in range(2):
 
 ### Training & Testing the MNIST ConvNet Model
 
-The Keras framework provides built-in functions for training and testing the model. These are shown below. Training is performed on the set of training images. The labelled data set is used to drive back-propagation algorithms to adjust the weights to minimize the chosen cost function (in this case "sparse categorical cross-entropy"). An "accuracy" metric is chosen to assess quality of result. After 5 training epochs, the network accuracy of 99.1% is achieved on the test data set. 
+The Keras framework provides built-in functions for training and testing the model. These are shown below. Training is performed on the set of training images. The labelled data set is used to drive back-propagation algorithms to adjust the weights to minimize the chosen cost function (in this case "sparse categorical cross-entropy"). An "accuracy" metric is chosen to assess quality of result. After five training epochs, the network accuracy of 99.1% is achieved on the test data set. 
 
 ![figure3](images/mnist-training-testing-result.png)
 
@@ -120,7 +120,7 @@ Another built-in Keras routine may be used for inference to predict new model ou
 
 ### Extracting Weights & Biases for AIE-ML Inference Solution
 
-Now having obtained a trained model for the MNIST ConvNet classifier, the last step required prior to building an inference solution on AIE-ML is to obtain a quantized set of weights to be used by the implementation. For simplicity in this tutorial, a `bfloat16` implementation is chosen since quantization is straightforward. Each weight & bias uses the same exponent but a quantized mantissa of only 8 bits as opposed to the 24-bits used by the full precision floating point values produced by the Keras network model. The code below extracts the weights & biases from the Keras model, quantizes them to `bfloat16` and then saves them in files for validating each layer of the network to be designed in AI Engine below.
+Now having obtained a trained model for the MNIST ConvNet classifier, the last step required prior to building an inference solution on AIE-ML is to obtain a quantized set of weights to be used by the implementation. For simplicity in this tutorial, a `bfloat16` implementation is chosen because quantization is straightforward. Each weight & bias uses the same exponent but a quantized mantissa of only 8 bits as opposed to the 24-bits used by the full precision floating point values produced by the Keras network model. The code below extracts the weights & biases from the Keras model, quantizes them to `bfloat16` and then saves them in files for validating each layer of the network to be designed in AI Engine below.
 
 ![figure5](images/mnist-quantize-weights.png)
 
@@ -136,15 +136,15 @@ This tutorial adopts a simple design approach to building the MNIST ConvNet clas
 * No specific throughput target is chosen. The design is a toy example and so its performance is not of practical interest.
 * The design generally partitions each network layer to its own AI engine tile where feasible. This simplifies system partitioning and allows a well-defined scope for each AI Engine kernel to be built.
 * Memory tile zero-padding capability is leveraged to expand input tensor shapes from (28,28,1) to (28,32,1) to satisfy AI Engine memory alignment and PLIO bit width requirements.
-* Memory tile multi-dimensional addressing capabilities are leveraged to transfer efficiently I/O data for compute consumption with minimal core cycles being required for data shuffling or lane adjustments within the core.
+* Memory tile multi-dimensional addressing capabilities are leveraged to efficiently transfer I/O data for compute consumption with minimal core cycles being required for data shuffling or lane adjustments within the core.
 * Compute workloads for 2D convolutional layers leverage the efficient `mac_4x8_8x4()` intrinsic for `bfloat16` data types to achieve a maximum efficiency of 128 MAC operations per cycle when feasible by a particular layer.
 * Compute workloads leverage the less efficient `mac_elem_16_2()` intrinsic for `bfloat16` data types with a maximum efficiency of 64 MAC operations per cycle in cases where `mac_4x8_8x4()` is not feasible (for example in the `conv2d_w1()` layer which only receives data from a single input channel).
-* The design combines together the `flatten_w6()` and `dense_w7()` layers to the same AI Engine tile. 
-* Weights & biases are stored in local tile memory instead of in memory tiles since the former admit a means to establish a read-only access scheme using asynchronous buffers that permits the weights to be read only once at startup. Larger ML networks with millions of weights require streaming solutions based on memory tiles; such a complex solution is excessive for the small MNIST problem considered here where all weights may be stored easily within the array.
+* The design combines the `flatten_w6()` and `dense_w7()` layers to the same AI Engine tile. 
+* Weights & biases are stored in local tile memory instead of in memory tiles because the former admit a means to establish a read-only access scheme using asynchronous buffers that permits the weights to be read only once at startup. Larger ML networks with millions of weights require streaming solutions based on memory tiles; such a complex solution is excessive for the small MNIST problem considered here where all weights may be stored easily within the array.
 
 ### Vitis Functional Simulation
 
-This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature generates executable "shared objects" of the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely Matlab and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose.
+This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature generates executable "shared objects" of the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose.
 
 Vitis Functional Simulation is an EA tool feature in 2024.2. To obtain instructions and design examples, request access to the [Vitis Functional Simulation Early Access Secure Site](https://account.amd.com/en/member/vitis-functional-simulation.html).
 
@@ -194,7 +194,7 @@ Based on this vectorization, we can compute in a single cycle 16 output samples 
 
 ### MNIST ConvNet: Profiling & Vector Load
 
-The table below summarizes the profiling characteristics of the MNIST ConvNet classifier design on AIE-ML. Each function and intrinsic is listed for each layer along with the # of AI Engine cycles required for its implementation. The #MACs column lists the total number of multiply-accumulate operations required in theory for each layer based on its input & output tensor shapes. This may be scaled by the # of MAC operations capable by the silicon to assess an estimate of the average "Vector Load" of each layer. Loads of 13% to 30% to 50% are achieved depending on the specific layer. These values of slightly lower than what is often achieved in "real world" networks. The MNIST ConvNet uses very small images starting at only 28 x 28 pixels. For this reason, the overhead cost is higher since we cannot sustain continuous compute cycles across these small images without falling quickly out of inner compute loops. 
+The table below summarizes the profiling characteristics of the MNIST ConvNet classifier design on AIE-ML. Each function and intrinsic is listed for each layer along with the # of AI Engine cycles required for its implementation. The #MACs column lists the total number of multiply-accumulate operations required in theory for each layer based on its input & output tensor shapes. This may be scaled by the # of MAC operations capable by the silicon to assess an estimate of the average "Vector Load" of each layer. Loads of 13% to 30% to 50% are achieved depending on the specific layer. These values of slightly lower than what is often achieved in "real world" networks. The MNIST ConvNet uses very small images starting at only 28 x 28 pixels. For this reason, the overhead cost is higher because we cannot sustain continuous compute cycles across these small images without falling quickly out of inner compute loops. 
 
 ![figure11](images/mnist-convnet-profiling.png)
 
@@ -210,11 +210,11 @@ The throughput of the MNIST ConvNet classifier is approximately ~70,000 frames p
 
 The figure below summarizes the key aspects of the design of the `conv2d_w1()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/conv2d_w1/gen_vectors.ipynb).
 
-* An input memory tile is used to zero pad the input images from tensors of (28,28,1) to tensors of (28,32,1). Only the column dimension requires padding since it forms the inner loop. Since the design uses `bfloat16` data and the memory tiles require 32-bit alignment, the input memory tile is designed to take four images (ie. with a (4,28,28,1) tensor) and the `conv2d_w1_graph` is set up as a multi-rate solution with a `repetition_count=1` on the memory tile and a `repetition_count=4` on the compute kernel. This is a key principle carried across the full design.
-* Since this layer has only a single input channel, the `mac_elem_16_2()` intrinsic is used at 50% capacity; it processes two channels by default and here one channel is zeroed out. This impacts its overall vector efficiency. 
-* The inner loop II=17 is achieved to deliver 9 MAC operations, which is only  26% efficient. Due to the small nature of the images here it is difficult to fill the pipeline with more MAC operations. This could easily be done in a larger design.
+* An input memory tile is used to zero pad the input images from tensors of (28,28,1) to tensors of (28,32,1). Only the column dimension requires padding because it forms the inner loop. Because the design uses `bfloat16` data and the memory tiles require 32-bit alignment, the input memory tile is designed to take four images (i.e., with a (4,28,28,1) tensor) and the `conv2d_w1_graph` is set up as a multi-rate solution with a `repetition_count=1` on the memory tile and a `repetition_count=4` on the compute kernel. This is a key principle carried across the full design.
+* Because this layer has only a single input channel, the `mac_elem_16_2()` intrinsic is used at 50% capacity; it processes two channels by default and here one channel is zeroed out. This impacts its overall vector efficiency. 
+* The inner loop II=17 is achieved to deliver nine MAC operations, which is only  26% efficient. Due to the small nature of the images here it is difficult to fill the pipeline with more MAC operations. This could easily be done in a larger design.
 * The overall loop structure employs an outer loop over the output image rows and an inner loop over the output image columns. This is a good fit for the chosen intrinsic.
-* Notice how the tiling parameters of the memory tile are used to pad the column dimension of the input images with 4 additional zero-valued pixels.
+* Notice how the tiling parameters of the memory tile are used to pad the column dimension of the input images with four additional zero-valued pixels.
 
 ![figure13](images/design-details-layer1.png)
 
@@ -223,7 +223,7 @@ The figure below summarizes the key aspects of the design of the `conv2d_w1()` l
 The figure below summarizes the key aspects of the design of the `max_pooling2d_w2()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/max_pooling2d_w2/gen_vectors.ipynb).
 
 * Max pooling decimates the input images by a factor of 2 in each dimension by applying a `max()` operation across all four pixels in a 2x2 patch. Successive patches are strided by 2, so they are non-overlapping. This compute workload may be vectorized efficiently using the `aie::max()` function of the AIE API. 
-* The layer is coded as an outer loop over the output image rows and an inner loop over the image columns. Vectorization creates 16 output channels for 4 pixels each. 
+* The layer is coded as an outer loop over the output image rows and an inner loop over the image columns. Vectorization creates 16 output channels for four pixels each. 
 * Software pipelining of the inner loop is perfect at II=16.
 
 ![figure14](images/design-details-layer2.png)
@@ -233,7 +233,7 @@ The figure below summarizes the key aspects of the design of the `max_pooling2d_
 The figure below summarizes the key aspects of the design of the `conv2d_w3()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/conv2d_w3/gen_vectors.ipynb).
 
 * The input memory tile writes samples in linear order, consuming the input tensors of shape (13,16,16) in order from the rightmost dimension first (as in the Numpy convention). Samples are extracted from the input memory tile in a tiled fashion such that the samples may be consumed immediately by the compute without any additional shuffling. Tiles of 8 x 16 samples extract 16 pixels from each of 8 input layers. This corresponds to four separate 4 x 8 sample blocks that may be consumed by a `mac_4x8_8x4()` intrinsic. 
-* The compute workload is scheduled across an outer loop over output image rows and an inner loop over output image columns. Each compute produces 4 pixels for 4 output channels in a single cycle. The layer produces an output tensor shape of (11,16,64). 
+* The compute workload is scheduled across an outer loop over output image rows and an inner loop over output image columns. Each compute produces four pixels for four output channels in a single cycle. The layer produces an output tensor shape of (11,16,64). 
 * A loop II=12 cycles is achieved for 12 MAC operations (100% inner loop efficiency).
 * The output memory tile stores samples in 4x4 tiles such that no output shuffling is required by the core itself; it is handled by the memory tile DMA engine. Samples are written in this tiled manner into the output memory tile so they can be easily extracted in output tensor order (11,16,64) for the subsequent layer to follow.
 
@@ -241,7 +241,7 @@ The figure below summarizes the key aspects of the design of the `conv2d_w3()` l
 
 ### Layer Design Details: `max_pooling2d_w4()`
 
-The figure below summarizes the key aspects of the design of the `max_pooling2d_w4()` layer. It's design is very similar to the 2nd layer with slightly smaller image dimensions yet more I/O channels to process. The code structure is similar, and an efficient software pipeline scheduling is achieved by the compiler. This layer requires no memory tiles for sample reordering. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/max_pooling2d_w4/gen_vectors.ipynb).
+The figure below summarizes the key aspects of the design of the `max_pooling2d_w4()` layer. Its design is very similar to the second layer with slightly smaller image dimensions yet more I/O channels to process. The code structure is similar, and an efficient software pipeline scheduling is achieved by the compiler. This layer requires no memory tiles for sample reordering. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/max_pooling2d_w4/gen_vectors.ipynb).
 
 ![figure16](images/design-details-layer4.png)
 
@@ -251,11 +251,11 @@ The figure below summarizes the key aspects of the design of the `conv2d_w5()` l
 
 * This layer is split over four tiles due to the heavy storage requirement of its weights. Each tile processes one quarter of the total output channels, and each local tile memory stores one quarter of the total weights.
 * The layer uses input and output memory tiles using an approach similar to the `conv2d_w3()` layer to extract and replace samples in the order required for compute consumption. This leads to efficient utilization of the high performance compute using `max_4x8_8x4()` and leads to a perfect inner loop software pipelining.
-* Since computation is partitioned across the four compute tiles, a "collection" function must be performed upon completion of the processing. Output channel results must be passed from each compute tile to the fourth tile for collection and reordering. The design uses I/O streams for this purpose. This requires an additional sample reordering process that is outlined in further detail below.
+* Because computation is partitioned across the four compute tiles, a "collection" function must be performed upon completion of the processing. Output channel results must be passed from each compute tile to the fourth tile for collection and reordering. The design uses I/O streams for this purpose. This requires an additional sample reordering process that is outlined in further detail below.
 
 ![figure17](images/design-details-layer5.png)
 
-The figure below illustrates the output sample collection process required by the `conv2d_w5()` layer in order to collect & restore sample ordering in the four sets of output channels computed by its four tiles. An input memory tile extracts input samples with an 8 x 8 tiling pattern and these samples are broadcast to all four compute tiles. Each tile computes its assigned portion of the output channels. Once collected by the fourth tile, these four data sets must be reshuffled into proper order by the 4th compute tile prior to extraction via the output 4 x 8 tiling pattern used by the output memory tile. The colored blocks in the figure below help to identify the various output image rows computed by each tile. These must be interleaved row-size to restore the (3,8,128) tensor shape desired at the layer output. This is performed using additional compute cycles by the fourth tile. Each data set when collected is copied into a scratch memory in the local tile. These four scratch areas are then read in proper order to produce the desired shuffling.
+The figure below illustrates the output sample collection process required by the `conv2d_w5()` layer in order to collect & restore sample ordering in the four sets of output channels computed by its four tiles. An input memory tile extracts input samples with an 8 x 8 tiling pattern and these samples are broadcast to all four compute tiles. Each tile computes its assigned portion of the output channels. Once collected by the fourth tile, these four data sets must be reshuffled into proper order by the fourth compute tile prior to extraction via the output 4 x 8 tiling pattern used by the output memory tile. The colored blocks in the figure below help to identify the various output image rows computed by each tile. These must be interleaved row-size to restore the (3,8,128) tensor shape desired at the layer output. This is performed using additional compute cycles by the fourth tile. Each data set when collected is copied into a scratch memory in the local tile. These four scratch areas are then read in proper order to produce the desired shuffling.
 
 ![figure18](images/design-details-layer5-collect.png)
 
