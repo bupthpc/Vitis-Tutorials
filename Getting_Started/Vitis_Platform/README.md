@@ -7,15 +7,15 @@
 
 # Versal Platform Creation Quick Start
 
-***Vitis Unified IDE 2024.1***, ***Vivado 2024.1***
+***Vitis Unified IDE 2024.2***, ***Vivado 2024.2***
 
 ***Board: VCK190 VEK280***
 
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 or VEK280 evaluation board in short. 
 
-This time, we will utilize AMD Versal™ extensible platform from the CED example, using pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform with AMD Vitis™ Unified IDE. At last, leverage the Vector Addition example to validate this platform. 
+This time, we will utilize the AMD Versal™ extensible platform from the CED example, using a pre-built Linux common image and a device tree file generated with the Platform Creation. Next, we will create an embedded Versal acceleration platform using the AMD Vitis™ Unified IDE. Finally, we will validate this platform using the Vector Addition example. 
 
-This is a quick start for Versal platform creation. If you have queries about some steps or settings or want to create a platform for customer's board, refer to [Versal Custom Platform Creation Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
+This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
@@ -103,48 +103,31 @@ This is a quick start for Versal platform creation. If you have queries about so
 1. Download Versal common image from [AMD website download page](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory, and extract the common image.
 
    ```bash
-   tar xvf ../xilinx-versal-common-v2024.1.tar.gz .
+   tar xvf ../xilinx-versal-common-v2024.2.tar.gz .
    ```
-
-2. Create the device tree file
-   Device tree describes the hardware components of the system. `createdts` command can generate the device tree file according to the hardware configurations from XSA file. If there are any settings not available in XSA, for example, any driver nodes that do not have corresponding hardware, or the user has their own design hardware, the user needs to add customization settings in `system-user.dtsi`.
-
-   Besides, uboot in common image does not have default environment variables. So update the bootargs manually. A pre-prepared [system-user.dtsi](ref_files/system-user.dtsi) file, which adds pre-defined bootargs is under `ref_files` directory. Copy `system-user.dtsi` to `WorkSpace` directory and follow below steps to generate the DTB file.
-
-   ```bash
-   cd WorkSpace
-   source <Vitis_Install_Directory>/settings64.sh
-   xsct 
-   ```
-   Then execute `createdts` command in XSCT console like the following:
-
-   ```bash
-   createdts -hw <full path>/vck190_custom.xsa -out . -zocl \
-   -platform-name mydevice -git-branch xlnx_rel_v2024.1 -board versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile   
-   ```
-
-   >Note: If you target VEK280, please specify the XSA  to **vek280_custom.xsa**  and board to **versal-vek280-revb**.
-
-   Notice that `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom.xsa`. Besides, the following information would show in XSCT console. Ignore the following warning and that means you succeed to get system.dtb file, which is located in `mydevice/psv_cortexa72_0/device_tree_domain/bsp/`.
-
-   ```bash
-   pl.dtsi:9.21-46.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property
-   pl.dtsi:41.26-45.5: Warning (simple_bus_reg): /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
-   ```
-
-   Type `exit` in console to exit XSCT console.
 
 3. Create Vitis platform
 
-   - Install SDK tool by typing `sh xilinx-versal-common-v2024.1/sdk.sh -d xilinx-versal-common-v2024.1/ -y` in console. Option `-d` is to specify the directory where to install. Option `-y` means confirmation. So it gets installed in `xilinx-versal-common-v2024.1/` folder.
+   - Install SDK tool by typing `sh xilinx-versal-common-v2024.2/sdk.sh -d xilinx-versal-common-v2024.2/ -y` in console. Option `-d` is to specify the directory where to install. Option `-y` means confirmation. So it gets installed in `xilinx-versal-common-v2024.2/` folder.
+
+   >Note: The SDK installation is not required for platform creation; it is needed for application compilation. You can install it later as needed.
+
    - Run Vitis by typing `vitis -w .` in the console. **-w** is to specify the workspace. `.` means the current workspace.
    - In the Vitis IDE, select **File > New Component > Platform** to create a platform component.
    - Enter the **Component name**. For this example, type `vck190_custom`, click **Next**.
 
       >Note: If you target VEK280, please update component name to **vek280_custom**.
 
-   - In the XSA selecting page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `Your Vivado Project Directory>/vck190_custom.xsa` or `vek280_custom.xsa`. Click **Next**.
-   - Set the **operating system** to **linux** and set the processor to **psv_cortexa72**. Click **Next**.
+   - In the XSA selecting page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `Your Vivado Project Directory>/vck190_custom.xsa` or `vek280_custom.xsa`. Expand the `Advanced Options` and set the items as following:
+
+   ![Created Vitis Platform](images/platform_generation_dts.jpg)
+
+      - SDT Source Repo: This is used to replace the built-in SDT tool. For this tutorial, leave it empty.
+      - Board DTSI: Specify the board machine name, which is used to retrieve the board-level DTSI file. For this tutorial, leave it empty. To check the board machine name, refer to [UG1144 Machine Name Checking](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Importing-a-Hardware-Configuration)
+      - User DTSI: Allows you to specify a custom DTSI file. Click **Browse** and select the the `system-suer.dtsi` file located in the corresponding board folder.
+      - DT ZOCL: Enables Zocl node generation for the XRT driver. Ensure this option is enabled, then click **Next**.
+
+   - Set the **Operating System** to `Linux` and the **Processor** to `psv_cortexa72`. Enable the `Generate Device Tree Blob (DTB)` option, then click **Next**.
    - Review the summary and click **Finish**.
 
    ![Created Vitis Platform](images/created_vitis_platform.png)
@@ -155,8 +138,8 @@ This is a quick start for Versal platform creation. If you have queries about so
   
       ![vitis_platform_config](images/vitis_platform_config.PNG)
 
-   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2024.1/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
-   - **DTB file**: Browse to the DTB file location we created just now. It is under `mydevice/psv_cortexa72_0/device_tree_domain/bsp/`. Select system.dtb and click **OK**
+   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2024.2/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
+   - **DTB file**: It will be generated automatically and populated in this area.
    - **FAT32 Partition Directory**: if you have additional file to be stored in FAT32 partition diretory you can browse to the file. If not please omit this.
    - **QEMU Data**: This Directory is used to add additional file for emulation. User can set it according to your requirement.
    - In the flow navigator, click the drop-down button to select the component. In this case, select **vck190_custom** component and click the **Build** button to build the platform.
@@ -178,9 +161,9 @@ This is a quick start for Versal platform creation. If you have queries about so
 
       >Note: If you target VEK280, please select `vek280_custom` platform.
 
-   - Input **Sysroot** path: `xilinx-versal-common-v2024.1/sysroots/cortexa72-cortexa53-xilinx-linux`
-   - Input **RootFS** path: `xilinx-versal-common-v2024.1/rootfs.ext4`
-   - Input **Kernel Image** path: `xilinx-versal-common-v2024.1/Image` and click **Next**.
+   - Input **Sysroot** path: `xilinx-versal-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux`
+   - Input **RootFS** path: `xilinx-versal-common-v2024.2/rootfs.ext4`
+   - Input **Kernel Image** path: `xilinx-versal-common-v2024.2/Image` and click **Next**.
    - Review the project summary and click **Finish**.
 
    After seconds, the project is created.

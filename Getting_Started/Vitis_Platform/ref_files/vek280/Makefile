@@ -8,26 +8,19 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 ABS_BUILD_PATH=$(ROOT_DIR)/build
 ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
 BD_TCL=run.tcl
-ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
-DTB_PLT_NAME=mydevice
-DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
-DTB=$(DTB_LOCATION)/system.dtb								  
+ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)								  
 VERSION=2024.2
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/
 XSA_NAME=vek280_custom
 PLATFORM_NAME=vek280_custom
-PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM ?= $(ROOT_DIR)/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 #PLATFORM ?=$(ROOT_DIR)/test/vek280_custom/export/vek280_custom/vek280_custom.xpfm
 
 VADD_WORK=$(ROOT_DIR)/vadd_work
 AIE_WORK = $(ROOT_DIR)/aieml_system_design/
 
-DEVICE_TREE_REPO ?=
 
-ifndef DEVICE_TREE_REPO
-DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
-endif
 
 
 .PHONY: help 
@@ -38,8 +31,8 @@ help:
 	@echo "make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
 #all: check-common-image hw  dtb  pfm vadd_emu 
-sd_card:check-common-image hw  dtb  pfm vadd_hw aieml_hw
-all: check-common-image hw  dtb  pfm vadd_emu aieml_emu
+sd_card:check-common-image hw    pfm vadd_hw aieml_hw
+all: check-common-image hw    pfm vadd_emu aieml_emu
 #target : check  whether the common image is ready 
 check-common-image:
 ifeq ($(wildcard $(COMMON_IMAGE_VERSAL)/Image),)
@@ -54,21 +47,13 @@ hw: $(ABS_BD_TCL)
 	mkdir -p $(ABS_HW_PATH)
 	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -tclargs
 
-# target: dtb
-#generate the DTB file
-#echo command is to avoid the return error code caused by the createdts command warning
-dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
-	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME) -board versal-vek280-revb -git-url $(DEVICE_TREE_REPO) -git-branch xlnx_rel_v2024.1 -dtsi system-user.dtsi -compile" 
-
 
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in build/vivado directory
 pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
-
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --user_dtsi $(ROOT_DIR)/system-user.dtsi
 	
 
 cpVaddCode:
