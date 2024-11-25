@@ -9,7 +9,7 @@
 
 # AI Engine GMIO Programming Model
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 This example introduces the AI Engine GMIO programming model. It includes three steps:
 
