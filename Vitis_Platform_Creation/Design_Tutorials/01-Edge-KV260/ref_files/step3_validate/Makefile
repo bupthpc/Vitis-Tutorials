@@ -5,7 +5,7 @@
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
-PLATFORM= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM= $(ROOT_DIR)/../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 
 VERSION=2024.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
@@ -41,7 +41,7 @@ $(VADD_WORK)/shell.json:
 vadd_hw_package: $(VADD_WORK)/simple_vadd  $(VADD_WORK)/shell.json
 	@echo "INFO: Packaging Completed"
 	mkdir -p vadd
-	cp ../step2_pfm/dtbo_output/pl.dtbo vadd/
+	cp ../step2_pfm//ws/kv260_custom/export/kv260_custom/hw/sdt/pl.dtbo vadd/
 	cp $(VADD_WORK)/shell.json vadd/
 	cp $(VADD_WORK)/build_dir.hw/krnl_vadd.link.xclbin vadd/krnl_vadd.bin
 	cp $(VADD_WORK)/simple_vadd vadd/

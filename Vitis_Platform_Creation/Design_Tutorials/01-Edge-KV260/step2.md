@@ -18,7 +18,7 @@ In this step, you will create a Vitis platform running a Linux operation system.
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    ├── kv260_hardware_platform
-   └── xilinx-zynqmp-common-v2024.1.tar.gz
+   └── xilinx-zynqmp-common-v2024.2.tar.gz
    ```
 
 2. Extract the common image.
@@ -26,14 +26,14 @@ In this step, you will create a Vitis platform running a Linux operation system.
 
    ```bash
    cd WorkSpace
-   tar xvf ../xilinx-zynqmp-common-v2024.1.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2024.2.tar.gz -C .
    ```
 
-   You can see **xilinx-zynqmp-common-v2024.1** folder which contains the components located in **WrokSpace** folder.
+   You can see **xilinx-zynqmp-common-v2024.2** folder which contains the components located in **WrokSpace** folder.
 
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2024.1
+   ├── xilinx-zynqmp-common-v2024.2
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -102,78 +102,11 @@ If you need to do system customization, take the following steps as reference. F
 
 </details>
 
-### Generate Device Tree Overlay
-
-  Because the KV260 loads the PL after Linux boots up, the PL IP information in the platform needs to be loaded dynamically as device tree overlay. One additional requirement for the KV260 acceleration platform software is to generate the device tree overlay for the platform PL IPs. This device tree overlay serves two purposes:
-
-  1. It needs to have ZOCL node so that XRT driver can be loaded properly.
-  2. It can include any configurations of the PL IP in the platform logic designed in step 1.
-
-  The device tree information for PL in your application is loaded after Linux boot together with the XCLBIN file which contains the PL bitstream. A device tree overlay (DTBO) can be loaded and unloaded in Linux. For more information about DTBO, refer to <https://lkml.org/lkml/2012/11/5/615>.
-
-  AMD provides a new command, `createdts`, executed in the XSCT tool to generate device tree from XSA file exported from the AMD Vivado™ Design Suite.
-
-  Run the following steps to generate DTBO from XSA
-
-1. Generate device tree file.
-
-   ```bash
-   source <Vitis_tool_install_dir>/settings64.sh
-   cd WrokSpace
-   xsct
-   createdts -hw kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
-   -platform-name mydevice -git-branch xlnx_rel_v2024.1 -overlay -compile
-   ```
-
-   The `createdts` command has the following input values. Specify them as you need.
-
-   - `-platform-name`: Platform name
-   - `-hw`: Hardware XSA file with path
-   - `-out`: Specify the output directory
-   - `-git-branch`: Device tree branch
-   - `-zocl`: Enable the zocl driver support
-   - `-overlay`: Enable the device tree overlay support
-   - `-compile`: Specify the option to compile the device tree to DTB file
-
-   The following information would show in XSCT console. Ignore the warning and that also means you succeed to get `system.dtb` file which is located in `<mydevice/psu_cortexa53_0/device_tree_domain/bsp>`.
-
-   ```bash
-   pl.dtsi:9.21-32.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property                                                      
-   system-top.dts:26.9-29.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
-   zynqmp.dtsi:790.43-794.6: Warning (pci_device_reg): /axi/pcie@fd0e0000/legacy-interrupt-controller: missing PCI reg property
-   pl.dtsi:27.26-31.5: Warning (simple_bus_reg): /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
-   ```
-
-   > **NOTE:** The `createdts` command is used within the XSCT console to generate device tree files. This command requires several inputs to produce the desired device tree files. If you're unsure about the specific options and their meanings, you can execute a help command to access detailed information. Additionally, it's important to note that XSCT is a console tool integrated into Vitis. You can initiate it by typing `xsct` in the Linux terminal or, alternatively, select the **Xilinx > XSCT** Console option from the Vitis menu after launching the Vitis tool.
-   
-
-   > **NOTE**: Device tree knowledge is a common know-how. Please refer to [AMD Device tree WIKI page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421121/Device+Trees) or [Device Tree WIKI page](https://en.wikipedia.org/wiki/Devicetree#Linux) for more information if you are not familiar with it.
-   
-   Execute the following command to exit XSCT console.
-
-   ```bash
-   exit
-   ```
-
-2. Compile the dtsi to dtbo.
-
-   Run the following command to build the dtsi file and create a directory to store the dtbo file.
-
-   ```bash
-   cd WrokSpace
-   dtc -@ -O dtb -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtsi
-   mkdir dtg_output
-   cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo dtg_output
-   ```
-
-   > **NOTE:** `dtc` is device tree compiler. For more info about dtc, check its [man page](http://manpages.ubuntu.com/manpages/trusty/man1/dtc.1.html) and [source code](https://git.kernel.org/pub/scm/utils/dtc/dtc.git/tree/README?h=main).
-
 ### Create the Vitis Platform
-
 
 1. Install sysroot.
 
-   - Go to `<WorkSpace/xilinx-zynqmp-common-v2024.1>` directory.
+   - Go to `<WorkSpace/xilinx-zynqmp-common-v2024.2>` directory.
    - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. For example: `./sdk.sh -d .`. **.** means the current directory. 
    >**NOTE:** The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
 
@@ -189,10 +122,18 @@ If you need to do system customization, take the following steps as reference. F
    3. On the **Create Platform Component** setup dialog
       - Enter the component name and location. For this example, type `kv260_custom` and use default location. Click **Next**.
       - Click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `kv260_hardware_platform.xsa`. 
-      - Set the operating system to **linux**.</br>
+      - Expand the **Advanced Options** and set the items as following:
+
+         ![Created Vitis Platform](images/platform_generation_dts.jpg)
+         - SDT Source Repo: This is used to replace the built-in SDT tool. For this tutorial, leave it empty.
+         - Board DTSI: Specify the board machine name, which is used to retrieve the board-level DTSI file. For this tutorial, leave it empty. To check the board machine name, refer to [UG1144 Machine Name Checking](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Importing-a-Hardware-Configuration)
+         - User DTSI: Allows you to specify a custom DTSI file. For this tutorial, leave it empty.
+         - DT ZOCL: Enables Zocl node generation for the XRT driver. Ensure this option is enabled, then click **Next**.
+      - Set the operating system to **Linux**.</br>
       - Set the processor to **psu_cortexa53**.</br>
       - Check the option **Generate boot artifacts**. Then click **Next**.</br> 
          >Note: Enabling this option will trigger the tool to automatically generate a PMU firmware domain and an FSBL (First Stage Boot Loader) domain into the platform
+      - Enable and expand the **Generate Device Tree Blob (DTB)** option, and check the **DT Overlay** option. This option is used to generrate DTB and device tree blob overlay for SOM application. Then click **Next**.</br>
       - Review the summary and click **Finish**.
       >Note: After a few moments, the platform component will be prepared and available in the component view. Simultaneously, the platform configuration file, `vitis-comp.json`, will be automatically displayed in the main view. Users can access the `vitis-comp.json` file by expanding the Settings section under the platform component.
 
@@ -203,9 +144,9 @@ If you need to do system customization, take the following steps as reference. F
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.1** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.2** and click **OK**.
 
-   - **DTB File**: Browse to **mydevice/psu_cortexa53_0/device_tree_domain/bsp** and select system.dtb, then click **OK**.
+   - **DTB File**: It will be generated automatically and populated in this area. Then click **OK**.
       >Note: If the directory you specified for Pre-build image directory already contains DTB file, this DTB field will be automatically updated. 
 
    - **FAT32 Partition Directory**: This directory is used to add additional file to the fat32 partition. User can set it according to your requirement.

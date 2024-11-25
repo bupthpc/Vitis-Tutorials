@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.2 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -40,7 +40,7 @@ Vendor:                           xilinx
 Board:                            kv260_hardware_Platform
 Name:                             kv260_hardware_Platform
 Version:                          0.0
-Generated Version:                2023.2
+Generated Version:                2024.2
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               1
@@ -116,12 +116,14 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
   - Go to `WorkSpace` directory created in step1
    - Run Vitis by typing `vitis -w .` in the console. `-w` is to specify the workspace. `.` means the current workspace directory. Close the welcome tab after Vitis launches.
    - Go to example view by clicking the example button and click **Simple Vector Addition**.
-      ![example.PNG](./images/example.PNG)
+   
+   ![example.PNG](./images/example.PNG)
+
    - Click **Create Application from Template**. The project creation wizard would pop up. 
       - Input the **System project name** as `vadd` and use the default location for **System project location**. Then click **Next**.
       - Select **kv260_custom** platform, click **Next**.
          >Note: If the platform component is not in the current workspace user could click **+** button to add the platform component.
-      - Set **Sysroot** to ```xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Sysroot** to ```xilinx-zynqmp-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
   >**NOTE:** In this step, the addition of the kernel image and rootfs is omitted since it is recommended to use the official sd_card.img from AMD's download center. Furthermore, V++ does not incorporate the kernel image and rootfs in the generation of the sd_card.img for the SOM.
@@ -194,17 +196,17 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
     If the application required files are loaded successfully, the following log is expected:
 
     ```bash
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking1
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: irq-xilinx: mismatch in kind-of-intr param
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: zocl-drm axi:zyxclmm_drm: error -ENXIO: IRQ index 32 not found
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking1
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: irq-xilinx: mismatch in kind-of-intr param
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20242 kernel: zocl-drm axi:zyxclmm_drm: error -ENXIO: IRQ index 32 not found
     vadd: loaded to slot 0
     ```
 
@@ -220,7 +222,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
    - It should show program prints.
 
    ```
-    xilinx-k26-starterkit-20241:~$ ./vadd_host binary_container_1.bin
+    xilinx-k26-starterkit-20242:~$ ./vadd_host binary_container_1.bin
     INFO: Reading binary_container_1.bin
     Loading: 'binary_container_1.bin'
     TEST PASSED

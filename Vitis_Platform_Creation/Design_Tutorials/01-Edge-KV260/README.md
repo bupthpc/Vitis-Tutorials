@@ -8,7 +8,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on KV260
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 The [AMD Kria™ KV260 Vision AI Starter Kit](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html) is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It is based on the AMD UltraScale+™ MPSoC technology similar to ZCU104 evaluation board. In this example, you will extend the [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/README.md) to KV260 Vision AI Starter Kit.
 
@@ -23,7 +23,6 @@ For your reference, The structure of this example system is shown in the followi
 The platform you create should be able to run these applications:
 
 - Vitis acceleration examples like Vector Addition.
-- Vitis-AI applications will be available in the future.
 
 The hardware design of the platform would provide basic support for Vitis acceleration. It is similar to the ZCU104 example.
 
@@ -71,12 +70,12 @@ The platform creation steps are introduced in the following pages. Each page des
 
 ## References
 
-- *Vitis Unified Software Platform Documentation: Application Acceleration Development* ([UG1393](https://docs.amd.com/access/sources/dita/map?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration))
+- *Vitis Unified Software Platform Documentation: Application Acceleration Development* ([UG1702](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Developing-Vitis-Kernels-and-Applications))
   - [Platform Creation General Rules](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vcm1596051749044.html)
   - [Setting Up the Vitis Environment](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=zks1565446519267.html)
   - [Installing Xilinx Runtime](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pjr1542153622642.html)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2024.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Xilinx Runtime (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
 - [Vitis-AI GitHub Repository](https://github.com/Xilinx/Vitis-AI)
 
