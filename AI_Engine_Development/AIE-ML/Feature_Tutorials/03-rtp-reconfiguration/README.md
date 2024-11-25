@@ -39,6 +39,8 @@ After completing this tutorial, you will be able to:
 * Use XRT API to control graph execution and RTP operations.
 * Verify the system by HW co-simulation and running in hardware.
 
+**Known issue in 2024.2**: There may exist hardware execution issue in asynchronous array RTP update & read. When it happens, please wait for an update in the tool or a patch. Otherwise, you may continue to use 2024.1 instead.
+
 ## Steps
 
 **Note:** Copy test cases and follow instructions in [AIE 03-rtp-reconfiguration](../../../AIE/Feature_Tutorials/03-rtp-reconfiguration). Run all make commands with `ARCH=aie-ml`. For example:
