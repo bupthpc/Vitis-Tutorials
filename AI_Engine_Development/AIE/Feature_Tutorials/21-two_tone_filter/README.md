@@ -1,13 +1,13 @@
 # Signal Processing on AI Engine Using Vitis DSP Libraries and Vitis Model Composer
-### *Version: Vitis 2024.1* 
+### *Version: Vitis 2024.2* 
 ## Introduction
 This tutorial guides you to design an FIR filter with an FFT using the DSP library targeting AMD Versal™ AI Engine.
 ## Before You Begin
 Install the tools:
-- Get and install **[MathWorks MATLAB® and Simulink® (R2022a or R2022b)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
-- Get and install **[AMD Vitis 2024.1](https://www.xilinx.com/support/download.html)**
+- Get and install **[MathWorks MATLAB® and Simulink® (R2023a or R2023b or R2024a)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
+- Get and install **[AMD Vitis 2024.2](https://www.xilinx.com/support/download.html)**
 
-> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2024.1) for setting up software and installing the VCK190 base platform.
+> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2024.2) for setting up software and installing the VCK190 base platform.
 ## Overview
 The algorithm designer creates a MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot.
 ![MATLAB Model](./images/MATLAB_Model.png)
@@ -193,20 +193,26 @@ Each tile is reported. Within each tile the report includes core, DMA, locks, an
 
 You can notice that the FIR started processing (Tile: 25,0) and once the first set of datas are ready, then FFT started processing (Tile: 24,0) the data and send the processed output. 
 
-After reviewing the reports, close the Vitis Analyzer.
+
 
 #### Verify the Performance
 
 Next step is to verify the performance of the design.
 
-By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
+In the Graph View, select the *I/O* tab and observe the **Throughput** column for each ports. 
+
+The output PLIO port (PLIO_fft_o) throughput shows the value 2307.86 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of 576.96 MSPS.
+
+Optional: By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
 
 Enter the following command to analyze the throughput:
 ```
 make throughput
 ```
 
-As per the design requirement, for the design 1, the required sampling rate is 400 Msps and we were able to achieve ~574 Msps.
+As per the design requirement, for the design 1, the required sampling rate is 400 Msps and we were able to achieve ~576 Msps.
+
+After reviewing the reports, close the Vitis Analyzer.
 
 ## Part 2: Implementing design 2 (SSR>1)
 In Desgin 2, the sampling rate requirement is 2000 Msps as given below.
@@ -289,19 +295,25 @@ make analyze
 Select the Graph view and verify the number of FIR kernels. Similarly, verify the number of FFTs implemented.
 ![Graph View - Design 2](./images/Graph_view_ssr_gt1.png)
 
-Review reports such as Array and Trace. Once you complete the review, close the Vitis Analyzer.
+Review reports such as Array and Trace. 
 
 #### Verify the Performance
 Next step is to verify the performance of the design.
 
-By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
+In the Graph View, select the *I/O* tab and observe the **Throughput** column for each ports. 
+
+The output of four PLIO ports (PLIO_fft_o_0, PLIO_fft_o_1, PLIO_fft_o_2, PLIO_fft_o_3) throughput shows the values 2855.151262, 2855.549359, 2855.151262, 2855.549359 MBYTES PER SEC (MBPS) repectively for each ports. To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of for each ports ~713.78 MSPS. There are four outputs and combined throughput of all output is ~2855 Msps.
+
+[Optional]: By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
 
 Enter the following command to analyze the throughput:
 ```
 make throughput_all2
 ```
 
-As per the design requirement, for the design 2, the required sampling rate is 2000 Msps and we were able to achieve ~2800 Msps. There are four outputs and combined throughput of all output is ~2800 Msps.
+As per the design requirement, for the design 2, the required sampling rate is 2000 Msps and we were able to achieve ~2855 Msps. There are four outputs and combined throughput of all output is ~2855 Msps.
+
+Once you complete the review, close the Vitis Analyzer.
 
 ## Part3: Implementing design 1 using Vitis IDE
 We will implement design 1 (SSR<1) using Vitis Unified IDE.
@@ -335,7 +347,7 @@ Add the following folder which contains test vectors by clicking ![Add Folders I
 Click **Next**.
 
 #### Select the Platform
-Select the platform as *xilinx_vck190_base_202410_1*.
+Select the platform as *xilinx_vck190_base_202420_1*.
 
 Click **Next** and review the Summary and then select **Finish**.
 
