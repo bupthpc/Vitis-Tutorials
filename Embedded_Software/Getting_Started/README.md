@@ -8,30 +8,43 @@
 
 # Getting Started in Vitis Unified Embedded IDE
 
-***Version: 2024.1***
+***Version: 2024.2***
 
-This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will create the platform, hello world application, setup the target connections and deploy on our target board.
+This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will accomplish the following tasks in this tutorial:
 
-**Note**:
+* Create the platform
+* Create a hello world application on ARM processor
+* Setup the target connections and deploy on our target board.
 
-- The diagram should be read from top to bottom.
-- The diagram is for illustration only.
-![missing image](./images/vitis_flow.PNG)
+**Note**
 
-## How Metadata is passed between Vivado and Vitis
-
-How the hardware metadata has passed between Vivado™ and Vitis has changed in the Vitis Unified flow. In Vitis Classic, the Hardware Software Interface (HSI) API suite was used in an "Ad-Hoc" manner depending on where this was needed in the Vitis IDE. In Vitis Unified IDE, the System Device Tree (SDT) is created during the Platform creation. The SDT is similar to the device tree used in Linux. However, the SDT is system level aware. Whereas a device tree in Linux would be specific to a processor and its address map. Then all hardware metadata is extracted from the SDT nodes using the Lopper framework. The Lopper framework is a Python based utility that extracts the metadata from the SDT. All components; platform, application and system project use the Lopper framework utility to extract the desired metadata from the SDT. The Domains are all maintained within the platform. If users add an application component, then the platform must be built first.
+The example design in this tutorial is based on ZCU102 evaluation board, which uses MPSoC UltraScale+. The concept can apply to all SoC devices such as ZYNQ-7000 and Versal.
 
 
 ## Get Started
 
-Launch Vitis unified embedded tool in 2024.1, and we will create out first Vitis Embedded project.
+Launch Vitis IDE, and we will create out first Vitis Embedded project.
 
-![missing image](./images/welcome_screen.PNG)
+* On Windows, click Windows start menu, go to Xilinx Design Tools, launch Vitis.
+* On Linux, open a terminal, `source <VITIS_Install_Path>/settings64.sh`, then launch `vitis` from the terminal.
+
+Based on your installation type, you may see different welcome page. This tutorial can run on both Vitis embedded software development installation or Vitis full installation.
+
+![missing image](./images/vitis_welcome_embedded.png)
+
+## Setup Workspace
+
+Vitis Unified IDE allows user to do some actions without specifying workspace initially, such as read bulit-in documents, read analysis reports, etc. But it's recommended to specify a workspace before your start to develop applications. 
+
+A workspace is a folder that Vitis IDE stores metadata for your project. 
+
+Click "Set Workspace" on the Welcome page, specify an empty folder and click OK.
 
 ## Create Platform
 
-In the Vitis Classic flows, the platform was generated automatically when the XSA was input by the user. However, for Vitis Unified IDE, the user will need to manually create it. This is by design, to allow for a clean workspace. In the embedded flow, the platform will contain the SDT. Any domains, and/or boot components will be placed in the platform.
+In the classic Vitis IDE, the platform was generated automatically when the XSA was input by the user. However, for Vitis Unified IDE, the user will need to manually create it. This is by design, to allow for a clean workspace. 
+
+For embedded designs, the platform will contain the system device tree (SDT). Any domains (BSP), and/or boot components will be placed in the platform.
 
 From the Welcome Screen, users can select the Create Platform Component under Embedded Development.  Or from the File menu, under New Component, Platform.
 
@@ -49,7 +62,18 @@ Users have two options: create a new platform using the XSA exported from Vivado
 
 ![missing image](./images/add_xsa.PNG)
 
-The SDT (System Device Tree) is a new concept in Vitis Unified flow. Previously, in Vitis Classic the hardware metadata was extracted directly from the XSA using HSI API in an "AD Hoc" manner when needed by the Vitis tools; such as extracting processors for platform creation or extracting IP for BSP creation. In Vitis unified flow, the tools will create a SDT (System Device Tree) when users generate the platform, and this is used to provide the hardware metadata to Vitis via the lopper utility.
+The SDT (System Device Tree) is a new concept in Vitis Unified flow. Previously, in the classic Vitis IDE, the hardware metadata was extracted directly from the XSA using HSI API in an "AD Hoc" manner when needed by the Vitis tools; such as extracting processors for platform creation or extracting IP for BSP creation. In Vitis unified flow, the tools will create a SDT (System Device Tree) when users generate the platform, and this is used to provide the hardware metadata to Vitis via the lopper utility.
+
+<details>
+  <summary>Click here to expand details of System Device Tree in Vitis workflow</summary>
+**Note**:
+
+- The diagram should be read from top to bottom.
+- The diagram is for illustration only.
+
+<img src="./images/vitis_flow.PNG" alt="Missing Image" width="600" height="423">
+</details>
+
 
 Users will now be presented with a drop down box to select the operating system and the processor will be auto-populated from the SDT. Tick the Generate boot artifacts box and proceed
 
