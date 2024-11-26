@@ -9,7 +9,7 @@
 
 # Multi-Kernel FIR Filter Implementation
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 In this second part of the tutorial, you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
 
@@ -266,7 +266,7 @@ Finally, click **Trace** to look at how the entire simulation went through. This
 
 ![missing image](../Images/Timeline4Kernels.jpg)
 
-Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
+Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
 
 ![missing image](../Images/GraphOutput4Kernels.jpg)
 
@@ -275,27 +275,27 @@ The top graph reflects the outputs where the abscissa is the time at which this 
 After simulation the simulator displays the raw throughput at the input and output ports:
 
 ```
---------------------------------------------------------------------------------------------------
-Port Name           | Type              | Average Throughput
---------------------------------------------------------------------------------------------------
-Stream for block 0  | IN                | 4543.092248 MBps
-Stream for block 1  | IN                | 4536.837570 MBps
-Stream for block 2  | IN                | 4530.647235 MBps
-Stream for block 3  | IN                | 4524.520256 MBps
-64 bits output 0    | OUT               | 4753.946147 MBps
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+| Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
+--------------------------------------------------------------------------------
+| plio        | Stream for block 0                 | IN    | 4691.484517       |
+|             | Stream for block 1                 | IN    | 4688.565583       |
+|             | Stream for block 2                 | IN    | 4686.719637       |
+|             | Stream for block 3                 | IN    | 4684.878712       |
+|             | 64 bits output 0                   | OUT   | 4691.867125       |
 ```
-The ouput port throughput in Msps (cint16) is: `1188.49 Msps`.
 
-The performance of this architecture can also be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
+The ouput port throughput in Msps (cint16) is: `1172.97 Msps`.
+
+The performance of this architecture can also be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->  1188.49 Msps
+Output_0.txt -->  1172.97 Msps
 
 -----------------------
 
 
-Total Throughput -->    1188.49 Msps
+Total Throughput -->    1172.97 Msps
 ```
 
 This architecture achieves close to 1.25 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.

@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -170,7 +170,7 @@ The constructor takes charge of the next operations. The first operation is to c
 The source and header locations are then defined for the AI Engine. The location of the first AI Engine in each row must also be constrained to facilitate the placer work. To shorten the place time by a few seconds, you can constrain the core location. A single one is necessary because all the others are constrained by the **cascade** connection.
 
 
-All the kernels need to discard a specific number of elements. In this dual-stream implementation, this is handled by the kernel itself. To ensure that this is correctly done, the instantiation line can be extracted from the AI Engine source code. Navigate to `Emulation-AIE/Work/aie/`. In this directory, all the AI Engines used in the design have their own directory. Open the first one: `cd 23_0/src`, and look at the source code. The instantiation of the kernel can be viewed:
+All the kernels need to discard a specific number of elements. In this dual-stream implementation, this is handled by the kernel itself. To ensure that this is correctly done, the instantiation line can be extracted from the AI Engine source code. Navigate to `Work/aie/`. In this directory, all the AI Engines used in the design have their own directory. Open the first one: `cd 23_0/src`, and look at the source code. The instantiation of the kernel can be viewed:
 
 ```C++
 // Declare Kernel objects and external arrays
@@ -182,7 +182,7 @@ DoubleStream::FIR_MultiKernel_cout<512, 0, false, false> i48({{-82, -253}, {643,
 ...
 ```
 
-It would be tedious to repeat this for every AI Engine, so a utility has been created that extracts this information for all AI Engines. Navigate back to `Emulation-AIE/Work/aie`, and type `GetDeclare.sh`. The output starts as follows:
+It would be tedious to repeat this for every AI Engine, so a utility has been created that extracts this information for all AI Engines. Navigate back to `Work/aie`, and type `GetDeclare.sh`. The output starts as follows:
 
 ```C++
 Row 0
@@ -267,7 +267,7 @@ In this view, the cascade streams connecting neighboring AI Engines are key to t
 
 Finally, click **Trace** to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if the performance is not as expected:
 
-Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `PhaseOut_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput PhaseOut_*`.
+Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `aiesimulator_output/data` and look at the `PhaseOut_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput PhaseOut_*`.
 
 ![missing image](../Images/GraphOutput8Phases.jpg)
 
@@ -276,69 +276,69 @@ The top graph reflects the real part of the output, the bottom graph this is the
 After simulation the simulator displays the raw throughput at the input and output ports:
 
 ```
---------------------------------------------------------------------------------------------------
-Port Name           | Type              | Average Throughput
---------------------------------------------------------------------------------------------------
-PhaseIn_0_0         | IN                | 5007.824726 MBps  
-PhaseIn_0_1         | IN                | 5007.824726 MBps  
-PhaseIn_1_0         | IN                | 4441.360167 MBps  
-PhaseIn_1_1         | IN                | 5007.824726 MBps  
-PhaseIn_2_0         | IN                | 5007.824726 MBps  
-PhaseIn_2_1         | IN                | 4312.668464 MBps  
-PhaseIn_3_0         | IN                | 4380.561259 MBps  
-PhaseIn_3_1         | IN                | 5007.824726 MBps  
-PhaseIn_4_0         | IN                | 5007.824726 MBps  
-PhaseIn_4_1         | IN                | 5007.824726 MBps  
-PhaseIn_5_0         | IN                | 5007.824726 MBps  
-PhaseIn_5_1         | IN                | 4494.382022 MBps  
-PhaseIn_6_0         | IN                | 5007.824726 MBps  
-PhaseIn_6_1         | IN                | 5007.824726 MBps  
-PhaseIn_7_0         | IN                | 4542.228531 MBps  
-PhaseIn_7_1         | IN                | 4723.247232 MBps  
-PhaseOut_0_0        | OUT               | 4714.548803 MBps  
-PhaseOut_0_1        | OUT               | 4705.882353 MBps  
-PhaseOut_1_0        | OUT               | 4714.548803 MBps  
-PhaseOut_1_1        | OUT               | 4705.882353 MBps  
-PhaseOut_2_0        | OUT               | 4714.548803 MBps  
-PhaseOut_2_1        | OUT               | 4705.882353 MBps  
-PhaseOut_3_0        | OUT               | 4714.548803 MBps  
-PhaseOut_3_1        | OUT               | 4705.882353 MBps  
-PhaseOut_4_0        | OUT               | 4714.548803 MBps  
-PhaseOut_4_1        | OUT               | 4705.882353 MBps  
-PhaseOut_5_0        | OUT               | 4714.548803 MBps  
-PhaseOut_5_1        | OUT               | 4705.882353 MBps  
-PhaseOut_6_0        | OUT               | 4714.548803 MBps  
-PhaseOut_6_1        | OUT               | 4705.882353 MBps  
-PhaseOut_7_0        | OUT               | 4714.548803 MBps  
-PhaseOut_7_1        | OUT               | 4705.882353 MBps  
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+| Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
+--------------------------------------------------------------------------------
+| plio        | PhaseOut_0_1                       | IN    | 4981.621622       |
+|             | PhaseIn_0_1                        | IN    | 5002.171081       |
+|             | PhaseIn_1_0                        | IN    | 4947.391024       |
+|             | PhaseIn_1_1                        | IN    | 5002.171081       |
+|             | PhaseIn_2_0                        | IN    | 4529.192058       |
+|             | PhaseIn_2_1                        | IN    | 5002.171081       |
+|             | PhaseIn_3_0                        | IN    | 4981.621622       |
+|             | PhaseIn_3_1                        | IN    | 5002.171081       |
+|             | PhaseIn_4_0                        | IN    | 4981.621622       |
+|             | PhaseIn_4_1                        | IN    | 5002.171081       |
+|             | PhaseIn_5_0                        | IN    | 4529.192058       |
+|             | PhaseIn_5_1                        | IN    | 5002.171081       |
+|             | PhaseIn_6_0                        | IN    | 4947.391024       |
+|             | PhaseIn_6_1                        | IN    | 5002.171081       |
+|             | PhaseIn_7_0                        | IN    | 4981.621622       |
+|             | PhaseIn_7_1                        | IN    | 5002.171081       |
+|             | PhaseOut_0_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_0_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_1_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_1_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_2_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_2_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_3_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_3_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_4_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_4_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_5_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_5_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_6_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_6_1                       | OUT   | 4455.079400       |
+|             | PhaseOut_7_0                       | OUT   | 4457.018498       |
+|             | PhaseOut_7_1                       | OUT   | 4455.079400       |
 ```
-The aggregated ouput port throughput in Msps (cint16) is: `18840.86 Msps`.
 
-The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput PhaseOut_*`:
+The aggregated ouput port throughput in Msps (cint16) is: `17824.19 Msps`.
+
+The performance of this architecture can be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput PhaseOut_*`:
 
 ```
-PhaseOut_0_0.txt -->  1178.64 Msps
-PhaseOut_0_1.txt -->  1176.47 Msps
-PhaseOut_1_0.txt -->  1178.64 Msps
-PhaseOut_1_1.txt -->  1176.47 Msps
-PhaseOut_2_0.txt -->  1178.64 Msps
-PhaseOut_2_1.txt -->  1176.47 Msps
-PhaseOut_3_0.txt -->  1178.64 Msps
-PhaseOut_3_1.txt -->  1176.47 Msps
-PhaseOut_4_0.txt -->  1178.64 Msps
-PhaseOut_4_1.txt -->  1176.47 Msps
-PhaseOut_5_0.txt -->  1178.64 Msps
-PhaseOut_5_1.txt -->  1176.47 Msps
-PhaseOut_6_0.txt -->  1178.64 Msps
-PhaseOut_6_1.txt -->  1176.47 Msps
-PhaseOut_7_0.txt -->  1178.64 Msps
-PhaseOut_7_1.txt -->  1176.47 Msps
+PhaseOut_0_0.txt -->  1114.01 Msps
+PhaseOut_0_1.txt -->  1114.01 Msps
+PhaseOut_1_0.txt -->  1114.01 Msps
+PhaseOut_1_1.txt -->  1114.01 Msps
+PhaseOut_2_0.txt -->  1114.01 Msps
+PhaseOut_2_1.txt -->  1114.01 Msps
+PhaseOut_3_0.txt -->  1114.01 Msps
+PhaseOut_3_1.txt -->  1114.01 Msps
+PhaseOut_4_0.txt -->  1114.01 Msps
+PhaseOut_4_1.txt -->  1114.01 Msps
+PhaseOut_5_0.txt -->  1114.01 Msps
+PhaseOut_5_1.txt -->  1114.01 Msps
+PhaseOut_6_0.txt -->  1114.01 Msps
+PhaseOut_6_1.txt -->  1114.01 Msps
+PhaseOut_7_0.txt -->  1114.01 Msps
+PhaseOut_7_1.txt -->  1114.01 Msps
 
 -----------------------
 
 
-Total Throughput -->   18840.86 Msps
+Total Throughput -->   17824.19 Msps
 ```
 
 This architecture achieves almost 19 Gsps performance. It is less than the maximum expected (20 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length, the performance obtained is:

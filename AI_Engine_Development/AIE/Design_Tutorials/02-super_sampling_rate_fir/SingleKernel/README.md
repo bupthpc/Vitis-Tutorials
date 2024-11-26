@@ -9,7 +9,7 @@
 
 # Single-Kernel FIR Filter Implementation
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 In this first part of the tutorial, you will use a basic filtering application and analyze the performance that can be achieved.
 
@@ -232,6 +232,8 @@ Click on **Generate** then on **Exit**. The generated file `PhaseIn_0.txt` shoul
 
 Type `make all` and wait for `vitis_analyzer` GUI to display. The AMD Vitis&trade; analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.
 
+### Vitis Analyzer
+
 Click **Graph** to visualize the graph of the application:
 
 ![missing image](../Images/GraphSingleKernel.jpg)
@@ -240,11 +242,19 @@ Click **Array** to visualize where the kernel has been placed, and how it is fed
 
 ![missing image](../Images/ArraySingleKernel.jpg)
 
-Finally, click on **Trace** to look how the entire simulation went through. This may be useful to track where your AI Engine stalls if the performance is not as expected:
+Click on **Trace** to look how the entire simulation went through. This may be useful to track where your AI Engine stalls if the performance is not as expected:
 
 ![missing image](../Images/TimelineSingleKernel.jpg)
 
-As explained earlier, the directory `Utils` contains a number of utilities that help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
+Vitis Analyzer allows you to analyze latency and thoughput of the design. Click on **latency** tab on the lower panel. Right-click on the input port and choose __Plot Continuous Latency__. By default the number of interval is specified as the __No of Intervals__ defined on the duration of the simulation. By default this is the number of iteration. Click **OK** and the following plot is displayed:
+
+![missing image](../Images/ContinuousLatency.png)
+
+You can perform the same analysis with throughput by selecting the **I/O** tab on the **Trace** section.
+
+### Script Utils
+
+As explained earlier, the directory `Utils` contains a number of utilities that help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
 
 ![missing image](../Images/GraphOutputSingleKernel.jpg)
 
@@ -253,25 +263,24 @@ The top graph reflects the outputs where the abscissa is at the time at which th
 After simulation the simulator displays the raw throughput at the input and output port:
 
 ```
---------------------------------------------------------------------------------------------------
-Port Name           | Type              | Average Throughput
---------------------------------------------------------------------------------------------------
-64 bits in G1       | IN                | 1168.361959 MBps
-64 bits out G1      | OUT               | 1182.721183 MBps
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+| Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
+--------------------------------------------------------------------------------
+| plio        | 64 bits in G1                      | IN    | 1170.608444       |
+|             | 64 bits out G1                     | OUT   | 1168.766318       |
 ```
 
-As this is expressed in bytes per second this must be divided by 4 to get it in samples per second (cint16 is encoded with 2 bytes for the real part and 2 bytes for the imaginary part). This makes an estimated throughput of `295.68 Msps`.
+As this is expressed in bytes per second this must be divided by 4 to get it in samples per second (cint16 is encoded with 2 bytes for the real part and 2 bytes for the imaginary part). This makes an estimated throughput of `292.17 Msps`.
 
-The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
+The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   295.61 Msps
+Output_0.txt -->   292.17 Msps
 
 -----------------------
 
 
-Total Throughput -->     295.61 Msps
+Total Throughput -->     292.17 Msps
 ```
 
 Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 312.5 Msps, which is in line with what was achieved.

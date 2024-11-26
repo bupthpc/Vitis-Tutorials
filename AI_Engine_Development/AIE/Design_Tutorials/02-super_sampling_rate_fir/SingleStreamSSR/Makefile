@@ -4,32 +4,77 @@
 #
 
 
+
+# AIE compiler tools
+AIE_TOP_DIR = .
+AIE_BUILD_DIR = .
+AIE_CC = v++ --compile --mode aie
+UTILS := $(PWD)/../Utils
+
+AIE_GRAPH_FILES = ${AIE_TOP_DIR}/aie/SSRgraph.cpp
+AIE_OUT_DIR = ${AIE_BUILD_DIR}/Work
+AIE_DATA_DIR = ${AIE_BUILD_DIR}/data
+AIE_HW_DIR = ${AIE_BUILD_DIR}/hw
+RM = rm -f
+RMDIR = rm -rf
+
 PFM_NAME ?= xilinx_vck190_base_202420_1
+PLATFORM ?= $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
-all:
-	make data
-	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) all
+# AIE compiler settings
+AIE_FLAGS = --aie.verbose --include "${XILINX_VITIS}/aietools/include"  --include "${AIE_TOP_DIR}/" --include "${AIE_TOP_DIR}/aie" --include "${AIE_TOP_DIR}/data" --target hw   --platform ${PLATFORM} --aie.workdir $(AIE_OUT_DIR)
 
-run:
-	make data
-	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aie aiesim
+AIE_FLAGS += --aie.Xrouter dmaFIFOsInFreeBankOnly
 
-aie:
-	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aie
+# Sources
+SRCS = ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.cpp ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.h ${AIE_TOP_DIR}/aie/SSRgraph.cpp  ${AIE_TOP_DIR}/aie/SSRgraph.h  ${AIE_TOP_DIR}/aie/system_settings.h  ${AIE_TOP_DIR}/aie/aie_kernels.h
 
-aiesim:
-	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aiesim
 
-aieviz:
-	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aieviz
+#
+# primary build targets
+#
 
-clean:
-	rm -rf data
-	make -C Emulation-AIE clean
-	rm -f vitis_analyzer*
+all: clean  data aie aiesim aieviz throughput waveform
+
+run: clean data aie aiesim
+
+
+NUM_SAMPLES ?= 512
+NFRAMES ?= 16
+
+SYSTEM_VAR_D := -DNUM_SAMPLES=$(NUM_SAMPLES) -DNFRAMES=$(NFRAMES)
+AIE_FLAGS += --aie.Xpreproc "\"$(SYSTEM_VAR_D)\""
+
+NSamples := $(NUM_SAMPLES)
+NFrames := $(shell echo " $(NFRAMES) + 1" | bc)
 
 data:
+	rm -rf data
 	mkdir -p data
-	../Utils/GenerateStreams cint16 64 4 1 512 4 Dirac data/PhaseIn
+	../Utils/GenerateStreams cint16 64 4 1 $(NSamples) $(NFrames) Dirac data/PhaseIn
 
-.PHONY: all clean aie aiesim aieviz data
+aie:   $(SRCS)
+	$(AIE_CC) $(AIE_FLAGS) $(AIE_GRAPH_FILES)
+
+aiesim: libadf.a
+	aiesimulator --pkg-dir=Work --dump-vcd=foo
+
+aieviz:
+	vitis_analyzer aiesimulator_output/default.aierun_summary
+	
+throughput:
+	cd aiesimulator_output/data/ && $(UTILS)/StreamThroughput output_*.txt
+	
+waveform:
+	cd aiesimulator_output/data/ && $(UTILS)/ProcessAIEOutput output_*.txt
+
+clean:
+	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) *.vcd _ide libadf.a *.log *.json aiesimulator_output *.csv *.db pl_sampl* .Xil .AIE_SIM*
+	
+.PHONY: all run data clean  aie aiesim aieviz throughput waveform
+
+
+
+
+.PHONY: incremental
+incremental: clean all

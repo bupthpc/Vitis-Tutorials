@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Super Sampling Rate FIR Filter
 
@@ -267,7 +267,7 @@ Finally, click **Trace** to look at how the entire simulation went through. This
 
 ![Timeline4Phases](../Images/Timeline4Phases.jpg)
 
-Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput output_*`.
+Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `aiesimulator_output/data` and look at the `output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput output_*`.
 
 ![GraphOutput4Phases](../Images/GraphOutput4Phases.jpg)
 
@@ -276,34 +276,33 @@ The top graph reflects the real part of the output. The bottom graph this is the
 After simulation the simulator displays the raw throughput at the input and output ports:
 
 ```
---------------------------------------------------------------------------------------------------
-Port Name           | Type              | Average Throughput
---------------------------------------------------------------------------------------------------
-Phase 0             | IN                | 5003.909304 MBps  
-Phase 1             | IN                | 5003.909304 MBps  
-Phase 2             | IN                | 5003.909304 MBps  
-Phase 3             | IN                | 5003.909304 MBps  
-64 bits out 0       | OUT               | 4753.946147 MBps  
-64 bits out 1       | OUT               | 4753.946147 MBps  
-64 bits out 2       | OUT               | 4753.946147 MBps  
-64 bits out 3       | OUT               | 4753.946147 MBps  
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+| Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
+--------------------------------------------------------------------------------
+| plio        | Phase 0                            | IN    | 4950.996958       |
+|             | Phase 1                            | IN    | 4957.698816       |
+|             | Phase 2                            | IN    | 4950.439288       |
+|             | Phase 3                            | IN    | 4943.757030       |
+|             | 64 bits out 0                      | OUT   | 4691.867125       |
+|             | 64 bits out 1                      | OUT   | 4691.867125       |
+|             | 64 bits out 2                      | OUT   | 4691.867125       |
+|             | 64 bits out 3                      | OUT   | 4691.867125       |
 ```
 
-The aggregated ouput port throughput in Msps (cint16) is: `4753.95 Msps`.
+The aggregated ouput port throughput in Msps (cint16) is: `4691.87 Msps`.
 
-The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput output_*`:
+The performance of this architecture can be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput output_*`:
 
 ```
-output_0.txt -->  1188.49 Msps
-output_1.txt -->  1188.49 Msps
-output_2.txt -->  1188.49 Msps
-output_3.txt -->  1188.49 Msps
+output_0.txt -->  1172.97 Msps
+output_1.txt -->  1172.97 Msps
+output_2.txt -->  1172.97 Msps
+output_3.txt -->  1172.97 Msps
 
 -----------------------
 
 
-Total Throughput -->    4753.95 Msps
+Total Throughput -->    4691.87 Msps
 ```
 
 This architecture achieves close to 5 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.

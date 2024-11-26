@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 
 ## Introduction
@@ -24,15 +24,15 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 Before beginning this tutorial, you should be familiar with Versal adaptive SoC architecture and more specifically on the AI Engine array processor and interconnect architecture.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2024.1 software.  The AMD Vitis&trade; release includes all the embedded base platforms, including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html).
+**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2024.2 software.  The AMD Vitis&trade; release includes all the embedded base platforms, including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html).
 The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.1` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms/xilinx_vck190_base_dfx_202410_1/xilinx_vck190_base_dfx_202410_1.xpfm`.
-This tutorial targets VCK190 production board for 2024.1 version.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2024.2/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.2` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.2/base_platforms/xilinx_vck190_base_dfx_202420_1/xilinx_vck190_base_dfx_202420_1.xpfm`.
+This tutorial targets VCK190 production board for 2024.2 version.
 
 Data generation for this tutorial requires Python:
 * [Python 3](https://www.python.org/downloads/)
@@ -57,6 +57,7 @@ This tutorial is decomposed into multiple steps:
 6. Polyphase FIR (SSR)
    1. [Single Stream](SingleStreamSSR/README.md)
    2. [Double Stream](DualStreamSSR/README.md)
+7. [Hardware implementation of 2 Dual-Stream SSR filters](DualSSR16_hw/README.md)
 
 
 <a name="AIE_Architecture"></a>
