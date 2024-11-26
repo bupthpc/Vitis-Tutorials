@@ -5,7 +5,7 @@
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=zcu104_custom
-PLATFORM ?= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM ?= $(ROOT_DIR)/../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 TARGET ?=hw_emu
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 SRC=$(XILINX_VITIS)/examples/vadd/

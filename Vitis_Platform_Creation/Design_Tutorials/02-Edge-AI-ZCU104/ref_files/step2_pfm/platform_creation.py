@@ -14,25 +14,24 @@ parser.add_argument("--platform_name", type=str, dest="platform_name")
 parser.add_argument("--xsa_path", type=str, dest="xsa_path")
 parser.add_argument("--xsa-emu_path", type=str, dest="emuxsa_path")
 parser.add_argument("--boot", type=str, dest="boot")
-parser.add_argument("--dtb", type=str, dest="dtb")
+parser.add_argument("--user_dtsi", type=str, dest="user_dtsi")
 args = parser.parse_args()
 platform_name=args.platform_name
 xsa_path=args.xsa_path
 emuxsa_path=args.emuxsa_path
-dtb=args.dtb
+user_dtsi=args.user_dtsi
 boot=args.boot
 print('args',args)
 client = vitis.create_client()
-
 workspace_path = os.getcwd() + "/ws" 
 client.set_workspace(path=workspace_path)
-print(workspace_path)
-platform = client.create_platform_component(name = platform_name, hw_design =xsa_path, os = "linux",cpu = "psu_cortexa53",emu_design = emuxsa_path )
+advanced_options = client.create_advanced_options_dict(board_dtsi="zcu104-revc",dt_overlay="0",dt_zocl="1",user_dtsi=user_dtsi)
+platform = client.create_platform_component(name = platform_name, hw_design =xsa_path, emu_design = emuxsa_path,os = "linux",cpu = "psu_cortexa53",generate_dtb = True,advanced_options = advanced_options )
 platform = client.get_component(name=platform_name)
 domain = platform.get_domain(name="linux_psu_cortexa53")
 status = domain.update_name(new_name="xrt")
 status = domain.generate_bif() 
 status = domain.set_boot_dir(path=boot)
-status = domain.set_dtb(path=dtb)
+
 
 status = platform.build()

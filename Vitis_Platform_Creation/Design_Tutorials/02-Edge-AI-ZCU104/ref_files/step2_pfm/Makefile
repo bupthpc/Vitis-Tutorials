@@ -10,11 +10,6 @@ VERSION=2024.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DTB=$(ROOT_DIR)/mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb
 SYSROOT=$(ROOT_DIR)/sysroot
-DEVICE_TREE ?=https://github.com/Xilinx/device-tree-xlnx.git
-
-ifdef DEVICE_TREE
-DEVICE_TREE_REPO=$(DEVICE_TREE)
-endif
 
 .PHONY: help 
 
@@ -23,7 +18,7 @@ help:
 	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## to generate platform with pre-built software components"
 	
 
-all: check-common-image  dtb pfm
+all: check-common-image  pfm
 sd_card:all
 
 #target : check  whether the common image is ready 
@@ -35,19 +30,12 @@ ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
 endif
 
 
-#:DTB 
-#generate dtb file
-#echo command is to avoid the return error code caused by the createdts command warning	
-$(DTB): dtb
-dtb:
-	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out . -git-url $(DEVICE_TREE_REPO) -git-branch xlnx_rel_v2024.1 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
 
 #create platfrom 
-pfm: $(DTB)
+pfm: 
 	@echo "INFO: Creating Final Platform $(PLATFORM_NAME)"
 	@echo "set place for vitis configuration file "
-	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa --xsa-emu_path ../step1_vivado/build/vivado/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_ZYNQMP) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa --xsa-emu_path ../step1_vivado/build/vivado/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_ZYNQMP) --user_dtsi $(ROOT_DIR)/system-user.dtsi
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 
 

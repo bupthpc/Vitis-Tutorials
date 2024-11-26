@@ -37,13 +37,14 @@
 			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
 			"IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
-            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_PACKAGE_OUT=./step3_validate/package.hw/", 
             "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
         ],
         "custom_build_target":
         {
             "all": "all",
             "hw" : "sd_card"
-        }
+        },
+        "custom_board_target": "run_test" 
     }
 }
