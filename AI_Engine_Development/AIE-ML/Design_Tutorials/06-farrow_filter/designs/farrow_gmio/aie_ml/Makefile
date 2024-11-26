@@ -16,7 +16,7 @@ LOG_FILE           = log
 OTHER_OPTS         = --aie.pl-freq=625.0 --aie.Xchess="-std=c++17"
 ALL_INCLUDE       := --include=${PWD}
 AIE_TRACE_HW 	  := --aie.event-trace-port=gmio --aie.event-trace=runtime	
-AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} --platform=${PLATFORM} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
+AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} ${AIE_TRACE_HW} --platform=${PLATFORM} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
 
 ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"

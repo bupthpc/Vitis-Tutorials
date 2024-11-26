@@ -510,6 +510,9 @@ Throughput of the graph: 4247.2 MB/s
 Throughput of the graph: 1061.8 MSPS
 ...
 ```
+
+Note: You can safely ignore the warnings.
+
 To exit the QEMU, press Ctrl A + X.
 After the hardware emulation run is complete, you can analyze the reports in Vitis Analyzer. 
 
@@ -541,6 +544,8 @@ Throughput of the graph: 1124.78 MSPS
 GMIO transactions finished
 
 ```
+
+Note: You can safely ignore the warnings.
 
 # Comparison of AIE vs AIE-ML Farrow Filter Design Implementation
 The following table compares the implementation of a farrow filter in AIE and AIE-ML architectures.
