@@ -27,7 +27,6 @@
             }
         ],
         "targets": [
-            "vitis_sw_emu",
             "vitis_hw_emu",
             "vitis_hw_build",
             "vitis_hw_run"
@@ -35,7 +34,7 @@
         "category": "canary",
         "make_options": [
             "HOST_ARCH=aarch64",
-            "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
+            "EDGE_COMMON_SW=${COMMON_IMAGE_VERSAL}",
             "SYSROOT=${SYSROOT}",
             "SDKTARGETSYSROOT=${SYSROOT}",
             "ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
@@ -46,7 +45,7 @@
         ],
         "custom_build_target":
         {
-            "all": "run",
+            "all": "all",
             "hw" : "sd_card"
         },
         "custom_board_target": "run_test",
