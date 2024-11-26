@@ -151,40 +151,50 @@ public:
       connect<>( dut.back_o[ff],     back_o[ff].in[0] );
 #ifndef __X86SIM__
       if (ff<ifft4096_2d_graph::TP_SSR/2){
-            location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])              = tile(34+ff,4);
-            location<kernel>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff])                                     = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])        = { address(34+ff, 4, 0x0), address(34+ff, 4, 0x4000) };
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0])                              = location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])       = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
-            location<stack>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(34+ff,5,0);
-            location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[0])                         = bank(34+ff,5,2);
-            location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[1])                         = bank(34+ff,5,2);
+            location<kernel>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = tile(34+ff,4);
+            location<kernel>   (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff])                                  = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])     = bank(34+ff,4,0);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0])                           = bank(34+ff,4,2);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])    = bank(34+ff,4,1);
+            location<stack>    (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = bank(34+ff,4,3);
+            location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[0])                         = bank(34+ff,4,3);
+            location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[1])                         = bank(34+ff,4,3);
             location<PLIO>(front_i[ff])                                                                             = shim(24);
             location<PLIO>(front_o[ff])                                                                             = shim(24);
 
             location<kernel>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = tile(30+ff,4);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = { bank(30+ff,4,0), bank(30+ff,4,1)};
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = { bank(30+ff,4,2), bank(30+ff,4,3)};
-            location<stack>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])                = bank(30+ff,5,0);
+            single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
+            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = bank(30+ff,4,0);
+            single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0]);
+            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = bank(30+ff,4,1);
+            location<stack> (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(30+ff,4,2);
             location<PLIO>(back_i[ff])                                                                              = shim(22);
             location<PLIO>(back_o[ff])                                                                              = shim(22);
       }
       else{
-            location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])              = tile(34+ff-4,6);
-            location<kernel>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff])                                     = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])        = { address(34+ff-4, 6, 0x0), address(34+ff-4, 6, 0x4000) };
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0])                              = location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])       = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
-            location<stack>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(34+ff-4,5,1);
+            location<kernel>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = tile(34+ff-4,5);
+            location<kernel>   (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff])                                  = location<kernel>(dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0]);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])     = bank(34+ff-4,5,0);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].out[0])                           = bank(34+ff-4,5,2);
+            single_buffer      (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0]);
+            location<buffer>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])    = bank(34+ff-4,5,1);
+            location<stack>    (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = bank(34+ff-4,5,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[0])                         = bank(34+ff-4,5,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[1])                         = bank(34+ff-4,5,3);
             location<PLIO>(front_i[ff])                                                                             = shim(23);
             location<PLIO>(front_o[ff])                                                                             = shim(23);
 
-            location<kernel>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = tile(30+ff-4,6);
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = { bank(30+ff-4,6,0), bank(30+ff-4,6,1)};
-            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = { bank(30+ff-4,6,2), bank(30+ff-4,6,3)};
-            location<stack>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])                = bank(30+ff-4,5,1);
+            location<kernel>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = tile(30+ff-4,5);
+            single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
+            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = bank(30+ff-4,5,0);
+            single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0]);
+            location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = bank(30+ff-4,5,1);
+            location<stack> (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(30+ff-4,5,2);
             location<PLIO>(back_i[ff])                                                                              = shim(21);
             location<PLIO>(back_o[ff])                                                                              = shim(21);
       }
