@@ -68,16 +68,11 @@ This tutorial shows how to design AI Engine applications using Model Composer. T
 This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal ACAP.</td>
  </tr>
  <tr>
- <td align="center"><a href="./12-axis-traffic-generator/">AXIS External Traffic Generator</a></td>
- <td>
-This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.</td>
- </tr>
-  <tr>
  <td align="center"><a href="./13-aie-performance-analysis/">AI Engine Performance and Deadlock Analysis Tutorial</a></td>
  <td>
 This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./14-implementing-iir-filter/">Implementing an IIR Filter on the AI Engine</a></td>
  <td>
 This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
@@ -95,10 +90,6 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td>This tutorial demonstrates how to reuse any AXI-based IP you have created as an RTL IP, control your platform, and convert your RTL IP to an RTL kernel allowing for a more streamlined process for creating the design you need.</td>
  </tr>
  <tr>
- <td align="center"><a href="./19-aie_external_io_sv/">Using Verilog Traffic Generators in AIE Simulation</a></td>
- <td>This tutorial demonstrates how to use Verilog or System Verilog modules to drive traffic in and out of an ADF graph running in the AIE Simulator.</td>
- </tr>
- <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
  </tr>
@@ -106,10 +97,6 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./21-two_tone_filter/">Two Tone Filter on AIE Using DSP libraries and Vitis Model Composer </a></td>
  <td>This tutorial demonstrates how to implement the same MATLAB model design using the Vitis DSP libraries targeting AI Engine. This MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot. This tutorial has four parts. In part 1, the sampling rate requirement is 400 Msps; in part 2, the sampling rate requirement is 2000 Msps, in part 3, implement the part 1 design using Vitis IDE and then finally, in part4, implement the part 1 design using Vitis Model Composer tool.</td>
  </tr> 
- <tr>
- <td align="center"><a href="./22-Performance-Validation-in-Analysis-View/">Performance Validation in Analysis View of the Vitis Unified IDE</a></td>
- <td>This tutorial demonstrates throughput and latency computation after AI Engine Simulation and their analysis in the Analysis View of the Vitis Unified IDE. </td>
- </tr>  
  <tr>
  <td align="center"><a href="./24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
  <td>This tutorial shows ways of interfacing user RTL logic to the AI Engine using the Vitis acceleration flow. </td>

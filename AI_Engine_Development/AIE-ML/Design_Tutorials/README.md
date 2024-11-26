@@ -42,7 +42,15 @@ The AI Engine Development Design Tutorials showcase the two major phases of AI E
  <tr>
  <td align="center"><a href="./06-farrow_filter/">Migrating Farrow Filter from AIE to AIE-ML</a></td>
  <td>A fractional delay filter is a common digital signal processing (DSP) algorithm found in many applications including digital receivers in modems and is required for timing synchronization. The Fractional Delay Farrow Filter design has already been implemented for the AIE architecture. This tutorial guides how to migrate the existing Fractional Delay Farrow Filter design from AIE to AIE-ML architecture. </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./07-Channelizer-Using-Vitis-Libraries/">Polyphase Channelizer on AIE-ML using Vitis Libraries</a></td>
+ <td>This tutorial demonstrates how to leverage Vitis Libraries IP blocks to build a high performance Polyphase Channelizer on AIE-ML running at 2GSPS. </td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./08-MNIST-ConvNet/">MNIST ConvNet on AIE-ML</a></td>
+ <td>This tutorial implements a Convolutional Neural Network classifier on AIE-ML for identifying hand-written digits from the MNIST database. The goal is to illustrate how to partition & vectorize a simple machine learning example to Versal AI Engines.</td>
+ </tr>  
 </table>
 
 

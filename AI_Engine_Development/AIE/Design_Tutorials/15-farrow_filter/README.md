@@ -292,9 +292,7 @@ Steady state throughput is 1024/912.8e-6 = 1115 Msps.
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
-
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms.
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile ```<path-to-design>/15-farrow_filter/Makefile``` file. The tutorial will build its own custom platform
 

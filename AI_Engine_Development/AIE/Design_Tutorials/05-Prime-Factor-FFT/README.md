@@ -168,9 +168,7 @@ The figure below summarizes the AI Engine and PL resources required to implement
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
-
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms.
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-design>/05-Prime-Factor-FFT/Makefile``` file. The tutorial will build its own custom platform
 

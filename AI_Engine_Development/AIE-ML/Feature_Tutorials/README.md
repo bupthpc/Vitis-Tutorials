@@ -42,11 +42,7 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
- </tr>
- <tr>
- <td align="center"><a href="./22-Performance-Validation-in-Analysis-View/">Performance Validation in Analysis View of the Vitis Unified IDE</a></td>
- <td>This tutorial demonstrates throughput and latency computation after AI Engine Simulation and their analysis in the Analysis View of the Vitis Unified IDE. </td>
- </tr>  
+ </tr> 
  </table>
 
 

@@ -290,9 +290,7 @@ Timing closure of the top-level device is achieved automatically with the standa
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images and the Embedded Vitis Platforms from this link.
-
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images and the Embedded Vitis Platforms.
 
 Set the environment variable `COMMON_IMAGE_VERSAL` to the full path where you have downloaded the Common Images. Set the environment variable `PLATFORM_REPO_PATHS` to the full path where you have downloaded the embedded base platforms. The remaining environment variables are configured in the top-level Makefile `<path-to-repo>/Makefile`.
 

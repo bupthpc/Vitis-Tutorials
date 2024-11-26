@@ -261,7 +261,7 @@ The figure below illustrates the output sample collection process required by th
 
 ### Layer Design Details: `dense_w7()`
 
-The figure below summarizes the key aspects of the design of the `dense_w7()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/dense_w7/gen_vectors.ipynb). This tile includes three functions, the `flatten_w6()` layer, the `dense_w7()` layer, and the final `softmax()` computation. The layer uses the `mac_elem_16_2()` intrinsic to compute outputs two at a time. Each intrinsic consumes 32 input channels. The `softmax()` activation function is computed using the approach outlined in the [Softmax Function Vitis Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2024.1/AI_Engine_Development/AIE-ML/Design_Tutorials/05-Softmax-Function)
+The figure below summarizes the key aspects of the design of the `dense_w7()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/dense_w7/gen_vectors.ipynb). This tile includes three functions, the `flatten_w6()` layer, the `dense_w7()` layer, and the final `softmax()` computation. The layer uses the `mac_elem_16_2()` intrinsic to compute outputs two at a time. Each intrinsic consumes 32 input channels. The `softmax()` activation function is computed using the approach outlined in the [Softmax Function Vitis Tutorial](../05-Softmax-Function/)
 
 ![figure19](images/design-details-layer7.png)
 

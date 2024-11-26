@@ -1,5 +1,16 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Signal Processing on AI Engine Using Vitis DSP Libraries and Vitis Model Composer
-### *Version: Vitis 2024.2* 
+
+***Version: Vitis 2024.2***
+
 ## Introduction
 This tutorial guides you to design an FIR filter with an FFT using the DSP library targeting AMD Versal™ AI Engine.
 ## Before You Begin
@@ -90,7 +101,7 @@ Make sure to set the PLATFORM_REPO_PATHS environment variable.
 #### Source the Vitis tool 
 Enter the following command to source the Vitis tool:
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2024.1/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2024.2/settings.sh
 ```
 
 #### Set the DSP Library Path
