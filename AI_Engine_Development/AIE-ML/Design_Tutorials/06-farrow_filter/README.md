@@ -1,6 +1,6 @@
 # Migrating Fractional Delay Farrow Filter from AIE to AIE-ML Architecture
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Introduction
 
@@ -27,13 +27,13 @@ The design requirements are identical here as you are simply migrating the desig
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up the software and installing the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up the software and installing the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.1/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.1/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2024.1/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2024.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 # Table of Contents
@@ -62,12 +62,12 @@ Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 ### Source the Vitis Tool
 Enter the following command to source the Vitis tool:
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2024.1/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2024.2/settings.sh
 ```
 ### Update the Makefile to switch the device from AIE to AIE-ML.
 Open the Makefile and modify the device from AIE to AIE-ML as shown below:
 ```
-PLATFORM_USE	  := xilinx_vek280_base_202410_1
+PLATFORM_USE	  := xilinx_vek280_base_202420_1
 ```
 Save the file.
 ### Compile the Design for x86 Simulation
@@ -81,7 +81,7 @@ Notice the compilation error as shown below:
 ./../../farrow_kernel1.cpp:58:19: error: constraints not satisfied for alias template 'sliding_mul_sym_xy_ops' [with Lanes = 8, Points = 8, CoeffStep = 1, DataStepXY = 1, CoeffType = short, DataType = cint16, AccumTag = cacc48]
     acc_f3 = aie::sliding_mul_sym_xy_ops<8,8,1,1,int16,cint16>::mul_antisym(f_coeffs,0,v_buff,9);
                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/proj/gsd/vivado/Vitis/2024.1/aietools/include/aie_api/aie.hpp:6492:14: note: because 'arch::is(arch::AIE)' evaluated to false
+/proj/gsd/vivado/Vitis/2024.2/aietools/include/aie_api/aie.hpp:1075:14: note: because 'arch::is(arch::AIE)' evaluated to false
     requires(arch::is(arch::AIE))
 `
 ```
@@ -165,7 +165,7 @@ $ make check_sim_output_aie
 The first command compiles graph code for the SystemC simulator, the second command runs the AIE simulation, and the final command invokes MATLAB to compare the simulation output with test vectors and compute raw throughput. The average throughput for the IO ports is displayed at the end of AIE simulation.
 After the final command execution, the console should output as below:
 ```
-Raw Throughput = 415.7 MSPS
+Raw Throughput = 450.8 MSPS
 Max error LSB = 1
 ```
 ### Analyze the Reports
@@ -181,13 +181,15 @@ The Graph view shows the kernels in the graph and the input/output ports of the 
 
 The output PLIO port throughput shows the value 1662.607566 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is `cint16`, which is four bytes in size. This gives a throughput value of 415.65 MSPS.
 
-A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/3.012 = 339.9 MSPS.
+A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/2.756 = 371.5 MSPS.
 
 Note: In the graph, select the output port which will show the net name, in this case it is net6.
 
 ![Initial_Port_Graph](./images/Initial_Port_Trace.png)
 
-The design requirement is to reach 1 GSPS, but the current performance is only **339.9 MSPS**.
+The design requirement is to reach 1 GSPS, but the current performance is only **371.5 MSPS**.
+
+Close the Vitis Analyzer.
 
 #### How to find the bottleneck in the design? 
 Begin by examining the compiler report for each kernel to assess its performance.
@@ -201,7 +203,7 @@ Assuming your AI Engine clock is 1.25 GHz, that means your throughput can potent
 #### How to determine the II required for farrow_kernel1?
 Navigate to the compiler reports for each tile located at `designs/farrow_port_initial/Work/aie`.
 
-The *farrow_kernel1* is specifically implemented on tile `18_2`. Locate the `18_2.log` file within the `18_2` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=115 cycles*.
+The *farrow_kernel1* is specifically implemented on tile `19_2`. Locate the `19_2.log` file within the `19_2` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=105 cycles*.
 
 In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the loop is implemented. This loop processes 32 samples per iteration, equivalent to BUFFER_SIZE/32 = 1024 samples/32 => 32 samples. Therefore, the goal is to achieve an II of 32.
 
@@ -209,7 +211,7 @@ In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the l
 
 ### First Optimization 
 
-After reviewing the previous analysis, it is evident that the kernel requires II=115 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
+After reviewing the previous analysis, it is evident that the kernel requires II=105 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
 
 In the `designs/farrow_port_initial/farrow_kernel1.cpp` file, within the for loop located at line number 55, the kernel currently performs four filter operations. To optimize, we propose splitting these operations; execute two filter operations in one tile and the remaining two in another tile.
 
@@ -276,12 +278,14 @@ The console should output as below:
 *** [LOOP_II] *** Tile 19_3 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_3 minII = 29 achieves II = 29
 ```
-The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_3 to perform four filter computations. According to the kernel `farrow_kernel1.cpp`, it contains two `for loops`, each with an II of 29. Consequently, it necessitates 58 cycles for each loop iteration. But the goal is to achieve an II of 32 to achieve 1 GSPS.
+The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_4 to perform four filter computations. According to the kernel `farrow_kernel1.cpp`, it contains two `for loops`, each with an II of 29. Consequently, it necessitates 58 cycles for each loop iteration. But the goal is to achieve an II of 32 to achieve 1 GSPS.
+
+Close the Vitis Analyzer.
 
 ### Second Optimization 
 The previous setup employs three tiles: two tiles for filters and another for final computations.
 
-As you noticed, the performance has been improved from 339.9 MSPS to 667.1 MSPS. The II has been reduced from 115 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
+As you noticed, the performance has been improved from 371.5 MSPS to 667.1 MSPS. The II has been reduced from 105 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
 
 Instead of managing two filters per tile, each kernel will now handle just one filter operation. You will use four tiles to carry out each filter operation. This adjustment could improve the II and enhance overall performance.
 
@@ -363,7 +367,7 @@ The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, 
 
 | Design              | Number of Tiles | Throughput  |
 |---------------------|-----------------|-------------|
-| farrow_port_initial |       2         | 339.9 MSPS  |
+| farrow_port_initial |       2         | 371.5 MSPS  |
 | farrow_opt_1        |       3         | 667.1 MSPS  |
 | farrow_opt_2        |       5         | 1011.8 MSPS |
 
@@ -459,9 +463,9 @@ The diagram below illustrates the entire Vitis tool flow, encompassing the devel
 ![Tool_Flow](./images/Tool_Flow.png)
 
 ### Setup and Initialization
-IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-tutorial>/designs/farrow_gmio/Makefile```. 
 
