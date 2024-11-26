@@ -38,7 +38,6 @@ all: clean  data aie aiesim aieviz throughput waveform
 
 run: clean data aie aiesim
 
-
 NUM_SAMPLES ?= 512
 NFRAMES ?= 16
 
@@ -71,10 +70,8 @@ waveform:
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) *.vcd _ide libadf.a *.log *.json aiesimulator_output *.csv *.db pl_sampl* .Xil .AIE_SIM*
 	
+
 .PHONY: all run data clean  aie aiesim aieviz throughput waveform
-
-
-
 
 .PHONY: incremental
 incremental: clean all

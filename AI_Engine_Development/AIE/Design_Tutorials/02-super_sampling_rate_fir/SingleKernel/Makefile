@@ -45,7 +45,6 @@ AIE_FLAGS += --aie.Xpreproc "\"$(SYSTEM_VAR_D)\""
 NSamples := $(NUM_SAMPLES)
 NFrames := $(shell echo " $(NFRAMES) + 1" | bc)
 
-
 data:
 	rm -rf data
 	mkdir -p data
@@ -70,9 +69,6 @@ clean:
 	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) *.vcd _ide libadf.a *.log *.json aiesimulator_output *.csv *.db pl_sampl* .Xil .AIE_SIM*
 	
 .PHONY: all run data clean  aie aiesim aieviz throughput waveform
-
-
-
 
 .PHONY: incremental
 incremental: clean all

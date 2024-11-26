@@ -27,7 +27,6 @@ AIE_FLAGS = --aie.verbose --include "${XILINX_VITIS}/aietools/include" --include
 # Sources
 SRCS = ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.cpp ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.h ${AIE_TOP_DIR}/aie/graph.cpp  ${AIE_TOP_DIR}/aie/graph.h  ${AIE_TOP_DIR}/aie/system_settings.h  ${AIE_TOP_DIR}/aie/aie_kernels.h
 
-
 #
 # primary build targets
 #
@@ -69,10 +68,8 @@ waveform:
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) *.vcd _ide libadf.a *.log *.json aiesimulator_output *.csv *.db pl_sampl* .Xil .AIE_SIM*
 	
+
 .PHONY: all run data clean  aie aiesim aieviz throughput waveform
-
-
-
 
 .PHONY: incremental
 incremental: clean all
