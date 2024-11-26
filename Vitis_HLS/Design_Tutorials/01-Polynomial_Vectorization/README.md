@@ -8,7 +8,9 @@
 
 # Polynomial Vectorization using Number Theoretic Transforms:<br>A Real World Case Study Using Vitis HLS Code Analyzer
 
-***Version: Vitis HLS 2024.1***
+***Version: Vitis 2024.1***
+
+>**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Adapt Your C++ Algorithms for Outstanding Results with Vitis™ HLS"](https://webinar.amd.com/Adapt-Your-C-Algorithms-for-Outstanding-Results-with-Vitis-tm-HLS/en) webinar.
 
 ## Introduction
 
