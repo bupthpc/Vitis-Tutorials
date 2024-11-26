@@ -8,7 +8,7 @@
 
 # Using Code Analyzer from Vitis Unified IDE
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Tutorial Overview
 

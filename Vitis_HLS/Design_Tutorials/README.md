@@ -16,11 +16,15 @@ These tutorials illustrate higher-level Vitis™ HLS concepts or design flows, w
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
+ <td align="center"><a href="./01-Polynomial_Vectorization/">Polynomial Vectorization using Number Theoretic Transforms:<br>A Real World Case Study Using Vitis HLS Code Analyzer</a></td>
+ <td>This tutorial demonstrates how to use Code Analyzer to optimize C/C++ code for Vitis HLS. The case study is based on the CRYSTALS-Kyber algorithm, polynomial vectorization, and number theoretic transforms.</td>
+ </tr> 
+ <tr>
  <td align="center"><a href="./02-Beamformer/">Adaptive Beamforming for Radar:<br>Floating-Point QRD+WBS in an FPGA</a></td>
  <td>This design example discusses beamforming, its applications to radar, and the optimization of floating-point QRD+WBS on an AMD FPGA.</td>
  </tr>
  </table>
  
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
