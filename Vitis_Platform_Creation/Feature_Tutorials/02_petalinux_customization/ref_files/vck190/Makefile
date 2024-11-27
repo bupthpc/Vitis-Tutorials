@@ -59,6 +59,8 @@ update_config:
 	echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"' >> $(PETALINUX_CONFIG)
 # For GCC < 6.0, enable prebuilt build tools
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >> $(PETALINUX_CONFIG)
+update_vcu:
+	echo 'MACHINE_FEATURES="vcu"' >> $(PETALINUX_DIR)/project-spec/meta-user/conf/petalinuxbsp.conf
 
 
 update_rootfs_config:
@@ -72,6 +74,7 @@ petalinux_proj:
 	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR)/$(PDI_DIR)/fixed.xsa --silentconfig
 	$(MAKE)  update_rootfs_config
 	$(MAKE)  update_dtsi
+	$(MAKE)  update_vcu
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:

@@ -38,7 +38,8 @@
         {
             "all": "all",
             "hw" : "sd_card"
-        }
+        },
+        "custom_board_target": "run_test" 
         
     }
 }

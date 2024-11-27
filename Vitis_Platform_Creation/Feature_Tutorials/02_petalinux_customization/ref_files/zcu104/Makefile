@@ -54,6 +54,9 @@ update_config:
 	# For GCC < 6.0, enable prebuilt build tools
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >> $(PETALINUX_CONFIG)
 
+update_vcu:
+	echo 'MACHINE_FEATURES="vcu"' >> $(PETALINUX_DIR)/project-spec/meta-user/conf/petalinuxbsp.conf
+
 update_rootfs_config:
 	# PetaLinux Rootfs: Enable XRT
 	echo 'CONFIG_packagegroup-petalinux-vitis-acceleration-essential=y' >> $(PETALINUX_ROOTFS_CONFIG)
@@ -67,6 +70,7 @@ petalinux_proj:
 	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=hw/xsa_file_for_petalinux.xsa --silentconfig
 	$(MAKE)  update_rootfs_config
 	$(MAKE)  update_dtsi
+	$(MAKE)  update_vcu
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:
