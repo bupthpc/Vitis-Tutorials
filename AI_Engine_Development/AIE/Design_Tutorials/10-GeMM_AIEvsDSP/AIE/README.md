@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.1 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.2 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
     </td>
  </tr>
 </table>
@@ -121,7 +121,7 @@ The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual d
 ### make kernels: Compiling PL Kernels
 
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202410_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202420_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
 
 ```
 make kernels
@@ -552,7 +552,7 @@ When hardware emulation is launched, you see the QEMU simulator load. Wait for t
 
 ```bash
 
-root@versal-rootfs-common-2024_1:~#
+root@versal-rootfs-common-2024_2:~#
 
 ```
 
@@ -631,7 +631,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2024.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2024.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -1314,7 +1314,7 @@ For all applications, designers must work to predefined specifications and build
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.1 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.2 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1375,12 +1375,12 @@ A summary of resource utilization and power for all variations is given in the f
 
 | GeMM Configuration | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) |
 |:------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
-|        32x32x32    |         24              |    16.10%       |         231                   |     4.025%       |           44          |         12.95%        |  26478    |   13510    |          2782             |
-|        64x64x64    |         24              |   34.33%       |         252                   |     6.16%       |           46          |         12.57%        |  19685    |   8440    |          3371             |
-|     128x128x128    |         24              |   37.20%       |         231                   |     8.54%       |           46          |         12.57%        |   26568   |   13733    |          3521             |
-|     256x256x256    |         24              |   61.68%       |        231                   |     14.49%      |           46          |         12.57%        |  26623    |   13860    |          4355             |
-|     512x512x512    |         24              |   73.56%       |         252                   |     12.51%       |           46          |         12.57%        |  26480    |   13553    |          4584             |
-|  1024x1024x1024    |         24              |   84.63%       |         252                   |     14.24%       |           46          |         12.57%        |  26478    |   13548    |         4924             |
+|        32x32x32    |         24              |   15.99%    |         231                   |     3.945%   |           44           |         12.87%    |  13559    |   2851    |          2792             |
+|        64x64x64    |         24              |   33.93%    |         252                   |     6.145%   |           43           |         13.10%    |  13563    |   2854    |          3286             |
+|     128x128x128    |         24              |   37.13%    |         231                   |     8.83%    |           43           |         13.10%    |  13524    |   2842    |          3496             |
+|     256x256x256    |         24              |   61.66%    |         231                   |     14.775%  |           43           |         13.10%    |  13542    |   2595    |          4356             |
+|     512x512x512    |         24              |   73.55%    |         252                   |     12.505%  |           43           |         13.41%    |  13537    |   2833    |          4514             |
+|  1024x1024x1024    |         24              |   84.60%    |         252                   |     14.205%  |           43           |         12.57%    |  13540    |   2834    |          4911             |
 
 </details>
 
@@ -1397,7 +1397,7 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
    [Debug]
    xrt_trace=true
    data_transfer_trace=fine
-   trace_buffer_size=500M
+   trace_buffer_size=8M
    ```
 
    Refer to the [xrt.ini](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation for more information. 
@@ -1415,7 +1415,7 @@ The time reported by trace is with the dma_hls kernel running at 312.50MHz.
 ```
 Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
 
-Processing Time (with 312.50MHZ)    =  3.584 us
+Processing Time (with 312.50MHZ)    =  3.667 us
 
 
 Latency = (Start of  processing of Stream input A & B )- (Start of  processing Timestamp of Stream output C)
@@ -1424,10 +1424,10 @@ Latency = (Start of  processing of Stream input A & B )- (Start of  processing T
 
 Throughput = (Samples transferred) / processing time
            = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 3.584us
-           = 4571.4286 MSamples/s
-           = 4571.4286 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 9142.8572 MB/s
+           = (32 x 32) x 16 / 3.667us
+           = 4467.9574 MSamples/s
+           = 4467.9574 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 8935.9149 MB/s
 ```
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces.
@@ -1437,7 +1437,7 @@ The throughput and latency calculations for the GeMM 32x32x32 design based on th
 
 ```
 Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
-                = 3.6896us
+                = 3.6736us
 
 Latency:
    = Difference between beginning of sending of input A & B  and receiving of output C
@@ -1447,22 +1447,22 @@ Latency:
 
 Throughput = (Samples transferred) / processing time
            = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 3.6896us
-           = 4440.5898 MSamples/s
-           = 4440.5898 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 8881.1796 MB/s
+           = (32 x 32) x 16 / 3.6736us
+           = 4459.9303 MSamples/s
+           = 4459.9303 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 8919.8606 MB/s
 ```
 
 A summary of throughput and latency for all variations is shown in the following table.
 
-| GeMM Configuration | Data Transfer Size | Latency<br/>(in μs) | Throughput<br/>(in MSPS)  | TOPs  | Matrices/s<br/>(in 10^6/s)|
-|:------------------:|:------------------:|:-------------------:|:-------------------------:|:-----:|:-------------------------:|
-|        32x32x32    |         1024       |        0.262401     |           4440.5898        | 0.2842 |         4.3365            |    
-|        64x64x64    |         4096       |        0.643201       |           5701.5590        | 0.7298 |         1.3919            |
-|     128x128x128    |        16384       |        2.387201        |           2921.0198        | 0.7478 |         0.1783            |
-|     256x256x256    |        65536       |        3.196801        |           2290.4594        | 1.1727 |         0.0349            |
-|     512x512x512    |       262144       |        1.776001    |           1337.7028        | 1.3698 |         0.0051            |
-|  1024x1024x1024    |      1048576       |        3.315201    |           769.3766        | 1.5756 |         0.0007            |
+| GeMM Configuration | Data Transfer Size | Latency<br/>(in μs) | Throughput<br/>(in MSPS)  | TOPs   | Matrices/s<br/>(in 10^6/s)|
+|:------------------:|:------------------:|:-------------------:|:-------------------------:|:------:|:-------------------------:|
+|        32x32x32    |         1024       |        0.272        |           4459.930        | 0.285  |         4.3365            |    
+|        64x64x64    |         4096       |        0.656        |           5701.559        | 0.729  |         1.3919            |
+|     128x128x128    |        16384       |        2.396        |           2920.603        | 0.747  |         0.1783            |
+|     256x256x256    |        65536       |        3.203        |           2290.395        | 1.172  |         0.0349            |
+|     512x512x512    |       262144       |        1.763        |           1337.707        | 1.369  |         0.0051            |
+|  1024x1024x1024    |      1048576       |        3.302        |           769.376         | 1.575  |         0.0007            |
 
 *Note:	Tabulated based on hw_emu
 </details>
@@ -1476,20 +1476,20 @@ TOPs per Watt is represented as TOPs/Power in Watts. The following example shows
 
 ```
 TOPs per Watt = TOPs / Power(Watt)
-              = (0.2842 / 2.782) MSPS/Watt
-              = 0.102156 TOPs/Watt
+              = (0.2854 / 2.792) MSPS/Watt
+              = 0.102233 TOPs/Watt
 ```
 
 A summary of TOPs per Watt for all variations is shown in the following table below.
 
 | GeMM Configuration | TOPs per Watt |
 |:------------------:|:-------------:|
-|        32x32x32    |     0.1021    |
-|        64x64x64    |     0.2164    |
-|     128x128x128    |     0.2123    |
+|        32x32x32    |     0.1022    |
+|        64x64x64    |     0.2229    |
+|     128x128x128    |     0.2139    |
 |     256x256x256    |     0.2692    |
-|     512x512x512    |     0.2988    |
-|  1024x1024x1024    |     0.3200    |
+|     512x512x512    |     0.3034    |
+|  1024x1024x1024    |     0.3208    |
 
 </details>
 
@@ -1502,12 +1502,12 @@ A consolidated summary of observations for all the point sizes and all the corre
 
 | GeMM Configuration | Perf<br/>(in MSPS) | Latency<br/>(in μs) | TOPs  | No. of Compute Cores | Vector Load | No. of Active Mem Banks | Mem R/W Rate | Active AIE Tiles | Dynamic Power<br/>(in mW) | TOPs per Watt |
 |:------------------:|:------------------:|:-------------------:|:-----:|:--------------------:|:-----------:|:-----------------------:|:------------:|:----------------:|:-------------------------:|:-------------:|
-|        32x32x32    |        4440.590    |        0.262401     | 0.284 | 24                   |  16.10%     | 231                     |  4.025%      | 44               |   2782                    |     0.1021    |
-|        64x64x64    |        5701.559    |        0.643201     | 0.729 | 24                   |  34.33%     | 252                     |  6.160%      | 46               |   3371                    |     0.2164    |
-|     128x128x128    |        2921.020    |        2.387201     | 0.747 | 24                   |  37.20%     | 231                     |  8.540%      | 46               |   3521                    |     0.2123    |
-|     256x256x256    |        2290.459    |        3.196801     | 1.172 | 24                   |  61.68%     | 231                     | 14.490%      | 46               |   4355                    |     0.2692    |
-|     512x512x512    |        1337.703    |        1.776001     | 1.369 | 24                   |  73.56%     | 252                     | 12.510%      | 46               |   4584                    |     0.2988    |
-|  1024x1024x1024    |         769.376    |        3.315201     | 1.575 | 24                   |  84.63%     | 252                     | 14.240%      | 46               |   4924                    |     0.3200    |
+|        32x32x32    |        4459.930    |        0.262        | 0.285 | 24                   |  15.99%     | 231                     |  3.945%      | 44               |   2792                    |     0.1022    |
+|        64x64x64    |        5701.559    |        0.636        | 0.729 | 24                   |  33.93%     | 252                     |  6.145%      | 43               |   3279                    |     0.2229    |
+|     128x128x128    |        2920.603    |        2.3776       | 0.747 | 24                   |  37.13%     | 231                     |  8.830%      | 43               |   3496                    |     0.2139    |
+|     256x256x256    |        2290.395    |        3.1872       | 1.172 | 24                   |  61.66%     | 231                     | 14.775%      | 43               |   4356                    |     0.2692    |
+|     512x512x512    |        1337.707    |        1.792        | 1.369 | 24                   |  73.55%     | 252                     | 12.505%      | 43               |   4514                    |     0.3034    |
+|  1024x1024x1024    |         769.376    |        3.3312       | 1.575 | 24                   |  84.60%     | 252                     | 14.245%      | 46               |   4911                    |     0.3208    |
 
 User may find an a much tighter placement solution which may reduce the power consumption further and lead to a more favourable performance, as indicated by the low Vector Load.
 

@@ -91,6 +91,8 @@ MAT_DIMS  := $(GEMM_SIZE)x$(GEMM_SIZE)x$(GEMM_SIZE)
 # =========================================================
 PL_FREQ := 700
 VPP_CLOCK_FREQ := $(PL_FREQ)000000
+PL_SUB_FREQ := 15625
+VPP_SUB_CLOCK_FREQ := $(PL_SUB_FREQ)0000
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
@@ -174,7 +176,8 @@ VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose
 VPP_FLAGS += -g
 
-VPP_LINK_FLAGS := --clock.freqHz $(VPP_CLOCK_FREQ):gemm_large_ocm_0 
+VPP_LINK_FLAGS := --clock.freqHz $(VPP_CLOCK_FREQ):gemm_large_ocm_0.clk 
+VPP_LINK_FLAGS += --clock.freqHz $(VPP_SUB_CLOCK_FREQ):gemm_large_ocm_0.S_AXI_ACLK 
 VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/gemm.cfg
 VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
