@@ -234,7 +234,7 @@ All of the PL kernels’ `s_axi_aclk` are connected to the 100 MHz clock (`id=0`
 
 If you built from scratch, you can open the block design in the AMD Vivado™ project to view the new hardware platform at `build/rev0/hw/_x/link/vivado/vpl/prj/prj.xpr`.
 
-![Linked Hardware Platform](images/Beamforming_new_xsa_2024_1.PNG)
+![Linked Hardware Platform](images/Beamforming_new_xsa_2024_2.PNG)
 
 Notice the new XSA hardware platform built on top of the custom platform you built in Module 01 (Creating a Custom Platform). It still contains the original building blocks: CIPS, NoC, AI Engine, Clocking Wizard, Processor Reset Systems, ``ctrl_sm``, and 16 AXI4-Lite SmartConnect interfaces. However, you will also notice that only six of these are being used, and ten of them remain unused.
 
@@ -298,11 +298,10 @@ If you built from scratch, you can open the block design in the Vivado project t
 
 ## References
 
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Linking the System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)  
+
 * [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System)
 * [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 * [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File)
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application) - HW vs HW_EMU
 *  [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support

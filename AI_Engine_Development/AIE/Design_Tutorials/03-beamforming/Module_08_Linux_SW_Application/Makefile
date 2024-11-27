@@ -38,6 +38,8 @@ ULBF_UTILS      := $(LOCAL_UTILS)/utils_ulbf.cpp $(LOCAL_UTILS)/ulbf_gold0.cpp $
 
 PFM_SYSROOT     := $(MODULE_07_DIR)/build/vck190_linux/images/linux/sdk/sysroots/cortexa72-cortexa53-xilinx-linux/
 SYSROOT_INCLUDE := ${PFM_SYSROOT}/usr/include
+CPP_INCLUDE      := ${SYSROOT_INCLUDE}/c++/13.3.0
+CPP_AARCH64_INCLUDE := ${CPP_INCLUDE}/aarch64-xilinx-linux
 SYSROOT_LIB     := ${PFM_SYSROOT}/usr/lib
 AIE_INCLUDE     := $(PFM_SYSROOT)/usr/include/xaiengine
 AIE_LINKER      := $(PFM_SYSROOT)/lib
@@ -56,7 +58,7 @@ CFLAGS          := -O -g -Wall -DXAIE_DEBUG
 exe: ${AIE_APP_EXE}
 
 ${AIE_APP_EXE}: ${AIE_APP}
-	$(CXX) $(CFLAGS) $(AIE_APP) $(AIE_APP_CTRL) -o $(AIE_APP_EXE) --sysroot=$(PFM_SYSROOT) -I$(SYSROOT_INCLUDE) -I$(GRAPH_INCLUDE) -I$(LOCAL_LIB) -I$(XILINX_VITIS)/aietools/include/ -I$(AIE_INCLUDE) -I$(XRT_INCLUDE) $(EXE_INCLUDE) -Xlinker -rpath-link=$(PFM_SYSROOT) -ladf_api_xrt -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(PFM_SYSROOT)/../ -lxrt_coreutil -L$(AIE_LINKER)
+	$(CXX) $(CFLAGS) $(AIE_APP) $(AIE_APP_CTRL) -o $(AIE_APP_EXE) --sysroot=$(PFM_SYSROOT) -I$(SYSROOT_INCLUDE) -I$(CPP_INCLUDE) -I$(CPP_AARCH64_INCLUDE) -I$(SYSROOT_INCLUDE) -I$(GRAPH_INCLUDE) -I$(LOCAL_LIB) -I$(XILINX_VITIS)/aietools/include/ -I$(AIE_INCLUDE) -I$(XRT_INCLUDE) $(EXE_INCLUDE) -Xlinker -rpath-link=$(PFM_SYSROOT) -ladf_api_xrt -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(PFM_SYSROOT)/../ -lxrt_coreutil -L$(AIE_LINKER)
 
 clean:
 	rm -rf ${AIE_APP_EXE}
