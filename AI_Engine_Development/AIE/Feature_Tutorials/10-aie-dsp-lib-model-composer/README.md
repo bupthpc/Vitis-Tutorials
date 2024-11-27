@@ -9,7 +9,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Introduction
 
@@ -20,11 +20,11 @@ The purpose of this tutorial is to provide hands-on experience for designing AI 
 Install the tools:
 
 * Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * The following MATLAB releases are supported: R2022a Update 6, R2022b Update 6, R2023a, R2023b
+  * The following MATLAB releases are supported: R2023a, R2023b, R2024a.
   * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2024.1](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2024.2](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -189,7 +189,7 @@ These are there to help you if you cannot complete any of the four stages.
 
       ![missing image](Images/Image_010.png)
 
-      Notice that before the implementing the Decimation Filter the vector length was ``2048``, but after implementation this was reduced to ``1024``.
+      Notice that before implementing the Decimation Filter the vector length was ``2048``, but after implementation this is reduced to ``1024``.
 
 16. Update the design with the other three filters using the following parameters:
 
@@ -209,7 +209,7 @@ These are there to help you if you cannot complete any of the four stages.
 
       ![missing image](Images/Image_011.png)
 
-18. Run the design. The added filters are compiled, and the design is run through the 5000 samples. The difference between the output should still be 0.
+18. Run the design. The added filters are compiled, and the design is run through the 5000 samples. The difference between the two outputs should be zero.
 
 ## Stage 2: Further Analysis of the Design
 
