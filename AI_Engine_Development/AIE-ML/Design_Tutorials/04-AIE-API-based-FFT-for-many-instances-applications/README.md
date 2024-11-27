@@ -13,7 +13,7 @@
 
 ## Introduction
 This tutorial intends to show how to design a complex Digital Signal Processing application using the AI Engine ML with its exclusive features through Vitis Unified IDE. In the tutorial the GUI flow is used. 
-Moreover, Python scripts are provided to automate project creation and build. To run such Python scripts, first set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.2/base_platforms`, then clone this repository, locate inside it, and run the following commands:
+Moreover, Python scripts are provided to automate project creation and build. To run such Python scripts, first set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms`, then clone this repository, locate inside it, and run the following commands:
 - ``vitis -s Step1_3Dbuf.py`` to automate the first hands-on part of the tutorial.
 - ``vitis -s Step2_4Dbuf.py`` to automate the second hands-on part of the tutorial.
 ### Table of Contents <!-- omit from toc -->

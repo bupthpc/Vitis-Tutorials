@@ -1,5 +1,21 @@
 # Vitis-Tutorials ChangeLog
 
+## 2024.2 (Nov. 27, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Design_Tutorials/07-Channelizer-Using-Vitis-Libraries/
+- AI_Engine_Development/AIE-ML/Design_Tutorials/08-MNIST-ConvNet/
+
+### Tutorial Updates
+- Tutorials showcasing features already demonstrated in other AIE tutorials have been removed from the repository to streamline content.
+    - AI_Engine_Development/AIE/Feature_Tutorials/12-axis-traffic-generator/
+    - AI_Engine_Development/AIE/Feature_Tutorials/19-aie_external_io_sv/
+    - AI_Engine_Development/AIE/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
+- The Hardware_Acceleration category tutorials are now in `deprecation` mode. These tutorials will be officially removed from the repository in 2025. However, users can continue accessing them by checking out a branch corresponding to an earlier version of the tools.
+
+<details open>
+    <summary>2024.1 Release</summary>
+
 ## 2024.1_update (Oct. 14, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE-ML/Design_Tutorials/06-farrow_filter/
@@ -31,8 +47,9 @@
 - The tutorials under Hardware_Acceleration category are in "regression" mode, meaning we will run regression tests on 2024.1 and newer versions, but will not make any feature updates other than bug fixes.
 - Update tutorials to use the Vitis Unified CLI
 - Provide equivalent python scripts for GUI-based tutorials
+</details>
 
-<details open>
+<details close>
     <summary>2023.2 Release</summary>
 
 ## 2023.2_update (Mar. 22, 2024)
@@ -81,6 +98,7 @@
 - Add an additional level under AI_Engine_Development to host tutorials targeting AIE and AIE-ML.
     - AI_Engine_Development/AIE
     - AI_Engine_Development/AIE-ML
+    
 </details>
 
 <details close>
@@ -195,6 +213,6 @@
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
