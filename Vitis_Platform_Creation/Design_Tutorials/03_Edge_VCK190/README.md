@@ -8,10 +8,11 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2024.1***
+***Version: 2024.2***
 
-In this module, we treat the VCK190 board as if it were a custom solution tailored to our customer's specific needs. Our approach involves leveraging the AMD Versal™ Adaptive SoC Extensible Part Support Example Design and harnessing the power of a pre-built Linux common image, along with the createdts command, to generate essential software components. These components are then used to construct a dedicated embedded Versal acceleration platform designed exclusively for our customer's board. As the final step, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform) would be a quick choice for you.
+In this module, we treat the VCK190 board as a customized solution tailored to our customer's specific needs. We leverage the AMD Versal™ Adaptive SoC Extensible Part Support Example Design, a pre-built Linux common image, and the Device Tree Blob generated during the platform creation process to produce essential software components. These components form the foundation of a dedicated embedded Versal acceleration platform tailored for the customer’s board. Finally, you will test this platform by running several applications.
 
+If your goal is simply to create a platform for kernel validation, then the [Vitis Platform Quick Start](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform) offers a streamlined approach.
 
 For your reference, the overall structure of this example system closely resembles the following:
 
@@ -28,7 +29,7 @@ In a general Vitis acceleration platform design, the Vitis platform and applicat
 In this module, you will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. In contrast to the Versal Extensible Design, which is used in [Vitis Platform Quick Start](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform), the part support design takes a slightly different approach. Specifically, it empowers you to handle board-level configurations independently. This includes configuring processing system (PS) side peripherals and fine-tuning parameters related to double data rate (DDR) as needed. This flexibility ensures that you have full control over the configuration process to meet the unique requirements of your application.
 
 
-To prepare the software components, you will utilize common image released by AMD and `createdts` command to generate the device tree file. After the whole software and hardware components are ready, you will package the platform.
+To prepare the software components, you will use the common image provided by AMD. The Device Tree Blob (DTB) will be generated automatically during the platform creation process if the DTB generation option is enabled. Once both the software and hardware components are ready, you will proceed to package the platform.
 
 In each step, you will validate the generated files to make sure they work as expected. A frequent test methodology can help to narrow down the root causes if any error occurs. Lastly, you will run several test applications on this platform to test this platform.
 
@@ -46,12 +47,13 @@ Navigate through these steps with the following table of contents links.
 
 ## Reference
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
+- [UG1701: Vitis Acceleration Flow User Guide](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Developing-Vitis-Kernels-and-Applications)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Versal Adaptive SoC Programmable Network on Chip and Integrated Memory Controller LogiCORE IP Product Guide (PG313)](https://docs.amd.com/r/en-US/pg313-network-on-chip)
 
 ## Changelog
-
+### 2024.2
+- The Platform Creation Wizard now includes an option to generate the DTB during platform creation, replacing the createdts command used in previous release.
 ### 2022.2
 
 - `createdts` add support for your device tree.
