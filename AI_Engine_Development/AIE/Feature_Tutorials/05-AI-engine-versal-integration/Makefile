@@ -10,7 +10,7 @@ IMAGE ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.2/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
 
 # Makefile input options
-TARGET := sw_emu
+TARGET := hw_emu
 PFM := tutorial
 
 # File names and locations

@@ -9,7 +9,7 @@
 
 # AI Engine A-to-Z Flow for Linux
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## Introduction
 
@@ -17,7 +17,6 @@ The AMD Vitis™ environment comprises tools, libraries, and IP that let you pro
 
 * **Platform** - Platforms provide the foundational hardware IP blocks and software features upon which the adaptable subsystem and software application can be built and integrated.
 * **Adaptable subsystem** - Adaptable subsystems perform well-defined functions, leveraging PL blocks and AI Engine graphs.
-* **Software application** - The software application runs on the PS and performs high-level application tasks while interacting with the adaptable subsystem.
 
 This tutorial introduces you to this platform-based approach to develop the elements mentioned above individually and leverage the parallelism to develop and test the application. The adaptable subsystem that contains the PL kernels and AI Engine graph can be developed and tested on the AMD standard base platform, while the custom platform that best suits your application is still under development. This tutorial also demonstrates how you can easily validate the design by means of hardware emulation or hardware using the base platform, and quickly switch to the custom platform with minimal changes.
 
@@ -40,7 +39,7 @@ The foundation of the Vitis environment design methodology is an iterative appro
 
 The steps in this tutorial are tightly coupled with the recommended best practices and introduce you to a complete end-to-end flow for a Linux-based host application for AI Engines and PL kernels using a base platform. You can then create a custom platform and re-target the design using the custom platform.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up software and installing the VCK190 base platform.
 
 ## Objectives
 
