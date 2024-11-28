@@ -70,7 +70,7 @@ The filterbank used by the channelizer uses K=36 taps per phase, leading to a to
 
 System Partitioning is the process of designing an embedded system for heterogeneous compute.
 This involves analyzing the polyphase channelizer algorithm characteristics and its functional blocks to identify which block should be implemented in AI Engines versus PL, and establish a data flow with sufficient bandwidth to support the required computations.
-For more information on system partitioning methodology, refer to [(UG1504)](https://docs.amd.com/r/en-US/ug1504-acap-system-solution-planning-methodology/AI-Engine-System-Partitioning-Planning).
+For more information on system partitioning methodology, refer to *Versal Adaptive SoC System and Solution Planning Methodology Guide* [(UG1504)](https://docs.amd.com/r/en-US/ug1504-acap-system-solution-planning-methodology/AI-Engine-System-Partitioning-Planning).
 
 ![figure2](images/system_partitioning_overview.png)
 
@@ -87,9 +87,9 @@ We will then instantiate and characterize the IP blocks and look for optimizatio
 The filterbank has a total of 4096 channels, each with 36 taps of type int32. The sampling rate of each channel is 2e9/4096 = 488.28125 Ksps.
 
 Based on the specified data and coefficient types, AI Engine should be able to perform 8 `cint16` x `int32` MACs every cycle in a single tile.
-For more information, refer to Table 1 of the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM020)](https://docs.amd.com/r/en-US/am020-versal-aie-ml/Functional-Overview). 
+For more information, refer to Table 1 of the *Versal Adaptive SoC AIE-ML Architecture Manual* [(AM020)](https://docs.amd.com/r/en-US/am020-versal-aie-ml/Functional-Overview). 
 
-Assuming we use part `xcve2802-vsvh1760-2MP-e-S`, AI Engine can be clocked at 1.25 GHz, as described in [(DS957)](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics).
+Assuming we use part `xcve2802-vsvh1760-2MP-e-S`, AI Engine can be clocked at 1.25 GHz, as described in *Versal AI Core Series Data Sheet: DC and AC Switching Characteristics* [(DS957)](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics).
 A general rule of thumb is to reserve some margin for processor overhead in the range of 20-25%.
 
 The number of tiles required based on compute-bound analysis = 2e9 x 36 / 8 / 1.25e9 x 1.25 = 9 tiles.
@@ -161,7 +161,7 @@ It is possible to trade-off throughput for storage.
 
 #### Filterbank Library Optimization
 You can use the following approach to tradeoff throughput for storage:
-* Apply `single_buffer` constraint on the input. For more information, refer to [UG1076](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Buffer-Allocation-Control).
+* Apply `single_buffer` constraint on the input. For more information, refer to *AI Engine Kernel and Graph Programming Guide* [UG1076](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Buffer-Allocation-Control).
 * Add placement constraints to store each tile's storage requirements locally.
 
 Code snippet below taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how this can be done.
@@ -298,7 +298,7 @@ Below is a list of potential improvements that could be made to reduce resource 
 
 ## Build and Run Design
 
-You can nuild the polyphase channelizer design from the command line.
+You can build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
@@ -352,7 +352,7 @@ The following is displayed on the terminal.
 
 ## Support
 
-GitHub issues are used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [Support](https://adaptivesupport.amd.com/s/?language=en_US).
 
 ## License
 
