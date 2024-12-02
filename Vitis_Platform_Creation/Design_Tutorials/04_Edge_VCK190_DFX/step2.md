@@ -70,7 +70,7 @@ createdts -hw <static XSA> \
     -zocl\
     -out . \
     -platform-name vck190_custom_dt \
-    -git-branch xlnx_rel_v2024.1 \
+    -git-branch xlnx_rel_v2024.2 \
     -dtsi system-user.dtsi \
     -board versal-vck190-reva-x-ebm-01-reva \
     -compile
@@ -104,7 +104,7 @@ This tutorial uses the Linux software components provided by the Common Images. 
 
    - Visit the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) download page.
    - Download the Versal common image to `step2_sw/build/common` from the download page.
-   - Extract the downloaded package using the `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2024.1.tar.gz` command.
+   - Extract the downloaded package using the `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2024.2.tar.gz` command.
 
 2. Prepare the boot components.
 

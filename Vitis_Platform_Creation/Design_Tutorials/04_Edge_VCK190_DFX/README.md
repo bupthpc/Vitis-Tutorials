@@ -8,7 +8,7 @@
 
 # AMD Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2024.1***
+***Version: 2024.2***
 
 In this module, you will create a custom Dynamic Function eXchange (DFX) platform to run acceleration applications for VCK190 evaluation board. Platforms that support DFX features allows you to reload acceleration kernels during runtime.
 
@@ -52,9 +52,9 @@ Start with [Step 1](./step1.md).
 
 ## Reference
 
-- *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration)
+- *Vitis Acceleration Flow User Guide* [(UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Developing-Vitis-Kernels-and-Applications)
 
-   - [Creating Embedded Platforms in Vitis](https://docs.amd.com/access/sources/dita/topic?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration&resourceid=rjs1596051748503.html)
+   - [Creating Embedded Platforms in Vitis](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Creating-and-Using-Vitis-Platforms)
 
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 
