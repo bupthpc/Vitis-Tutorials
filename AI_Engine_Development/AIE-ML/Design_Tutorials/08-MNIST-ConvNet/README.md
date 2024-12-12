@@ -32,11 +32,11 @@ Author: Mark Rollins
 
 ## Introduction
 
-This tutorial implements a Convolutional Neural Network classifier on AIE-ML for identifying hand-written digits from the [MNIST database](https://en/wikipedia.org/wiki/MNIST_database). The goal is to illustrate how to partition & vectorize a simple machine learning example to Versal AI Engines. An MNIST ConvNet classifier makes a good learning example because it contains only ~100,000 parameters and a handful of layers. This tutorial example illustrates a number of key topics fundamental to custom coding machine learning designs using the AIE API including:
+This tutorial implements a Convolutional Neural Network classifier on AMD Versal<sup>TM</sup> adaptive SoC AIE-ML for identifying hand-written digits from the [MNIST database](https://en.wikipedia.org/wiki/MNIST_database). The goal is to illustrate how to partition & vectorize a simple machine learning example to Versal AI Engines. An MNIST ConvNet classifier makes a good learning example because it contains only ~100,000 parameters and a handful of layers. This tutorial example illustrates a number of key topics fundamental to custom coding machine learning designs using the AIE API including:
 * Using multi-channel matrix multiply intrinsics to vectorize ConvNet layer compute workloads
 * Using 3D addressing patterns of memory tiles to access layer I/O in the order required for consumption by the compute
 * Using local tile memory for capturing stored network weights
-* Structuring AI Engine kernel code to implement convolutional & pooling layers efficiently
+* Structuring AIE-ML kernel code to implement convolutional & pooling layers efficiently
 
 ### Virtual Python Environment Setup
 This tutorial implements computer models of the MNIST ConvNet in Python using Jupyter Notebooks. This is best managed using a Python virtual environment. The first step of this tutorial involves setting up such a virtual environment with the required versions of all the associated open source Python packages. The top level Makefile of this tutorial builds the Python virtual environment based on a script `create_venv.sh` which creates the environment and then loads a set of specific versions of all required Python packages. To create this Python virtual environment, run the following code:
@@ -120,7 +120,7 @@ Another built-in Keras routine may be used for inference to predict new model ou
 
 ### Extracting Weights & Biases for AIE-ML Inference Solution
 
-Now having obtained a trained model for the MNIST ConvNet classifier, the last step required prior to building an inference solution on AIE-ML is to obtain a quantized set of weights to be used by the implementation. For simplicity in this tutorial, a `bfloat16` implementation is chosen because quantization is straightforward. Each weight & bias uses the same exponent but a quantized mantissa of only 8 bits as opposed to the 24-bits used by the full precision floating point values produced by the Keras network model. The code below extracts the weights & biases from the Keras model, quantizes them to `bfloat16` and then saves them in files for validating each layer of the network to be designed in AI Engine below.
+Now having obtained a trained model for the MNIST ConvNet classifier, the last step required prior to building an inference solution on AIE-ML is to obtain a quantized set of weights to be used by the implementation. For simplicity in this tutorial, a `bfloat16` implementation is chosen because quantization is straightforward. Each weight & bias uses the same exponent but a quantized mantissa of only 8 bits as opposed to the 24-bits used by the full precision floating point values produced by the Keras network model. The code below extracts the weights & biases from the Keras model, quantizes them to `bfloat16` and then saves them in files for validating each layer of the network to be designed in AIE-ML below.
 
 ![figure5](images/mnist-quantize-weights.png)
 
@@ -134,13 +134,13 @@ This tutorial adopts a simple design approach to building the MNIST ConvNet clas
 
 * The `bfloat16` data type is chosen for both layer I/O data and for weights & biases. This simplifies the quantization of trained network parameters. No special tools nor quantization strategies are required. 
 * No specific throughput target is chosen. The design is a toy example and so its performance is not of practical interest.
-* The design generally partitions each network layer to its own AI engine tile where feasible. This simplifies system partitioning and allows a well-defined scope for each AI Engine kernel to be built.
+* The design generally partitions each network layer to its own AIE-ML tile where feasible. This simplifies system partitioning and allows a well-defined scope for each AIE-ML kernel to be built.
 * Memory tile zero-padding capability is leveraged to expand input tensor shapes from (28,28,1) to (28,32,1) to satisfy AI Engine memory alignment and PLIO bit width requirements.
 * Memory tile multi-dimensional addressing capabilities are leveraged to efficiently transfer I/O data for compute consumption with minimal core cycles being required for data shuffling or lane adjustments within the core.
 * Compute workloads for 2D convolutional layers leverage the efficient `mac_4x8_8x4()` intrinsic for `bfloat16` data types to achieve a maximum efficiency of 128 MAC operations per cycle when feasible by a particular layer.
 * Compute workloads leverage the less efficient `mac_elem_16_2()` intrinsic for `bfloat16` data types with a maximum efficiency of 64 MAC operations per cycle in cases where `mac_4x8_8x4()` is not feasible (for example in the `conv2d_w1()` layer which only receives data from a single input channel).
-* The design combines the `flatten_w6()` and `dense_w7()` layers to the same AI Engine tile. 
-* Weights & biases are stored in local tile memory instead of in memory tiles because the former admit a means to establish a read-only access scheme using asynchronous buffers that permits the weights to be read only once at startup. Larger ML networks with millions of weights require streaming solutions based on memory tiles; such a complex solution is excessive for the small MNIST problem considered here where all weights may be stored easily within the array.
+* The design combines the `flatten_w6()` and `dense_w7()` layers to the same AIE-ML tile. 
+* Weights & biases are stored in local tile memory instead of in memory tiles because the former admit a means to establish a read-only access scheme using asynchronous buffers that permits the weights to be read only once at startup. Larger ML networks with millions of weights require streaming solutions based on memory tiles; such a complex solution is excessive for the small MNIST problem considered here where all weights may be stored easily within the array. Extending the programming model to support read-only operation in memory tiles is under development.
 
 ### Vitis Functional Simulation
 
@@ -156,17 +156,17 @@ The Python version of Vitis Functional Simulation is used to validate each netwo
 
 The overall AI Engine graph of the MNIST ConvNet classifier is shown in the diagram below. 
 
-* Each layer is generally assigned to its own AI Engine tile as outlined above. 
-* Layers with weights & biases contain two AI Engine tiles. One tile performs the compute workload on the input images. Weights are delivered to this compute tile from a buffer filled once at startup from a second "weight delivery" tile. An asynchronous buffer mechanism reads the weights at design startup from the PLIO and delivers them to the weight input buffer. The compute tile may then access these weights continuously as the design runs.
-* The `conv2d_w5()` layer is partitioned over four tiles to manage the weight storage which is too large to fit into the available 32 KB of local tile storage. Based on its ~74,000 parameters the storage must be split over a minimum of four AI Engine tiles. Its compute workload is also partitioned over the four tiles, with each tile computing one quarter of the output layer samples. Further details are outlined below. 
-* The last AI Engine tile contains the `flatten_w6()` layer, the `dense_w7()` layer, and the `softmax()` compute workload to produce the final classifier output.
-The max pooling layers `max_pooling2d_w2()` and `max_pooling2d_w4()` do not have any weights and so are implemented using a single AI Engine tile each.
+* Each layer is generally assigned to its own AIE-ML tile as outlined above. 
+* Layers with weights & biases contain two AIE-ML tiles. One tile performs the compute workload on the input images. Weights are delivered to this compute tile from a buffer filled once at startup from a second "weight delivery" tile. An asynchronous buffer mechanism reads the weights at design startup from the PLIO and delivers them to the weight input buffer. The compute tile may then access these weights continuously as the design runs.
+* The `conv2d_w5()` layer is partitioned over four tiles to manage the weight storage which is too large to fit into the available 32 KB of local tile storage (ping/pong buffers are limited to 32 KB since they must be allocated to the same 64 KB local tile memory). Based on its ~74,000 parameters the storage must be split over a minimum of four AIE-ML tiles. Its compute workload is also partitioned over the four tiles, with each tile computing one quarter of the output layer samples. Further details are outlined below. 
+* The last AIE-ML tile contains the `flatten_w6()` layer, the `dense_w7()` layer, and the `softmax()` compute workload to produce the final classifier output.
+The max pooling layers `max_pooling2d_w2()` and `max_pooling2d_w4()` do not have any weights and so are implemented using a single AIE-ML tile each.
 
 ![figure6](images/mnist-convnet-aie-graph.png)
 
 ### MNIST ConvNet: AI Engine Floorplan View
 
-The floorplan view of the MNIST ConvNet classifier is shown in the diagram below. Placement constraints place the compute tiles in the top row of tiles and the weight delivery tiles in the lower row of tiles. The design uses memory tiles for layer I/O ordering and zero padding as outlined in more detail below. 
+The floorplan view of the MNIST ConvNet classifier is shown in the diagram below. Placement constraints place the compute tiles in the top row of tiles and the weight delivery tiles in the lower row of tiles. The design uses memory tiles for layer I/O ordering and zero padding as outlined in more detail below.  
 
 ![figure7](images/mnist-convnet-floorplan.png)
 
@@ -188,7 +188,7 @@ The diagram below shows how this intrinsic may be loaded to perform 3x3 convolut
 
 The weights may be loaded as columns of matrix $Y$ where each weight $w(C_i,C_o)$ maps from an input channel to an output layer. Since there are 8 rows and 4 columns, each weight maps from 8 input channels to 4 output channels. The weights are not a function of the pixels; the same weights are used across a specific image. 
 
-Based on this vectorization, we can compute in a single cycle 16 output samples (four pixels for each of four output channels) from 32 input samples (four pixels from eight input channels). The trick then for each AI Engine kernel is to load efficiently these $4\times 8$ input samples and the $8\times 4$ weights continuously to keep the compute busy.
+Based on this vectorization, we can compute in a single cycle 16 output samples (four pixels for each of four output channels) from 32 input samples (four pixels from eight input channels). The trick then for each AIE-ML kernel is to load efficiently these $4\times 8$ input samples and the $8\times 4$ weights continuously to keep the compute busy.
 
 ![figure10](images/vectorization-intrinsic.png)
 
@@ -210,7 +210,7 @@ The throughput of the MNIST ConvNet classifier is approximately ~70,000 frames p
 
 The figure below summarizes the key aspects of the design of the `conv2d_w1()` layer. The Jupyter Notebook used for validation is [gen_vectors.ipynb](aie/conv2d_w1/gen_vectors.ipynb).
 
-* An input memory tile is used to zero pad the input images from tensors of (28,28,1) to tensors of (28,32,1). Only the column dimension requires padding because it forms the inner loop. Because the design uses `bfloat16` data and the memory tiles require 32-bit alignment, the input memory tile is designed to take four images (i.e., with a (4,28,28,1) tensor) and the `conv2d_w1_graph` is set up as a multi-rate solution with a `repetition_count=1` on the memory tile and a `repetition_count=4` on the compute kernel. This is a key principle carried across the full design.
+* An input memory tile is used to zero pad the input images from tensors of (28,28,1) to tensors of (28,32,1). This zero padding introduces 4 columns of zeros on the right side of the image so the overall # of columns is a multiple of 32. Only the column dimension requires padding because it forms the inner loop. Because the design uses `bfloat16` data and the memory tiles require 32-bit alignment, the input memory tile is designed to take four images (i.e., with a (4,28,28,1) tensor) and the `conv2d_w1_graph` is set up as a multi-rate solution with a `repetition_count=1` on the memory tile and a `repetition_count=4` on the compute kernel. This is a key principle carried across the full design.
 * Because this layer has only a single input channel, the `mac_elem_16_2()` intrinsic is used at 50% capacity; it processes two channels by default and here one channel is zeroed out. This impacts its overall vector efficiency. 
 * The inner loop II=17 is achieved to deliver nine MAC operations, which is only  26% efficient. Due to the small nature of the images here it is difficult to fill the pipeline with more MAC operations. This could easily be done in a larger design.
 * The overall loop structure employs an outer loop over the output image rows and an inner loop over the output image columns. This is a good fit for the chosen intrinsic.
