@@ -124,8 +124,6 @@ filter_AIEvsHLS
 
 ### *Tools Documentation:
 
-* [Versal AI Engines Secure Site](https://www.xilinx.com/member/forms/registration/versal_ai_engines.html#documentation)
-
 * [AI Engine Documentation](https://docs.amd.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 </details>
 
@@ -137,7 +135,7 @@ filter_AIEvsHLS
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), install the following tools.
 
-* Install the [Vitis Software Platform 2024.2](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2024.2](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation)
 
 * Obtain licenses for AI Engine tools
 
