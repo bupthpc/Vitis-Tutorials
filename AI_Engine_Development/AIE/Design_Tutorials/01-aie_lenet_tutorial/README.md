@@ -111,8 +111,6 @@ Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.
 
 Tools Documentation:
 
-* [AI Engine Documentation](https://docs.amd.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
-
 To build and run the LeNet tutorial, you will need the following tools downloaded/installed:
 
 * Install the [Vitis Software Platform 2024.2](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
@@ -120,10 +118,6 @@ To build and run the LeNet tutorial, you will need the following tools downloade
 * Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202420_1` platform)
 
 * Obtain licenses for AI Engine tools
-
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
-
-* Download and set up the [VCK190 Vitis Platform for 2024.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 </details>
 
@@ -557,8 +551,8 @@ cd ../../;
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4`: Linux file system and `fat32`: Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -1090,7 +1084,7 @@ The following are links to the XRT information used by this tutorial:
 
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
@@ -1098,6 +1092,7 @@ The following are links to Vitis related information referenced in this tutorial
 
 ##### Revision History
 
+* Dec 2024 - Updated for 2024.2
 * Jun 2024 - Updated for 2024.1
 * Apr 2023 - Updated for 2023.2
 * Jan 2023 - Updated for 2022.2
