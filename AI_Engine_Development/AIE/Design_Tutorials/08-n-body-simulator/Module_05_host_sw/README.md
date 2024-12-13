@@ -112,8 +112,10 @@ The following is the general execution flow for the host applications.
 
 * [XRT Github Repo](https://github.com/Xilinx/XRT)
 
-* [Vitis Developing Application Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Developing-Applications)
-* [Vitis Building-and-Running-the-Application Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application)
+* [Vitis Developing Application Documentation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Developing-Vitis-Kernels-and-Applications)
+
+* [Vitis Building-and-Running-the-Application Documentation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Building-and-Running-the-System)
+
 
 ## Next Steps
 After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module, [Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run).

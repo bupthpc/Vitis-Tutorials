@@ -62,7 +62,7 @@ After coming up with 400 tile AI Engine design, the next step is the come up wit
 |`packet_receiver`|Packet switching kernel that evaluates packet headers from incoming streams and reroutes data to one of 4 AXI4-Streams|499.5 MHz|
 |`s2mm_mp`|Quad-channel data-mover that moves data from AXI4-Stream to DDR.|411 MHz|
 
-Using Vivado timing closure techniques, you can increase the FMax if needed. To showcase the example, integrate using the 300 MHz clock. There is also a 400 MHz timing-closed design in the [beamforming tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming).
+Using Vivado timing closure techniques, you can increase the FMax if needed. To showcase the example, integrate using the 300 MHz clock. There is also a 400 MHz timing-closed design in the [beamforming tutorial](../../03-beamforming).
 
 ![alt text](images/pl_kernels_highlighted.PNG)
 
@@ -95,10 +95,7 @@ The `s2mm_mp` kernel is generated from the `kernel/spec.json` specification. Rev
 
 * [Vitis Utilities Library Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/index.html)
 
-* [Generating PL Data-Mover Kernels](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html)
-
-* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
-
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands)
 ## Next Steps
 
 After compiling the PL datamover kernels, you are ready to link the entire hardware design together in the next module, [Module 04 - Full System Design](../Module_04_full_system_design).

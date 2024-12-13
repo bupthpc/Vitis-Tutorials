@@ -50,9 +50,9 @@ The following image was taken from the Vivado project for the entire design. It 
 
 ## References
 
-* [Beamforming Tutorial - Module_04 - AI Engine and PL Integration](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming)
+* [Beamforming Tutorial - Module_04 - AI Engine and PL Integration](../../03-beamforming)
 
-* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands)
 
 ## Next Steps
 
