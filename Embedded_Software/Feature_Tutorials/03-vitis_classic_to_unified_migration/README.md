@@ -7,6 +7,8 @@
 
 ***Version: Vitis 2024.1***
 
+>**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Advancing Embedded Development: Migrating to AMD Vitis™ Unified IDE and Exploring Backend Innovations"](https://webinar.amd.com/Advancing-Embedded-Development-Migrating-to-AMD-Vitis-tm-Unified-IDE-and-Exploring-Backend-Innovations/en) webinar.
+
 # Vitis Classic to Unified Project Migration
 
 The methodology to pass the metadata from hardware from Vivado to Vitis IDE has changed. However, these changes will not affect the users as the AMD baremetal drivers, standalone bsp and libraries have been fully ported to this new methodology.

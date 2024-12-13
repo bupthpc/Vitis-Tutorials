@@ -277,24 +277,9 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>Yes</td>
  <td> </td>
  <td> </td>
- </tr>  
- <tr>
+ </tr> 
+ <tr> 
  <td align="center"><a href="./Design_Tutorials/07-Channelizer-Using-Vitis-Libraries/">Polyphase Channelizer on AIE-ML using Vitis Libraries</a></td>
- <td>Base</td>
- <td>Linux</td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td>Yes</td>
- <td>Yes</td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- </tr>  
- <tr>
- <td align="center"><a href="./Design_Tutorials/08-MNIST-ConvNet/">MNIST ConvNet on AIE-ML</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
@@ -307,7 +292,22 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>Yes</td>
  <td> </td>
  <td>Yes</td>
- </tr>    
+ </tr>  
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/08-MNIST-ConvNet/">MNIST ConvNet on AIE-ML</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>  
  </table>
 
 
