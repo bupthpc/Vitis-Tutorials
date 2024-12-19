@@ -7,10 +7,15 @@
 #################################################################################
 ##     Directories
 #################################################################################
-AIE_DIR := $(PWD)/aie
-KERNELS_DIR := $(PWD)/pl_kernels
-HOST_DIR := $(PWD)/sw
-ADDON_DIR := $(PWD)/addon_files
+# AIE_DIR := $(PWD)/aie
+# KERNELS_DIR := $(PWD)/pl_kernels
+# HOST_DIR := $(PWD)/sw
+# ADDON_DIR := $(PWD)/addon_files
+
+AIE_DIR := ./aie
+KERNELS_DIR := ./pl_kernels
+HOST_DIR := ./sw
+ADDON_DIR := ./addon_files
 
 #################################################################################
 ## Project Parameters
@@ -55,15 +60,18 @@ VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}
 
 
 ###
-.PHONY: all_hw all_hw_emu 
+.PHONY: all_hw all_hw_emu run
+
+run: all_hw
 
 all_hw:
 	make TARGET=hw clean data aie kernels xclbin host package
 
+
+
 all_hw_emu:
 	make TARGET=hw_emu clean data aie kernels xclbin host package
 
-run: all_hw_emu run_hw_emu
 
 upd_host_hw:
 	make TARGET=hw host package
@@ -114,7 +122,7 @@ ${XOS}:
 
 host:  ${HOST_EXE}
 ${HOST_EXE}: $(HOST_DIR)/*.cpp
-	make -C $(HOST_DIR) AIE_DIR=$(AIE_DIR)
+	make -C $(HOST_DIR) AIE_DIR=../$(AIE_DIR)
 
 package:  package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
