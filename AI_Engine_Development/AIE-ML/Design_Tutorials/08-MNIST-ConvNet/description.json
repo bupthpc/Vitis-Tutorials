@@ -1,6 +1,6 @@
 {
-    "name": "Design_Tutorials-07-MNIST-ConvNet",
-    "description": "07-MNIST-ConvNet on AIE-ML",
+    "name": "Design_Tutorials-08-MNIST-ConvNet",
+    "description": "08-MNIST-ConvNet on AIE-ML",
     "gui": "false",
     "flow": "versal",
 
@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "AIE-ML_D_07-MNIST-ConvNet",
+        "test_name": "AIE-ML_D_08-MNIST-ConvNet",
         "jobs": [
             {
                 "max_memory_MB": 65536,

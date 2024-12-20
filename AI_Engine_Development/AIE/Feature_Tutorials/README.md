@@ -98,6 +98,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td>This tutorial demonstrates how to implement the same MATLAB model design using the Vitis DSP libraries targeting AI Engine. This MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot. This tutorial has four parts. In part 1, the sampling rate requirement is 400 Msps; in part 2, the sampling rate requirement is 2000 Msps, in part 3, implement the part 1 design using Vitis IDE and then finally, in part4, implement the part 1 design using Vitis Model Composer tool.</td>
  </tr> 
  <tr>
+ <td align="center"><a href="./23-AIE_independent_graphs/">Compiling AIE Graphs for Independent Partitions</a></td>
+ <td>This tutorial is designed to demonstrate the flow for compiling AI Engine Graphs for AI Engine partitions. The AI Engine graphs are located in different partitions of the device, verified by aiesimulator independently, but integrated and packaged by v++ linker and v++ packager together. The flow is suitable for multiple teams working simultaneously in different parts of a system project or integrating user owned design with vendor (for example, AMD) provided IPs.</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
  <td>This tutorial shows ways of interfacing user RTL logic to the AI Engine using the Vitis acceleration flow. </td>
  </tr>  

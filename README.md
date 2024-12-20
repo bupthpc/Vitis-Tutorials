@@ -185,12 +185,12 @@ To download a ZIP file of a specific branch, do one of the following:
 <table border="0" width="100%">
     <tbody>
         <tr>
-            <td colspan="3" height="24" align="center">
+            <td colspan="4" height="24" align="center">
                 <strong> <a href="./AI_Engine_Development/AIE/">AI Engine Development on AIE</a></strong>
             </td>
         </tr>
         <tr>
-            <td colspan="3" height="48">
+            <td colspan="4" height="48">
                 Learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
             </td>
         </tr>
@@ -198,7 +198,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Design Tutorials</strong>
             </td>
         </tr>
@@ -212,6 +212,9 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/01-aie_lenet_tutorial">LeNet Tutorial</a>
             </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/02-super_sampling_rate_fir">Super Sampling Rate FIR Filters</a>
+            </td>            
         </tr>
         <tr>
             <td height="24">
@@ -221,7 +224,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/04-packet-switching">Packet Switching</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/02-super_sampling_rate_fir">Super Sampling Rate FIR Filters</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/03-beamforming">Beamforming Design</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer</a>
             </td>
         </tr>
         <tr>
@@ -232,7 +238,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/06-versal-system-design-clocking-tutorial">Versal System Design Clocking</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/03-beamforming">Beamforming Design</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT </a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
             </td>
         </tr>
         <tr>
@@ -243,7 +252,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/08-dsp-library">DSP Library Tutorial</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer </a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
             </td>
         </tr>
         <tr>
@@ -254,7 +266,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/10-aie-dsp-lib-model-composer">AIE DSP Library and Model Composer</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation</a>
             </td>
         </tr>
         <tr>
@@ -265,7 +280,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/13-aie-performance-analysis">AIE Performance and Deadlock Analysis</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
+                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>                    
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation</a>
             </td>
         </tr>
         <tr>
@@ -275,9 +293,12 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
-            <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
+            <td >
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture</a>                     
             </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine</a>
+            </td>  
         </tr>
         <tr>
             <td height="24">
@@ -287,8 +308,11 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/17-RTL-IP-with-AIE-Engines">Using RTL IP with AI Engines</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine</a>                     
             </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter</a>
+            </td> 
         </tr>
         <tr>
             <td height="24">
@@ -297,8 +321,11 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features</a>
             </td>
+            <td>                   
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps">1M Point float FFT @ 32 Gsps :new: </a>
+            </td>                
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain </a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
             </td>
         </tr>
         <tr>
@@ -306,59 +333,27 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter">Two Tone Filter</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation</a>            
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm">MUSIC Algorithm :new: </a>
+            </td> 
+            <td>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/19-Softmax-Function">Softmax Function on AI Engine :new: </a>            
             </td>
-        </tr>
-        <tr>
-            <td colspan="3" height="24" align="center">
-                <strong> Design Tutorials </strong>
-            </td>
-        </tr>        
+        </tr>     
         <tr>
             <td height="24">
-                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>                    
-            </td>
-            <td >
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>                     
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/">AIE Independent Graphs :new: </a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture </a>
-            </td>          
-        </tr>
-        <tr>
-            <td height="24">
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine </a>                    
-            </td>
-            <td >
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine </a>                     
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter </a>
-            </td>          
-        </tr>
-        <tr>
-            <td height="24">                   
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps">1M Point float FFT @ 32 Gsps :new: </a>
-            </td>                
-            <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
-            </td>              
-            <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm">MUSIC Algorithm :new: </a>
-            </td>            
-        </tr>
-        <tr>
-            <td height="24">                   
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/19-Softmax-Function"> Softmax Function on AI Engine :new: </a>
-            </td>                
-            <td>
-            </td>              
-            <td>
-            </td>            
-        </tr>                             
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer :new: </a>
+            </td> 
+            <td>            
+            </td>
+        </tr>  
     </tbody>
 </table>
 

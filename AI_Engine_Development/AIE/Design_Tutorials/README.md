@@ -105,7 +105,11 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <tr>
  <td align="center"><a href="./19-Softmax-Function/">Softmax Function on AIE Engine</a></td>
  <td>Softmax is an activation function often used in the output layer of a neural network designed for multi-class classification. This tutorial provides an example of how the softmax function might be implemented for those desiring to develop custom machine learning inference applications on AI Engines. </td>
- </tr>  
+ </tr>
+ <tr>
+ <td align="center"><a href="./20-TDM-Mixer/">Time-Division Multiplexed Mixer Example</a></td>
+ <td>This tutorial implements a time-division multiplexed (TDM) Mixer design on AI Engine. The design illustrates how a "corner-turning" operation can be performed using the DMA hardware resources inside the AI Engine local tile, leaving core capacity available for compute workloads. The tutorial also shows how to vectorize workloads involving phase or frequency generation without lookup tables.</td>
+ </tr>     
  </table>
 
 

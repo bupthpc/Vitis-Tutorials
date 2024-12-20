@@ -393,6 +393,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  </tr>
  <tr>
+ <td align="center"><a href="./Feature_Tutorials/23-AIE_independent_graphs/">Compiling AIE Graphs for Independent Partitions</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> Yes </td>
+ <td> Yes </td>
+ <td> </td>
+ <td> Yes </td>
+ <td> Yes </td>
+ <td> Yes </td>
+ <td> </td>
+ </tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
  <td>Custom</td>
  <td>N/A</td>
@@ -716,7 +731,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  </tr> 
  <tr>
- <td align="center"><a href="./Design_Tutorials/18-Softmax-Function/">Softmax Function on AI Engine</a></td>
+ <td align="center"><a href="./Design_Tutorials/19-Softmax-Function/">Softmax Function on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <td align="center"><a href="./Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
