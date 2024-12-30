@@ -232,6 +232,9 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Use **Vitis menu -> Xilinx -> Start/Stop Emulator** to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.
    - Right click **vadd** project (not the vadd_system system project), select **Run as -> Launch on Emulator**
 
+> [!NOTE]
+> Click the run icon.
+
    The result will show on Console tab.
 
    ```
