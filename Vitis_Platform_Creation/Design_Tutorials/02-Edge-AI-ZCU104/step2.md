@@ -107,24 +107,21 @@ As mentioned above we will create a Vitis Platform to obtain FSBL and PMU firmwa
 Create a tcl file with XSCT commands. For example, here is the parts of [xsct_create_pfm.tcl](./ref_files/step2_pfm/xsct_create_pfm.tcl)
 
 ```Tcl
+set platform_name zcu104_custom_fsbl
+set xsa_name zcu104_custom_platform
+set xsa_path ../zcu104_hardware_platform
+
 setws .
-#set OUTPUT platform_repo
-platform create -name $platform_name \
+
+platform create -name ${platform_name} \
     -desc "A custom platform ZCU104 platform" \
     -hw ${xsa_path}/${xsa_name}_hw.xsa \
     -hw_emu ${xsa_path}/${xsa_name}_hwemu.xsa \
-    -fsbl-target psu_cortexa53_0 \
-#    -out ./${OUTPUT} 
- 
-# standalone domain
-domain create -name standalone -proc psu_cortexa53_0 -os standalone -arch {64-bit} 
-# Linux domain
-#domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./sd_dir}  -bootmode {sd}
-# domain active xrt
-#domain config -boot {./boot}
-#domain config -generate-bif
-#domain config -qemu-data ./boot
+    -fsbl-target psu_cortexa53_0
+#-out ./${OUTPUT}  
 
+#   Standalone Domain
+domain create -name standalone -proc psu_cortexa53_0 -os standalone -arch {64-bit} 
 platform write
 platform generate
 ```
