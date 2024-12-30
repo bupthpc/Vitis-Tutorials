@@ -170,6 +170,17 @@ Utilize XSCT tool to execute one command to generate device tree files:
    createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform.xsa -zocl  -platform-name mydevice \
     -git-branch xlnx_rel_v2022.1 -board  zcu104-revc -compile
    ```
+> [!NOTE]
+> hw:
+> ```bash
+> createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hw.xsa -zocl -platform-name mydevice -git-branch xlnx_rel_v2022.1 -board zcu104-revc -compile
+> ```
+>
+> hwemu:
+> ```bash
+> createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hwemu.xsa -zocl -platform-name mydevice -git-branch xlnx_rel_v2022.1 -board zcu104-revc -compile
+> ```
+
    The `createdts` command needs the following input values:
 
    -  `-name`: Platform name
@@ -206,7 +217,7 @@ Utilize XSCT tool to execute one command to generate device tree files:
    Go to `zcu104_software_platform` directory.
 
    ```bash
-   cd zcu104_software_platform
+   # cd zcu104_software_platform
    cp system-user.dtsi  mydevice/psu_cortexa53_0/device_tree_domain/bsp/
    echo "#include \"system-user.dtsi\"" >> mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts
    ```
@@ -214,7 +225,8 @@ Utilize XSCT tool to execute one command to generate device tree files:
    Then rebuild the dts file
 
    ```bash
-   cd zcu104_software_platform/mydevice/psu_cortexa53_0/device_tree_domain/bsp/
+   # cd zcu104_software_platform/mydevice/psu_cortexa53_0/device_tree_domain/bsp/
+   cd mydevice/psu_cortexa53_0/device_tree_domain/bsp/
    gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o system.dts system-top.dts  #preprocess the dts file because DTC command can not recognize the #include grammar
    dtc -I dts -O dtb -o system.dtb system.dts # compile the dts
    ```
@@ -226,7 +238,7 @@ After this step, all the components platform creation need is ready. Next we wil
 
 ### Create Vitis Platform
    
-1. First We will create four directories: **pfm, boot, sd_dir sw_comp** to store the components and copy files to these directories.
+1. First We will create four directories: **pfm, boot, sd_dir, sw_comp** to store the components and copy files to these directories.
 
    ```bash
    cd WorkSpace/zcu104_software_platform
@@ -234,8 +246,8 @@ After this step, all the components platform creation need is ready. Next we wil
    mkdir pfm/boot
    mkdir pfm/sd_dir
    mkdir pfm/sw_comp 
-   cp zcu104_platform_fsbl/zynqmp_fsbl/fsbl_a53.elf pfm/boot/fsbl.elf        #rename it to fsbl.elf in case of V++ can not find it by name 
-   cp zcu104_platform_fsbl/zynqmp_pmufw/pmufw.elf pfm/boot/
+   cp zcu104_custom_fsbl/zynqmp_fsbl/fsbl_a53.elf pfm/boot/fsbl.elf        #rename it to fsbl.elf in case of V++ can not find it by name 
+   cp zcu104_custom_fsbl/zynqmp_pmufw/pmufw.elf pfm/boot/
    cp xilinx-zynqmp-common-v2022.1/bl31.elf pfm/boot/
    cp xilinx-zynqmp-common-v2022.1/u-boot.elf pfm/boot/
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb  pfm/boot/
@@ -267,6 +279,33 @@ After this step, all the components platform creation need is ready. Next we wil
      - Architecture: **64-bit**</br>
      - **uncheck** option **Generate boot components**, because we have got FSBL and PMU already.</br>
      - Click **Finish**.
+    
+> [!NOTE]
+> XSCT
+> ```bash
+> set platform_name zcu104_custom
+> set xsa_name zcu104_custom_platform
+> set xsa_path ../zcu104_hardware_platform
+>
+> setws .
+> 
+> platform create -name $platform_name \
+>    -desc "A custom platform ZCU104 platform" \
+>    -hw ${xsa_path}/${xsa_name}_hw.xsa \
+>    -hw_emu ${xsa_path}/${xsa_name}_hwemu.xsa \
+>    -no-boot-bsp    
+> #-out ./${OUTPUT}  
+>
+> # Linux domain
+> domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./pfm/sd_dir}  -bootmode {sd}
+> domain config -boot {./pfm/boot}
+> domain config -generate-bif
+> domain config -qemu-data ./pfm/boot
+> platform write
+> platform generate
+> ```
+> 
+
   
 4. Set up the software settings in Platform Settings view
    
